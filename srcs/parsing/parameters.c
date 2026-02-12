@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 19:48:49 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/12 09:09:45 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:25:12 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@ int	parse_pos(char *str, t_pos_xyz *pos)
 
 	spl_str = ft_split(str, ',');
 	if (!spl_str || !spl_str[0] || !spl_str[1] || !spl_str[2] || spl_str[3])
+	{
+		ft_free_strs(spl_str);
 		return (1);
+	}
 	pos->x = ft_atod(spl_str[0]) * 1000;
 	pos->y = ft_atod(spl_str[1]) * 1000;
 	pos->z = ft_atod(spl_str[2]) * 1000;
+	ft_free_strs(spl_str);
 	return (0);
 }
 
@@ -34,10 +38,14 @@ int	parse_raw_color(char *str, int *color)
 
 	spl_str = ft_split(str, ',');
 	if (!spl_str || !spl_str[0] || !spl_str[1] || !spl_str[2] || spl_str[3])
+	{
+		ft_free_strs(spl_str);
 		return (1);
+	}
 	r = ft_atoi(spl_str[0]);
 	v = ft_atoi(spl_str[1]);
 	b = ft_atoi(spl_str[2]);
+	ft_free_strs(spl_str);
 	if (r > 255 || r < 0)
 		return (2);
 	if (v > 255 || v < 0)

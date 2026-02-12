@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 18:43:44 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/11 12:42:50 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:20:06 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@ int	ft_puterr(char *error)
 
 int	ft_error(char *error, char *progname)
 {
-	char *error_str = NULL;
-	
+	char	*error_str;
+
+	error_str = NULL;
 	if (error)
 		error_str = ft_strjoin_mult(4, progname, ": ", error, "\n");
 	if (!error_str && progname)
 	{
 		perror(progname);
-		return(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	if (!progname)
 		return (EXIT_FAILURE);
@@ -38,14 +39,15 @@ int	ft_error(char *error, char *progname)
 
 int	ft_maperror(char *error, char *progname)
 {
-	char *error_str = NULL;
-	
+	char	*error_str;
+
+	error_str = NULL;
 	if (error)
 		error_str = ft_strjoin_mult(3, "Error\n", error, "\n");
 	if (!error_str && progname)
 	{
 		perror(progname);
-		return(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	if (!progname)
 		return (EXIT_FAILURE);
@@ -54,10 +56,11 @@ int	ft_maperror(char *error, char *progname)
 	return (EXIT_FAILURE);
 }
 
-int ft_perror(char *optional_name, char *progname)
+int	ft_perror(char *optional_name, char *progname)
 {
-	char *error_prefix = NULL;
-	
+	char	*error_prefix;
+
+	error_prefix = NULL;
 	if (optional_name)
 		error_prefix = ft_strjoin_mult(3, progname, ": ", optional_name);
 	else

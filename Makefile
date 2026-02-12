@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS += -Wall -Wextra -Werror -O3
-DFLAGS += -g3
+DFLAGS += -g3 -D DEBUG=1
 
 SRCS_DIR = srcs
 SRCS = main.c\
@@ -10,6 +10,8 @@ SRCS = main.c\
 		parsing/parser.c\
 		render/colors.c\
 		render/loop.c\
+		utils/clean_exit.c\
+		utils/debug_print.c\
 		utils/errors.c\
 		utils/inputs.c\
 		utils/tools.c

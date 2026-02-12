@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 18:47:31 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/11 17:22:52 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:21:16 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	check_args(int ac, char **av, char *prog_name)
 		exit(ft_puterr("Only .rt format is supported\n"));
 }
 
-int		open_map(char *filename, char *progname)
+int	open_map(char *filename, char *progname)
 {
 	int	fd;
 

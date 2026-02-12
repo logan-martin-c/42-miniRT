@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:47 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/11 17:04:23 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:20:35 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ void	set_hooks(t_global_data *g_data)
 	mlx_hook(g_data->mlx.win, 2, 1L, key_press, g_data);
 	mlx_hook(g_data->mlx.win, 3, 1L << 1, key_release, g_data);
 	mlx_hook(g_data->mlx.win, 17, 1L, win_close, g_data);
-	//mlx_hook(g_data->mlx.win, 4, 1L << 2, scale, g_data);
+	// mlx_hook(g_data->mlx.win, 4, 1L << 2, scale, g_data);
 	mlx_loop_hook(g_data->mlx.mlx, update_display, g_data);
-	mlx_mouse_move(g_data->mlx.mlx, g_data->mlx.win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+	mlx_mouse_move(g_data->mlx.mlx, g_data->mlx.win, WIN_WIDTH / 2, WIN_HEIGHT
+		/ 2);
 }

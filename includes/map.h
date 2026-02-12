@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:51 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/12 09:07:03 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/12 14:31:19 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_cam_data
 	int				speed;
 }					t_cam_data;
 
-typedef struct		s_map_data
+typedef struct s_map_data
 {
 	bool			cam;
 	bool			ambient_light;
@@ -65,13 +65,13 @@ typedef struct s_object
 {
 	enum
 	{
-		ambient_lighting,
-		camera,
-		light,
-		sphere,
-		plane,
-		cylinder
-	} type;
+		_ambient_lighting,
+		_camera,
+		_light,
+		_sphere,
+		_plane,
+		_cylinder
+	} e_type;
 	void			*data;
 }					t_object;
 
@@ -85,7 +85,7 @@ typedef struct s_camera
 {
 	t_pos_xyz		pos;
 	t_pos_xyz		rot;
-	char			fov;
+	int				fov;
 }					t_camera;
 
 typedef struct s_light

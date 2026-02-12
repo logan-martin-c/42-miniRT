@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 15:38:04 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/11 19:30:35 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/12 11:51:24 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ float				ft_atof(const char *str);
 int					ft_atoi(const char *str);
 int					ft_atoi_base(const char *str, char *base);
 long				ft_atol(const char *str);
+void				ft_free_strs(char **strs);
 int					ft_isascii(int c);
 int					ft_isprint(int c);
 int					ft_isspace(int c);

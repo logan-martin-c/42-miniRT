@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS += -Wall -Wextra -Werror
+CFLAGS += -Wall -Wextra -Werror -o3
 
 SRCS = ft_abs_bonus.c\
 		ft_atof.c\
@@ -9,6 +9,7 @@ SRCS = ft_abs_bonus.c\
 		ft_atol.c\
 		ft_bzero.c\
 		ft_calloc.c\
+		ft_free_strs.c\
 		ft_isalnum.c\
 		ft_isalpha.c\
 		ft_isascii.c\
