@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 10:05:13 by lomartin          #+#    #+#             */
-/*   Updated: 2025/11/23 19:53:47 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/14 18:33:38 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 void	ft_putnbr_base_recursive(long n, t_printf_data *d, t_rnumber_data *dn,
 		size_t *len)
 {
+	int	i;
+
 	if (++dn->i < dn->nblen_min || n > dn->baselen - 1)
 		ft_putnbr_base_recursive((n / dn->baselen), d, dn, len);
-	write(1, dn->set + n % dn->baselen, 1);
+	i = write(1, dn->set + n % dn->baselen, 1);
 	*len = *len + 1;
+	(void)i;
 }
 
 size_t	printf_putnbr_base(t_rnumber_data *dn, t_printf_data *d)
@@ -53,10 +56,13 @@ size_t	printf_putnbr_base(t_rnumber_data *dn, t_printf_data *d)
 void	ft_putnbr_base_ul_recursive(unsigned long nb, unsigned int baselen,
 		char *base, size_t *len)
 {
+	int	i;
+
 	if (nb > baselen - 1)
 		ft_putnbr_base_ul_recursive((nb / baselen), baselen, base, len);
-	write(1, base + nb % baselen, 1);
+	i = write(1, base + nb % baselen, 1);
 	*len = *len + 1;
+	(void)i;
 }
 
 size_t	printf_putnbr_base_ul(unsigned long nb, char *base)

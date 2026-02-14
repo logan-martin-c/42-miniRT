@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 15:26:34 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 16:06:53 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/14 18:32:01 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ double	ft_atod(const char *str)
 	}
 	while (*str >= '0' && *str <= '9')
 		nbr = nbr * 10 + (*(str++) - '0');
-	if (*str != ',' && *str != '.')
+	if (*str != ',' && *(str++) != '.')
 		return (nbr * sin);
-	str++;
 	dec = 0.1;
 	while (*str >= '0' && *str <= '9')
 	{

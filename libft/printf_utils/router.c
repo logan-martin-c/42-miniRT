@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 12:05:04 by lomartin          #+#    #+#             */
-/*   Updated: 2025/12/03 21:57:32 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/14 18:33:42 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,15 @@ void	r_str(const char **str, va_list ap, t_printf_data *d, char *self)
 
 void	r_char(const char **str, va_list ap, t_printf_data *d)
 {
+	int	i;
+
 	if (d->fpadd && !d->fpaddleft)
 	{
 		while (--d->fpadd)
 			d->siz += write(1, " ", 1);
 	}
 	d->c = va_arg(ap, int);
-	write(1, &d->c, 1);
+	i = write(1, &d->c, 1);
 	if (d->fpaddleft && d->fpadd)
 	{
 		while (--d->fpadd)
@@ -57,6 +59,7 @@ void	r_char(const char **str, va_list ap, t_printf_data *d)
 	}
 	(*str)++;
 	d->siz++;
+	(void)i;
 }
 
 void	r_number2(t_printf_data *d, t_rnumber_data *dn, char flag)

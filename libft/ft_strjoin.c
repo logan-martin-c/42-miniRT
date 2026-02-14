@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 10:30:37 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/11 12:43:44 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/14 18:30:13 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	len;
 	char	*dest;
+
 	len = ft_strlen(s1) + ft_strlen(s2);
 	dest = malloc((len + 1) * sizeof(char));
 	if (!dest)
@@ -37,11 +38,11 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 char	*ft_strjoin_mult(unsigned int count, ...)
 {
-	va_list	ap;
-	char	*dest;
-	char	*temp;
-	char	*temp2;
-	unsigned int		i;
+	va_list			ap;
+	char			*dest;
+	char			*temp;
+	char			*temp2;
+	unsigned int	i;
 
 	i = -1;
 	dest = NULL;
@@ -50,7 +51,7 @@ char	*ft_strjoin_mult(unsigned int count, ...)
 	{
 		temp = va_arg(ap, char *);
 		if (!temp || !*temp)
-			continue;
+			continue ;
 		temp2 = dest;
 		dest = ft_strjoin(dest, temp);
 		free(temp2);

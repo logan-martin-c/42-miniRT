@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:14:56 by lomartin          #+#    #+#             */
-/*   Updated: 2025/11/23 12:55:06 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/14 18:26:45 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@
 void	ft_putstr_fd(char *s, int fd)
 {
 	size_t	len;
+	int		i;
 
 	if (!s)
 		return ;
 	len = ft_strlen(s);
-	write(fd, s, len);
+	i = write(fd, s, len);
+	(void)i;
 }

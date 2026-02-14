@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 18:11:52 by lomartin          #+#    #+#             */
-/*   Updated: 2025/11/23 12:51:23 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/14 18:32:28 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,8 @@
 
 void	ft_putchar_fd(char c, int fd)
 {
-	write(fd, &c, 1);
+	int	i;
+
+	i = write(fd, &c, 1);
+	(void)i;
 }

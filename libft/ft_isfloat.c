@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 19:21:10 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/12 19:36:12 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/14 18:32:46 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_isfloat_str(char *str)
 				return (0);
 			point = 1;
 			str++;
-			continue;
+			continue ;
 		}
 		if (!ft_isdigit(*(str++)))
 			return (0);
