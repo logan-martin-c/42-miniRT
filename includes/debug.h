@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   debug.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/10 15:24:04 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 18:49:43 by lomartin         ###   ########.fr       */
+/*   Created: 2026/02/14 18:41:28 by lomartin          #+#    #+#             */
+/*   Updated: 2026/02/14 18:43:35 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#ifndef DEBUG_H
+# define DEBUG_H
 
-int	main(int ac, char *av[])
-{
-	t_global_data	g_data;
-	t_parsing_data	p_data;
+# include "map.h"
 
-	init(&g_data, &p_data, av[1]);
-	parser(ac, av, &g_data, &p_data);
-	if (init_mlx(&g_data.mlx))
-	{
-		ft_perror("mlx", g_data.prog_name);
-		clean_exit(EXIT_FAILURE, &g_data, &p_data);
-	}
-	set_hooks(&g_data);
-	// mlx_do_key_autorepeatoff(vars.mlx);
-	mlx_loop(g_data.mlx.mlx);
-}
+void	print_sphere(t_sphere *sphere);
+void	print_plane(t_plane *plane);
+void	print_cylinder(t_cylinder *cylinder);
+void	print_cam(t_cam_data *cam);
+void	print_light(t_light_data *light);
+void	print_ambient_light(t_ambient_light_data *ambient_light);
+
+#endif

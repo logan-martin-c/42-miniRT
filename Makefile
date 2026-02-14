@@ -5,12 +5,16 @@ DFLAGS += -g3 -D DEBUG=1
 SRCS_DIR = srcs
 SRCS = main.c\
 		init.c\
+		parsing/objects.c\
 		parsing/open_map.c\
-		parsing/parameters.c\
+		parsing/params.c\
 		parsing/parser.c\
-		render/colors.c\
-		render/loop.c\
+		parsing/sub_parameters.c\
+		rendering/colors.c\
+		rendering/loop.c\
 		utils/clean_exit.c\
+		utils/debug_obj_print.c\
+		utils/debug_params_print.c\
 		utils/debug_print.c\
 		utils/errors.c\
 		utils/inputs.c\

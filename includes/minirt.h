@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 16:31:14 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/14 19:23:31 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,12 @@
 # include "libft.h"
 # include "map.h"
 # include "mlx.h"
+# include "settings.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <string.h>
-
-# define WIN_HEIGHT 1080
-# define WIN_WIDTH 1920
-# define NORM_PREC 10e8
-# define NORM_TOLERANCE 0.5
 
 // KEYCODES
 # define ESC 65307
@@ -96,14 +92,31 @@ typedef struct s_global_data
 	t_world_data			world;
 }							t_global_data;
 
+typedef enum e_obj_type
+{
+	_obj_object,
+	_obj_param,
+	_obj_none,
+}							t_obj_type;
+
+typedef struct s_int_color
+{
+	int						a;
+	int						r;
+	int						v;
+	int						b;
+}							t_int_color;
+
 // INIT
 int							init_mlx(t_mlx_data *mlx);
+void						init(t_global_data *g_data, t_parsing_data *p_data,
+								char *av_zero);
 
 // PARSING
+void						parser(int ac, char *av[], t_global_data *g_data,
+								t_parsing_data *p_data);
 void						check_args(int ac, char **av, char *prog_name);
 int							open_map(char *filename, char *progname);
-int							parse_map(int map_fd, t_global_data *g_data,
-								t_parsing_data *p_data);
 int							parse_pos(char *str, t_pos_xyz *pos,
 								char normalized);
 int							parse_raw_color(char *str, int *color);
@@ -111,6 +124,10 @@ int							parse_float(char *str, int *value);
 t_color						parse_color(int color);
 void						lst_map_to_array(t_parsing_data *p_data,
 								t_world_data *world);
+void						parse_object(t_parsing_data *p_data, char *obj_line,
+								t_global_data *g_data);
+void						parse_params(t_parsing_data *p_data, char *obj_line,
+								t_global_data *g_data);
 
 // RENDER
 int							update_display(t_global_data *data);
@@ -132,10 +149,11 @@ void						free_node(void *node);
 void						clean_exit(int exit_status, t_global_data *g_data,
 								t_parsing_data *p_data);
 int							win_close(t_global_data *g_data);
-void						print_nodes(t_parsing_data *p_data,
+void						print_objects(t_parsing_data *p_data,
 								t_world_data *world);
 int							check_args_count(char **args, unsigned int min,
 								unsigned int max);
 int							is_normalized(t_pos_xyz pos);
+t_obj_type					get_obj_type(char *obj_line);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:30:17 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 16:40:16 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/14 19:16:09 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	update_display(t_global_data *data)
 	// rotate_cam(vars);
 	ft_bzero(data->mlx.s_img_data.addr, WIN_HEIGHT * WIN_WIDTH
 		* data->mlx.s_img_data.bits_per_pixel / 8);
-	// ft_memset_int(data->mlx.s_img_data.addr, get_color_chars(255, 255, 67, 39), WIN_HEIGHT * WIN_WIDTH
+	// ft_memset_int(data->mlx.s_img_data.addr, get_color_chars(255, 255, 67,
+	//		39), WIN_HEIGHT * WIN_WIDTH
 	//  	* data->mlx.s_img_data.bits_per_pixel / 8);
 	// draw_map(vars, -1, -1);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win,
