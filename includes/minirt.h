@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 12:40:57 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/14 16:31:14 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@
 # include "map.h"
 # include "mlx.h"
 # include <fcntl.h>
+# include <math.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <string.h>
 
 # define WIN_HEIGHT 1080
 # define WIN_WIDTH 1920
+# define NORM_PREC 10e8
+# define NORM_TOLERANCE 0.5
 
 // KEYCODES
 # define ESC 65307
@@ -101,8 +104,10 @@ void						check_args(int ac, char **av, char *prog_name);
 int							open_map(char *filename, char *progname);
 int							parse_map(int map_fd, t_global_data *g_data,
 								t_parsing_data *p_data);
-int							parse_pos(char *str, t_pos_xyz *pos);
+int							parse_pos(char *str, t_pos_xyz *pos,
+								char normalized);
 int							parse_raw_color(char *str, int *color);
+int							parse_float(char *str, int *value);
 t_color						parse_color(int color);
 void						lst_map_to_array(t_parsing_data *p_data,
 								t_world_data *world);
@@ -131,5 +136,6 @@ void						print_nodes(t_parsing_data *p_data,
 								t_world_data *world);
 int							check_args_count(char **args, unsigned int min,
 								unsigned int max);
+int							is_normalized(t_pos_xyz pos);
 
 #endif

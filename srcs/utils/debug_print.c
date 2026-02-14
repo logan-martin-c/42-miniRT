@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:30:37 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 12:45:29 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/14 16:29:54 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_sphere(t_sphere *sphere)
 	printf("\t\tx : %lf\n", (double)sphere->pos.x / 1000);
 	printf("\t\ty : %lf\n", (double)sphere->pos.y / 1000);
 	printf("\t\tz : %lf\n", (double)sphere->pos.z / 1000);
-	printf("\tdiameter : %d\n", sphere->diameter);
+	printf("\tdiameter : %f\n", (float)sphere->diameter / 1000);
 	printf("\tcolor:\n");
 	printf("\t\ta : %u\n", color.alpha);
 	printf("\t\tr : %u\n", color.red);
@@ -41,9 +41,9 @@ void	print_plane(t_plane *plane)
 	printf("\t\ty : %lf\n", (double)plane->pos.y / 1000);
 	printf("\t\tz : %lf\n", (double)plane->pos.z / 1000);
 	printf("\tvector :\n");
-	printf("\t\tx : %lf\n", (double)plane->rot.x / 1000);
-	printf("\t\ty : %lf\n", (double)plane->rot.y / 1000);
-	printf("\t\tz : %lf\n", (double)plane->rot.z / 1000);
+	printf("\t\tx : %lf\n", (double)plane->rot.x / NORM_PREC);
+	printf("\t\ty : %lf\n", (double)plane->rot.y / NORM_PREC);
+	printf("\t\tz : %lf\n", (double)plane->rot.z / NORM_PREC);
 	printf("\tcolor:\n");
 	printf("\t\ta : %u\n", color.alpha);
 	printf("\t\tr : %u\n", color.red);
@@ -62,11 +62,11 @@ void	print_cylinder(t_cylinder *cylinder)
 	printf("\t\ty : %lf\n", (double)cylinder->pos.y / 1000);
 	printf("\t\tz : %lf\n", (double)cylinder->pos.z / 1000);
 	printf("\tvector :\n");
-	printf("\t\tx : %lf\n", (double)cylinder->rot.x / 1000);
-	printf("\t\ty : %lf\n", (double)cylinder->rot.y / 1000);
-	printf("\t\tz : %lf\n", (double)cylinder->rot.z / 1000);
-	printf("\tdiameter : %d\n", cylinder->diameter);
-	printf("\theight : %d\n", cylinder->height);
+	printf("\t\tx : %lf\n", (double)cylinder->rot.x / NORM_PREC);
+	printf("\t\ty : %lf\n", (double)cylinder->rot.y / NORM_PREC);
+	printf("\t\tz : %lf\n", (double)cylinder->rot.z / NORM_PREC);
+	printf("\tdiameter : %f\n", (float)cylinder->diameter / 1000);
+	printf("\theight : %f\n", (float)cylinder->height / 1000);
 	printf("\tcolor:\n");
 	printf("\t\ta : %u\n", color.alpha);
 	printf("\t\tr : %u\n", color.red);
@@ -82,9 +82,9 @@ void	print_cam(t_cam_data *cam)
 	printf("\t\ty : %lf\n", (double)cam->pos.y / 1000);
 	printf("\t\tz : %lf\n", (double)cam->pos.z / 1000);
 	printf("\torientation :\n");
-	printf("\t\tx : %lf\n", (double)cam->angle.x / 1000);
-	printf("\t\ty : %lf\n", (double)cam->angle.y / 1000);
-	printf("\t\tz : %lf\n", (double)cam->angle.z / 1000);
+	printf("\t\tx : %lf\n", (double)cam->angle.x / NORM_PREC);
+	printf("\t\ty : %lf\n", (double)cam->angle.y / NORM_PREC);
+	printf("\t\tz : %lf\n", (double)cam->angle.z / NORM_PREC);
 	printf("\fFOV : %d\n", cam->fov);
 }
 

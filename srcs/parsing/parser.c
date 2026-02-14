@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:48:12 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 12:52:17 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/14 15:56:50 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ int	new_sphere(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	if (check_args_count(params, 4, 4) == -1)
 		return (free(sphere), ft_free_strs(params),
 			ft_maperror("sphere : invalid parameters", g_data->prog_name));
-	if (parse_pos(params[1], &sphere->pos) || parse_raw_color(params[3],
-			&sphere->color))
+	if (parse_pos(params[1], &sphere->pos, 0) || parse_float(params[2],
+			&sphere->diameter) || parse_raw_color(params[3], &sphere->color))
 		return (free(sphere), ft_free_strs(params),
 			ft_maperror("sphere : invalid parameters", g_data->prog_name));
-	sphere->diameter = ft_atof(params[2]);
 	node->e_type = _sphere;
 	node->data = sphere;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
@@ -57,8 +56,8 @@ int	new_plane(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	if (!params[1] || !params[2] || !params[3] || params[4])
 		return (free(plane), ft_free_strs(params),
 			ft_maperror("plane : invalid parameters", g_data->prog_name));
-	if (parse_pos(params[1], &plane->pos) || parse_pos(params[2], &plane->rot)
-		|| parse_raw_color(params[3], &plane->color))
+	if (parse_pos(params[1], &plane->pos, 0) || parse_pos(params[2],
+			&plane->rot, 1) || parse_raw_color(params[3], &plane->color))
 		return (free(plane), ft_free_strs(params),
 			ft_maperror("plane : invalid parameters", g_data->prog_name));
 	node->e_type = _plane;
@@ -71,7 +70,7 @@ int	new_cylinder(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 		t_object *node)
 {
 	t_cylinder	*cylinder;
-	char	**params;
+	char		**params;
 
 	cylinder = malloc(sizeof(t_cylinder));
 	params = ft_split_charset(obj_line, " \t\v\f\r");
@@ -84,12 +83,12 @@ int	new_cylinder(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	if (check_args_count(params, 6, 6) == -1)
 		return (free(cylinder), ft_free_strs(params),
 			ft_maperror("cylinder : invalid parameters", g_data->prog_name));
-	if (parse_pos(params[1], &cylinder->pos) || parse_pos(params[2], &cylinder->rot)
+	if (parse_pos(params[1], &cylinder->pos, 0) || parse_pos(params[2],
+			&cylinder->rot, 1) || parse_float(params[3], &cylinder->diameter)
+		|| parse_float(params[4], &cylinder->height)
 		|| parse_raw_color(params[5], &cylinder->color))
 		return (free(cylinder), ft_free_strs(params),
 			ft_maperror("cylinder : invalid parameters", g_data->prog_name));
-	cylinder->diameter = ft_atof(params[3]);
-	cylinder->height = ft_atof(params[4]);
 	node->e_type = _cylinder;
 	node->data = cylinder;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
@@ -109,11 +108,14 @@ int	set_cam(t_parsing_data *p_data, char *obj_line, t_global_data *g_data)
 	if (check_args_count(params, 4, 4) == -1)
 		return (ft_free_strs(params), ft_maperror("camera : invalid parameters",
 				g_data->prog_name));
-	if (parse_pos(params[1], &g_data->world.cam.pos) || parse_pos(params[2],
-			&g_data->world.cam.angle))
+	if (parse_pos(params[1], &g_data->world.cam.pos, 0) || parse_pos(params[2],
+			&g_data->world.cam.angle, 1) || !ft_isdigit_str(params[3]))
 		return (ft_free_strs(params), ft_maperror("camera : invalid parameters",
 				g_data->prog_name));
 	g_data->world.cam.fov = ft_atoi(params[3]);
+	if (g_data->world.cam.fov > 180 || g_data->world.cam.fov < 0)
+		return (ft_free_strs(params), ft_maperror("camera : invalid parameters",
+				g_data->prog_name));
 	p_data->map_data.cam = 1;
 	return (ft_free_strs(params), 0);
 }
@@ -132,7 +134,8 @@ int	set_light(t_parsing_data *p_data, char *obj_line, t_global_data *g_data)
 	if (check_args_count(params, 4, 4) == -1)
 		return (ft_free_strs(params), ft_maperror("light : invalid parameters",
 				g_data->prog_name));
-	if (parse_pos(params[1], &g_data->world.light.pos) || !ft_isfloat_str(params[2]) || parse_raw_color(params[3],
+	if (parse_pos(params[1], &g_data->world.light.pos, 0)
+		|| !ft_isfloat_str(params[2]) || parse_raw_color(params[3],
 			&g_data->world.light.color))
 		return (ft_free_strs(params), ft_maperror("light : invalid parameters",
 				g_data->prog_name));
@@ -145,7 +148,8 @@ int	set_light(t_parsing_data *p_data, char *obj_line, t_global_data *g_data)
 	return (ft_free_strs(params), 0);
 }
 
-int	set_ambient_light(t_parsing_data *p_data, char *obj_line, t_global_data *g_data)
+int	set_ambient_light(t_parsing_data *p_data, char *obj_line,
+		t_global_data *g_data)
 {
 	char	**params;
 	float	raw_ratio;
@@ -157,16 +161,18 @@ int	set_ambient_light(t_parsing_data *p_data, char *obj_line, t_global_data *g_d
 	if (!params)
 		return (ft_perror(NULL, g_data->prog_name));
 	if (check_args_count(params, 3, 3) == -1)
-		return (ft_free_strs(params), ft_maperror("ambient light : invalid parameters",
+		return (ft_free_strs(params),
+			ft_maperror("ambient light : invalid parameters",
 				g_data->prog_name));
 	if (!ft_isfloat_str(params[1]) || parse_raw_color(params[2],
 			&g_data->world.ambient_light.color))
-		return (ft_free_strs(params), ft_maperror("ambient light : invalid parameters",
+		return (ft_free_strs(params),
+			ft_maperror("ambient light : invalid parameters",
 				g_data->prog_name));
 	raw_ratio = ft_atof(params[1]);
 	if (raw_ratio > 1 || raw_ratio < 0)
-		return (ft_free_strs(params), ft_maperror("ambient light : invalid ratio",
-				g_data->prog_name));
+		return (ft_free_strs(params),
+			ft_maperror("ambient light : invalid ratio", g_data->prog_name));
 	g_data->world.ambient_light.ratio = 255 * raw_ratio;
 	p_data->map_data.ambient_light = 1;
 	return (ft_free_strs(params), 0);

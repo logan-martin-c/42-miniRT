@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 15:26:34 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/11 19:31:37 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/14 16:06:53 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 double	ft_atod(const char *str)
 {
 	double	nbr;
-	float	dec;
+	double	dec;
 	int		sin;
 
 	nbr = 0;
