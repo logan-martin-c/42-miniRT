@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 22:49:31 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/12 11:39:59 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/12 16:13:00 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,12 @@ unsigned long	get_time(unsigned long start)
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1e3 + tv.tv_usec * 1e-3 - start);
+}
+
+unsigned long	get_utime(unsigned long start)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec *1e6 + tv.tv_usec - start);
 }

@@ -14,6 +14,7 @@ SRCS = ft_abs_bonus.c\
 		ft_isalpha.c\
 		ft_isascii.c\
 		ft_isdigit.c\
+		ft_isfloat.c\
 		ft_isinset.c\
 		ft_isprint.c\
 		ft_isspace_bonus.c\

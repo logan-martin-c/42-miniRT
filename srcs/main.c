@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:24:04 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/12 14:06:46 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/14 12:06:59 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int ac, char *av[])
 	close(p_data.map_fd);
 	p_data.map_fd = -1;
 	if (DEBUG)
-		print_nodes(&p_data);
+		print_nodes(&p_data, &g_data.world);
 	lst_map_to_array(&p_data, &g_data.world);
 	ft_lstclear(&p_data.obj_lst, free_node);
 	if (init_mlx(&g_data.mlx))

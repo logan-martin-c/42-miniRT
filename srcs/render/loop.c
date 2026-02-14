@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:30:17 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/11 17:20:24 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/14 10:57:22 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	update_display(t_global_data *data)
 	int						fps;
 	char					s_fps[12];
 
-	time = get_time(0);
+	time = get_utime(0);
 	elapsed = time - last_time;
 	last_time = time;
-	fps = 1000 / elapsed;
+	fps = 1000000 / elapsed;
 	// if (vars->r_data.funky_mode)
 	// 	vars->r_data.color += 0x00030205 * elapsed;
 	// update_move_status(vars);

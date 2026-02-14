@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:51 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/12 14:31:19 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/14 12:39:22 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,26 @@ typedef struct s_cam_data
 	t_pos_xyz		pos;
 	t_pos_xyz		move;
 	t_pos_xyz		angle;
+	int				fov;
 	double			cos_x;
 	double			sin_x;
 	double			cos_z;
 	double			sin_z;
 	int				speed;
 }					t_cam_data;
+
+typedef struct s_light_data
+{
+	t_pos_xyz		pos;
+	unsigned char	ratio;
+	int				color;
+}					t_light_data;
+
+typedef struct s_ambient_light_data
+{
+	unsigned char	ratio;
+	int				color;
+}					t_ambient_light_data;
 
 typedef struct s_map_data
 {
@@ -65,9 +79,9 @@ typedef struct s_object
 {
 	enum
 	{
-		_ambient_lighting,
-		_camera,
-		_light,
+		//_ambient_lighting,
+		//_camera,
+		//_light,
 		_sphere,
 		_plane,
 		_cylinder
@@ -81,18 +95,12 @@ typedef struct s_ambient_lighting
 	int				color;
 }					t_ambient_lighting;
 
-typedef struct s_camera
-{
-	t_pos_xyz		pos;
-	t_pos_xyz		rot;
-	int				fov;
-}					t_camera;
-
-typedef struct s_light
-{
-	t_pos_xyz		pos;
-	char			ratio;
-}					t_light;
+// typedef struct s_camera
+// {
+// 	t_pos_xyz		pos;
+// 	t_pos_xyz		rot;
+// 	int				fov;
+// }					t_camera;
 
 typedef struct s_sphere
 {

@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 15:38:04 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/12 11:51:24 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/12 19:24:11 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int					ft_isprint(int c);
 int					ft_isspace(int c);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
+int					ft_isdigit_str(char *str);
+int					ft_isfloat_str(char *str);
 int					ft_isalnum(int c);
 int					ft_isinset(char c, const char *set);
 int					ft_toupper(int c);

@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 19:37:29 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/12 09:06:03 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/12 22:11:13 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ int	get_color(t_color p_color)
 	return (color);
 }
 
-int	get_color_chars(char a, char r, char g, char b)
+int	get_color_chars(unsigned char a, unsigned char r, unsigned char g, unsigned char b)
 {
 	int	color;
 
 	color = 0;
-	color += (a << (24));
-	color += (r << (16)) & 16777215;
+	color += (a << 24);
+	color += (r << 16) & 16777215;
 	color += (g << 8) & 65535;
 	color += b & 255;
 	return (color);
