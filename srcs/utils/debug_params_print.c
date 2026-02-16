@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:41:08 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 18:41:23 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/15 23:43:22 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	print_cam(t_cam_data *cam)
 {
 	printf("Camera :\n");
 	printf("\tpos :\n");
-	printf("\t\tx : %lf\n", (double)cam->pos.x / 1000);
-	printf("\t\ty : %lf\n", (double)cam->pos.y / 1000);
-	printf("\t\tz : %lf\n", (double)cam->pos.z / 1000);
+	printf("\t\tx : %lf\n", (double)cam->pos.x);
+	printf("\t\ty : %lf\n", (double)cam->pos.y);
+	printf("\t\tz : %lf\n", (double)cam->pos.z);
 	printf("\torientation :\n");
-	printf("\t\tx : %lf\n", (double)cam->angle.x / NORM_PREC);
-	printf("\t\ty : %lf\n", (double)cam->angle.y / NORM_PREC);
-	printf("\t\tz : %lf\n", (double)cam->angle.z / NORM_PREC);
+	printf("\t\tx : %lf\n", (double)cam->angle.x);
+	printf("\t\ty : %lf\n", (double)cam->angle.y);
+	printf("\t\tz : %lf\n", (double)cam->angle.z);
 	printf("\fFOV : %d\n", cam->fov);
 }
 
@@ -33,9 +33,9 @@ void	print_light(t_light_data *light)
 	color = parse_color(light->color);
 	printf("Light :\n");
 	printf("\tpos :\n");
-	printf("\t\tx : %lf\n", (double)light->pos.x / 1000);
-	printf("\t\ty : %lf\n", (double)light->pos.y / 1000);
-	printf("\t\tz : %lf\n", (double)light->pos.z / 1000);
+	printf("\t\tx : %lf\n", (double)light->pos.x);
+	printf("\t\ty : %lf\n", (double)light->pos.y);
+	printf("\t\tz : %lf\n", (double)light->pos.z);
 	printf("\tratio : %f\n", (float)light->ratio / 255);
 	printf("\tcolor:\n");
 	printf("\t\ta : %u\n", color.alpha);

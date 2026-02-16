@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 19:48:49 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 19:29:07 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/16 00:03:45 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,16 @@
 int	parse_pos(char *str, t_pos_xyz *pos, char normalized)
 {
 	char	**spl_str;
-	long	mult;
 
-	mult = 1e3;
-	if (normalized)
-		mult = NORM_PREC;
 	spl_str = ft_split(str, ',');
 	if (!spl_str || check_args_count(spl_str, 3, 3) == -1)
 		return (ft_free_strs(spl_str), 1);
 	if (!ft_isfloat_str(spl_str[0]) || !ft_isfloat_str(spl_str[1])
 		|| !ft_isfloat_str(spl_str[2]))
 		return (ft_free_strs(spl_str), 2);
-	pos->x = ft_atod(spl_str[0]) * mult;
-	pos->y = ft_atod(spl_str[1]) * mult;
-	pos->z = ft_atod(spl_str[2]) * mult;
+	pos->x = ft_atof(spl_str[0]);
+	pos->y = ft_atof(spl_str[1]);
+	pos->z = ft_atof(spl_str[2]);
 	if (normalized)
 	{
 		if (!is_normalized(*pos))
@@ -67,13 +63,8 @@ int	parse_raw_color(char *str, int *color)
 	return (ft_free_strs(spl_str), 0);
 }
 
-int	parse_float(char *str, int *value)
+int	parse_float(char *str, float *value)
 {
-	float	temp;
-
-	temp = ft_atof(str);
-	if (temp > __INT_MAX__ / 1e3 || temp < (-__INT_MAX__ - 1) / 1e3)
-		return (1);
-	*value = temp * 1e3;
+	*value = atof(str);
 	return (0);
 }

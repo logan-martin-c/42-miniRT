@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:58:52 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 18:22:12 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/15 19:30:10 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	init_cam(t_cam_data *cam)
 	cam->angle.y = 0;
 	cam->angle.z = 1 * NORM_PREC;
 	cam->fov = CAM_FOV;
+	cam->speed = 1;
 }
 
 void	init_light(t_light_data *light)

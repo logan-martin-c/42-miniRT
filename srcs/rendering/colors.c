@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 19:37:29 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 19:16:14 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/16 11:17:40 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,10 @@ int	get_color_chars(unsigned char a, unsigned char r, unsigned char g,
 	return (color);
 }
 
-int	color_gradient(int start, int end, float progress)
-{
-	t_color	p_color_start;
-	t_color	p_color_end;
-	t_color	p_color_progress;
-
-	p_color_start = parse_color(start);
-	p_color_end = parse_color(end);
-	p_color_progress.alpha = p_color_start.alpha + (p_color_end.alpha
-			- p_color_start.alpha) * progress;
-	p_color_progress.red = p_color_start.red + (p_color_end.red
-			- p_color_start.red) * progress;
-	p_color_progress.green = p_color_start.green + (p_color_end.green
-			- p_color_start.green) * progress;
-	p_color_progress.blue = p_color_start.blue + (p_color_end.blue
-			- p_color_start.blue) * progress;
-	return (get_color(p_color_progress));
-}
+// int	get_prev_color(t_pos_xyz pos, t_mlx_data *mlx)
+// {
+// 	if (pos.x < 0 || pos.x >= WIN_WIDTH || pos.y < 0 || pos.y >= WIN_HEIGHT)
+// 		return (0);
+// 	return (mlx->s_img_data.addr[((int)pos.y * LINE_SIZE + (int)pos.x
+// 		* BPP)]);
+// }

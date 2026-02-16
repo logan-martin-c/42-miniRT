@@ -1,23 +1,28 @@
 CC = cc
 CFLAGS += -Wall -Wextra -Werror -Wpedantic -O3
-DFLAGS += -g3 -D DEBUG=1
+DFLAGS += -g3 -D DEBUG=1 -O3
 
 SRCS_DIR = srcs
 SRCS = main.c\
 		init.c\
+		interface/inputs.c\
 		parsing/objects.c\
 		parsing/open_map.c\
 		parsing/params.c\
 		parsing/parser.c\
 		parsing/sub_parameters.c\
 		rendering/colors.c\
+		rendering/colors_maths.c\
 		rendering/loop.c\
+		rendering/move.c\
+		rendering/project.c\
+		rendering/ray_tracer.c\
+		rendering/vectors_maths.c\
 		utils/clean_exit.c\
 		utils/debug_obj_print.c\
 		utils/debug_params_print.c\
 		utils/debug_print.c\
 		utils/errors.c\
-		utils/inputs.c\
 		utils/parsing.c\
 		utils/tools.c
 
@@ -25,8 +30,7 @@ OBJS_DIR = objs
 OBJS = $(patsubst %.c, $(OBJS_DIR)/%.o, $(SRCS))
 DOBJS = $(patsubst %.c, $(OBJS_DIR)/%_DEBUG.o, $(SRCS))
 
-DEPS = $(patsubst %.c, $(OBJS_DIR)/%.d, $(SRCS))
-DDEPS = $(patsubst %.c, $(OBJS_DIR)/%_DEBUG.d, $(SRCS))
+DEPS = $(patsubst %.c, $(OBJS_DIR)/%.d, $(SRCS)) 
 
 INCLUDES = includes
 
@@ -39,7 +43,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 NAME = miniRT
 DNAME = $(NAME)_debug
 
-.PHONY = $(NAME) all clean fclean re
+.PHONY = $(NAME) all clean fclean re debug
 
 all : $(NAME)
 

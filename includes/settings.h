@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 17:59:52 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 18:38:26 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/15 11:54:11 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define SETTINGS_H
 
 # define WIN_HEIGHT 1080
-# define WIN_WIDTH 2920
+# define WIN_WIDTH 1920
 
 //Normalized vectors settings
 # define NORM_PREC 10e8
-# define NORM_TOLERANCE 0.5
+# define NORM_TOLERANCE 1000000
 
 // Default cam settings (when not defined in the map)
 // --POSITION--

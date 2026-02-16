@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:47 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/12 13:20:35 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/15 22:45:19 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int	key_press(int keycode, t_global_data *g_data)
 	if (keycode == ESC)
 		win_close(g_data);
 	if (keycode == W_KEY)
+	{
 		g_data->key.w = 1;
+		printf("w on\n");
+	}
 	if (keycode == A_KEY)
 		g_data->key.a = 1;
 	if (keycode == S_KEY)
@@ -42,7 +45,10 @@ int	key_press(int keycode, t_global_data *g_data)
 int	key_release(int keycode, t_global_data *g_data)
 {
 	if (keycode == W_KEY)
+	{
 		g_data->key.w = 0;
+		printf("w off\n");
+	}
 	if (keycode == A_KEY)
 		g_data->key.a = 0;
 	if (keycode == S_KEY)
@@ -76,4 +82,11 @@ void	set_hooks(t_global_data *g_data)
 	mlx_loop_hook(g_data->mlx.mlx, update_display, g_data);
 	mlx_mouse_move(g_data->mlx.mlx, g_data->mlx.win, WIN_WIDTH / 2, WIN_HEIGHT
 		/ 2);
+}
+
+void	update_move_status(t_cam_data *cam, t_interface *intf)
+{
+	cam->move.x = intf->a - intf->d;
+	cam->move.y = intf->space - intf->ctrl;
+	cam->move.z = intf->s - intf->w;
 }

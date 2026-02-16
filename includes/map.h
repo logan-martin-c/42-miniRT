@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:51 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 12:39:22 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/16 00:15:22 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 
 typedef struct s_pos_xyz
 {
-	long			x;
-	long			y;
-	long			z;
-	int				color;
+	float			x;
+	float			y;
+	float			z;
+	//int				color;
 }					t_pos_xyz;
 
 typedef struct s_color
@@ -48,10 +48,10 @@ typedef struct s_cam_data
 	t_pos_xyz		move;
 	t_pos_xyz		angle;
 	int				fov;
-	double			cos_x;
-	double			sin_x;
-	double			cos_z;
-	double			sin_z;
+	double			cos_pitch;
+	double			sin_pitch;
+	double			cos_yaw;
+	double			sin_yaw;
 	int				speed;
 }					t_cam_data;
 
@@ -79,9 +79,6 @@ typedef struct s_object
 {
 	enum
 	{
-		//_ambient_lighting,
-		//_camera,
-		//_light,
 		_sphere,
 		_plane,
 		_cylinder
@@ -105,7 +102,7 @@ typedef struct s_ambient_lighting
 typedef struct s_sphere
 {
 	t_pos_xyz		pos;
-	int				diameter;
+	float			diameter;
 	int				color;
 }					t_sphere;
 
@@ -120,8 +117,8 @@ typedef struct s_cylinder
 {
 	t_pos_xyz		pos;
 	t_pos_xyz		rot;
-	int				diameter;
-	int				height;
+	float			diameter;
+	float			height;
 	int				color;
 }					t_cylinder;
 

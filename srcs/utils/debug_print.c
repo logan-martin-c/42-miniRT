@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:30:37 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 18:44:57 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/15 22:00:25 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,28 @@ void	print_objects(t_parsing_data *p_data, t_world_data *world)
 		else if (((t_object *)(obj_lst->content))->e_type == _cylinder)
 			print_cylinder(((t_object *)(obj_lst->content))->data);
 		obj_lst = obj_lst->next;
+	}
+	print_cam(&world->cam);
+	print_light(&world->light);
+	print_ambient_light(&world->ambient_light);
+}
+
+void	print_array(t_world_data *world)
+{
+	int		obj_count;
+	t_object	*array;
+
+	obj_count = -1;
+	array = world->objs;
+	printf("Total : %d\n\n", world->obj_count);
+	while (++obj_count < world->obj_count)
+	{
+		if (array[obj_count].e_type == _sphere)
+			print_sphere(array[obj_count].data);
+		else if (array[obj_count].e_type == _plane)
+			print_plane(array[obj_count].data);
+		else if (array[obj_count].e_type == _cylinder)
+			print_cylinder(array[obj_count].data);
 	}
 	print_cam(&world->cam);
 	print_light(&world->light);

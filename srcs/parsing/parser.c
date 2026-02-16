@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:48:12 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 19:16:31 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/15 23:49:34 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,19 @@ void	lst_map_to_array(t_parsing_data *p_data, t_world_data *world)
 	t_list	*next;
 	int		i;
 
-	world->objs = malloc(sizeof(t_object) * (p_data->obj_count + 1));
+	world->objs = malloc(sizeof(t_object) * (p_data->obj_count));
 	i = -1;
 	while (++i < p_data->obj_count)
 	{
 		world->objs[i] = *(t_object *)p_data->obj_lst->content;
+		world->objs[i].e_type = ((t_object *)p_data->obj_lst->content)->e_type;
+		world->objs[i].data = ((t_object *)p_data->obj_lst->content)->data;
 		next = p_data->obj_lst->next;
-		free_node(p_data->obj_lst->content);
+		free(p_data->obj_lst->content);
 		free(p_data->obj_lst);
 		p_data->obj_lst = next;
 	}
+	world->obj_count = p_data->obj_count;
 }
 
 void	parser(int ac, char *av[], t_global_data *g_data,

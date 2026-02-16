@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 11:40:00 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/12 14:42:00 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/15 22:12:27 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@ void	free_node(void *node)
 {
 	free(((t_object *)(node))->data);
 	free(node);
+}
+
+void	free_objs_array(t_object *array, int size)
+{
+	int	i;
+
+	i = -1;
+	while (++i < size)
+		free(array[i].data);
+	free(array);
 }
 
 void	clean_exit(int exit_status, t_global_data *g_data,
@@ -33,7 +43,7 @@ void	clean_exit(int exit_status, t_global_data *g_data,
 		}
 		ft_lstclear(&p_data->obj_lst, free_node);
 	}
-	free(g_data->world.objs);
+	free_objs_array(g_data->world.objs, g_data->world.obj_count);
 	if (g_data->mlx.mlx)
 	{
 		mlx_do_key_autorepeaton(g_data->mlx.mlx);

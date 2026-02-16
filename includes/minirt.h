@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 19:23:31 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/16 11:08:06 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@
 # define PLUS_KEY 65451
 # define MINUS_KEY 65453
 
+# define LINE_SIZE WIN_WIDTH * 4
+# define BPP 4
+
 # ifndef DEBUG
 #  define DEBUG 0
 # endif
@@ -58,12 +61,26 @@ typedef struct s_mlx_data
 	} s_img_data;
 }							t_mlx_data;
 
+typedef struct s_viewport
+{
+	t_pos_xyz			down;
+	t_pos_xyz			right;
+	double				aspect_ratio;
+	double				theta;
+	double				vp_h;
+	double				vp_w;
+	double				step_h;
+	double				step_w;
+}						t_viewport;
+
 typedef struct s_world_data
 {
 	t_object				*objs;
+	int						obj_count;
 	t_cam_data				cam;
 	t_light_data			light;
 	t_ambient_light_data	ambient_light;
+	t_viewport				viewport;
 }							t_world_data;
 
 typedef struct s_parsing_data
@@ -111,6 +128,7 @@ typedef struct s_int_color
 int							init_mlx(t_mlx_data *mlx);
 void						init(t_global_data *g_data, t_parsing_data *p_data,
 								char *av_zero);
+void						init_viewport(t_viewport *viewport, int fov);
 
 // PARSING
 void						parser(int ac, char *av[], t_global_data *g_data,
@@ -120,7 +138,7 @@ int							open_map(char *filename, char *progname);
 int							parse_pos(char *str, t_pos_xyz *pos,
 								char normalized);
 int							parse_raw_color(char *str, int *color);
-int							parse_float(char *str, int *value);
+int							parse_float(char *str, float *value);
 t_color						parse_color(int color);
 void						lst_map_to_array(t_parsing_data *p_data,
 								t_world_data *world);
@@ -131,11 +149,26 @@ void						parse_params(t_parsing_data *p_data, char *obj_line,
 
 // RENDER
 int							update_display(t_global_data *data);
+int							get_color(t_color p_color);
 int							get_color_chars(unsigned char a, unsigned char r,
 								unsigned char g, unsigned char b);
+// int							color_sup(int color_a, int color_b);
+t_pos_xyz					project(t_pos_xyz pos, t_cam_data *cam_data);
+// void						my_mlx_pixel_put(t_mlx_data *mlx, t_pos_xyz pos,
+// 								int color);
+void						update_cam_pos(t_cam_data *cam, int elapsed);
+int							rotate_cam(t_cam_data *cam, t_mlx_data *mlx);
+void						trace_rays(t_world_data *world, t_mlx_data *mlx);
+t_pos_xyz					vector_norm(t_pos_xyz a);
+t_pos_xyz					vector_cross(t_pos_xyz a, t_pos_xyz b);
+void						render_canva(t_pos_xyz start, t_pos_xyz end,
+								t_world_data *world, t_mlx_data *mlx, int color);
+// int							get_prev_color(t_pos_xyz pos, t_mlx_data *mlx);
 
 // INPUT
 void						set_hooks(t_global_data *g_data);
+void						update_move_status(t_cam_data *cam,
+								t_interface *intf);
 
 // UTILS
 int							ft_puterr(char *error);
@@ -151,9 +184,59 @@ void						clean_exit(int exit_status, t_global_data *g_data,
 int							win_close(t_global_data *g_data);
 void						print_objects(t_parsing_data *p_data,
 								t_world_data *world);
+void						print_array(t_world_data *world);
 int							check_args_count(char **args, unsigned int min,
 								unsigned int max);
 int							is_normalized(t_pos_xyz pos);
 t_obj_type					get_obj_type(char *obj_line);
+
+static inline void	my_mlx_pixel_put(t_mlx_data *mlx, t_pos_xyz pos, int color)
+{
+	char		*dst;
+	//int		index;
+
+	if (pos.x < 0 || pos.x >= WIN_WIDTH || pos.y < 0 || pos.y >= WIN_HEIGHT)
+		return ;
+	// index = (int)pos.y * WIN_WIDTH + (int)pos.x;
+	// if (!(index < 0 || index > WIN_HEIGHT
+	// 		* WIN_WIDTH))
+	// {
+	// 	if (vars->z_buffer[index] > (int)pos.z)
+	// 		return ;
+	// 	vars->z_buffer[index] = (int)pos.z;
+	// }
+	dst = mlx->s_img_data.addr + ((int)pos.y * LINE_SIZE + (int)pos.x
+			* BPP);
+	*(unsigned int *)dst = color;
+}
+
+static inline int	get_prev_color(t_pos_xyz pos, t_mlx_data *mlx)
+{
+	if (pos.x < 0 || pos.x >= WIN_WIDTH || pos.y < 0 || pos.y >= WIN_HEIGHT)
+		return (0);
+	return (mlx->s_img_data.addr[((int)pos.y * LINE_SIZE + (int)pos.x
+		* BPP)]);
+}
+
+static inline int	color_sup(int front, int back)
+{
+	t_color	ret;
+	t_color	c_f;
+	t_color	c_b;
+	float	a;
+
+	c_f = parse_color(front);
+	c_b = parse_color(back);
+	if (c_f.alpha == 0)
+		return (back);
+	if (c_f.alpha == 255)
+		return (front);
+	a = (float)c_f.alpha / 255.0;
+	ret.alpha = 255;
+	ret.red = c_f.red * a + c_b.red * (1 - a);
+	ret.green = c_f.green * a + c_b.green * (1 - a);
+	ret.blue = c_f.blue * a + c_b.blue * (1 - a);
+	return (get_color(ret));
+}
 
 #endif

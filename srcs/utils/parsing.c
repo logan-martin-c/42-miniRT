@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 11:06:07 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 19:15:13 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/15 23:37:25 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,9 @@ int	is_normalized(t_pos_xyz pos)
 	pos.x = ft_abs(pos.x);
 	pos.y = ft_abs(pos.y);
 	pos.z = ft_abs(pos.z);
-	if (pos.x < 0 || pos.x > NORM_PREC || pos.y < 0 || pos.y > NORM_PREC
-		|| pos.z < 0 || pos.z > NORM_PREC)
+	if (pos.x < 0 || pos.x > 1 || pos.y < 0 || pos.y > 1
+		|| pos.z < 0 || pos.z > 1)
 		return (0);
 	magnitude = sqrt(pos.x * pos.x + pos.y * pos.y + pos.z * pos.z);
-	return ((magnitude < NORM_PREC + NORM_TOLERANCE) && (magnitude > NORM_PREC
-			- NORM_TOLERANCE));
+	return (magnitude == 1);
 }
