@@ -33,6 +33,7 @@ int	new_sphere(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 			&sphere->diameter) || parse_raw_color(params[3], &sphere->color))
 		return (free(sphere), ft_free_strs(params),
 			ft_maperror("sphere : invalid parameters", g_data->prog_name));
+	sphere->radius = sphere->diameter / 2;
 	node->e_type = _sphere;
 	node->data = sphere;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));

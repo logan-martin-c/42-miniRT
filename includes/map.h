@@ -53,6 +53,9 @@ typedef struct s_cam_data
 	double			cos_yaw;
 	double			sin_yaw;
 	int				speed;
+	t_pos_xyz		forward;
+	t_pos_xyz		right;
+	t_pos_xyz		up;
 }					t_cam_data;
 
 typedef struct s_light_data
@@ -103,6 +106,7 @@ typedef struct s_sphere
 {
 	t_pos_xyz		pos;
 	float			diameter;
+	float			radius;
 	int				color;
 }					t_sphere;
 

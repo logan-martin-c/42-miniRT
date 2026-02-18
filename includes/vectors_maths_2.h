@@ -10,37 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#ifndef VECTORS_MATHS_2_H
+# define VECTORS_MATHS_2_H
 
-t_pos_xyz	vectors_add(t_pos_xyz a, t_pos_xyz b)
-{
-	return ((t_pos_xyz){a.x + b.x, a.y + b.y, a.z + b.z});
-}
-
-t_pos_xyz	vectors_sub(t_pos_xyz a, t_pos_xyz b)
-{
-	return ((t_pos_xyz){a.x - b.x, a.y - b.y, a.z - b.z});
-}
-
-double	vector_mag(t_pos_xyz a)
+static inline double	vector_mag(t_pos_xyz a)
 {
 	return (sqrt(a.x * a.x + a.y * a.y + a.z * a.z));
 }
 
-long	dot_product(t_pos_xyz a, t_pos_xyz b)
-{
-	return (a.x * b.x + a.y * b.y + a.z * b.z);
-}
-
-t_pos_xyz	vector_mult(t_pos_xyz a, int scal)
-{
-	a.x *= scal;
-	a.y *= scal;
-	a.z *= scal;
-	return (a);
-}
-
-t_pos_xyz	vector_norm(t_pos_xyz a)
+static inline t_pos_xyz	vector_norm(t_pos_xyz a)
 {
 	double	mag;
 
@@ -51,7 +29,7 @@ t_pos_xyz	vector_norm(t_pos_xyz a)
 	return (a);
 }
 
-t_pos_xyz	vector_cross(t_pos_xyz a, t_pos_xyz b)
+static inline t_pos_xyz	vector_cross(t_pos_xyz a, t_pos_xyz b)
 {
 	t_pos_xyz	ret;
 
@@ -60,3 +38,5 @@ t_pos_xyz	vector_cross(t_pos_xyz a, t_pos_xyz b)
 	ret.z = a.x * b.y - a.y * b.x;
 	return (ret);
 }
+
+#endif

@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/16 11:08:06 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/18 11:59:22 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@
 
 # define LINE_SIZE WIN_WIDTH * 4
 # define BPP 4
+# define BLACK 0xFF000000
+# define INV_WIN_HEIGHT 1 / WIN_HEIGHT
+# define INV_WIN_WIDTH 1 / WIN_WIDTH
 
 # ifndef DEBUG
 #  define DEBUG 0
@@ -63,15 +66,17 @@ typedef struct s_mlx_data
 
 typedef struct s_viewport
 {
-	t_pos_xyz			down;
-	t_pos_xyz			right;
-	double				aspect_ratio;
-	double				theta;
-	double				vp_h;
-	double				vp_w;
-	double				step_h;
-	double				step_w;
-}						t_viewport;
+	t_pos_xyz				down;
+	t_pos_xyz				right;
+	double					aspect_ratio;
+	double					theta;
+	double					tan_theta;
+	double					ratio_tan_theta;
+	double					vp_h;
+	double					vp_w;
+	double					step_h;
+	double					step_w;
+}							t_viewport;
 
 typedef struct s_world_data
 {
@@ -156,19 +161,18 @@ int							get_color_chars(unsigned char a, unsigned char r,
 t_pos_xyz					project(t_pos_xyz pos, t_cam_data *cam_data);
 // void						my_mlx_pixel_put(t_mlx_data *mlx, t_pos_xyz pos,
 // 								int color);
-void						update_cam_pos(t_cam_data *cam, int elapsed);
-int							rotate_cam(t_cam_data *cam, t_mlx_data *mlx);
+void						update_cam_pos(t_interface *input, t_cam_data *cam, int elapsed);
+void						rotate_cam(t_cam_data *cam, t_mlx_data *mlx);
 void						trace_rays(t_world_data *world, t_mlx_data *mlx);
-t_pos_xyz					vector_norm(t_pos_xyz a);
-t_pos_xyz					vector_cross(t_pos_xyz a, t_pos_xyz b);
+// t_pos_xyz					vector_norm(t_pos_xyz a);
+// t_pos_xyz					vector_cross(t_pos_xyz a, t_pos_xyz b);
 void						render_canva(t_pos_xyz start, t_pos_xyz end,
-								t_world_data *world, t_mlx_data *mlx, int color);
+								t_world_data *world, t_mlx_data *mlx);
 // int							get_prev_color(t_pos_xyz pos, t_mlx_data *mlx);
+double    					sphere_collision(t_pos_xyz ray, t_sphere *sphere, t_pos_xyz cam_pos);
 
 // INPUT
 void						set_hooks(t_global_data *g_data);
-void						update_move_status(t_cam_data *cam,
-								t_interface *intf);
 
 // UTILS
 int							ft_puterr(char *error);
@@ -189,54 +193,5 @@ int							check_args_count(char **args, unsigned int min,
 								unsigned int max);
 int							is_normalized(t_pos_xyz pos);
 t_obj_type					get_obj_type(char *obj_line);
-
-static inline void	my_mlx_pixel_put(t_mlx_data *mlx, t_pos_xyz pos, int color)
-{
-	char		*dst;
-	//int		index;
-
-	if (pos.x < 0 || pos.x >= WIN_WIDTH || pos.y < 0 || pos.y >= WIN_HEIGHT)
-		return ;
-	// index = (int)pos.y * WIN_WIDTH + (int)pos.x;
-	// if (!(index < 0 || index > WIN_HEIGHT
-	// 		* WIN_WIDTH))
-	// {
-	// 	if (vars->z_buffer[index] > (int)pos.z)
-	// 		return ;
-	// 	vars->z_buffer[index] = (int)pos.z;
-	// }
-	dst = mlx->s_img_data.addr + ((int)pos.y * LINE_SIZE + (int)pos.x
-			* BPP);
-	*(unsigned int *)dst = color;
-}
-
-static inline int	get_prev_color(t_pos_xyz pos, t_mlx_data *mlx)
-{
-	if (pos.x < 0 || pos.x >= WIN_WIDTH || pos.y < 0 || pos.y >= WIN_HEIGHT)
-		return (0);
-	return (mlx->s_img_data.addr[((int)pos.y * LINE_SIZE + (int)pos.x
-		* BPP)]);
-}
-
-static inline int	color_sup(int front, int back)
-{
-	t_color	ret;
-	t_color	c_f;
-	t_color	c_b;
-	float	a;
-
-	c_f = parse_color(front);
-	c_b = parse_color(back);
-	if (c_f.alpha == 0)
-		return (back);
-	if (c_f.alpha == 255)
-		return (front);
-	a = (float)c_f.alpha / 255.0;
-	ret.alpha = 255;
-	ret.red = c_f.red * a + c_b.red * (1 - a);
-	ret.green = c_f.green * a + c_b.green * (1 - a);
-	ret.blue = c_f.blue * a + c_b.blue * (1 - a);
-	return (get_color(ret));
-}
 
 #endif

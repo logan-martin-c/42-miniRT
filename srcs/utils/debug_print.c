@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:30:37 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/15 22:00:25 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/17 09:32:47 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	print_objects(t_parsing_data *p_data, t_world_data *world)
 
 void	print_array(t_world_data *world)
 {
-	int		obj_count;
+	int			obj_count;
 	t_object	*array;
 
 	obj_count = -1;

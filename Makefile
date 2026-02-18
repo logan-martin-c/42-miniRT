@@ -12,12 +12,11 @@ SRCS = main.c\
 		parsing/parser.c\
 		parsing/sub_parameters.c\
 		rendering/colors.c\
-		rendering/colors_maths.c\
 		rendering/loop.c\
 		rendering/move.c\
+		rendering/object_collision.c\
 		rendering/project.c\
 		rendering/ray_tracer.c\
-		rendering/vectors_maths.c\
 		utils/clean_exit.c\
 		utils/debug_obj_print.c\
 		utils/debug_params_print.c\

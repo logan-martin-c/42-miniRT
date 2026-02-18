@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:51:58 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/14 19:15:36 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/17 14:53:38 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	set_cam(t_parsing_data *p_data, char *obj_line, t_global_data *g_data)
 		return (ft_free_strs(params), ft_maperror("camera : invalid parameters",
 				g_data->prog_name));
 	if (parse_pos(params[1], &g_data->world.cam.pos, 0) || parse_pos(params[2],
-			&g_data->world.cam.angle, 1) || !ft_isdigit_str(params[3]))
+			&g_data->world.cam.move, 1) || !ft_isdigit_str(params[3]))
 		return (ft_free_strs(params), ft_maperror("camera : invalid parameters",
 				g_data->prog_name));
 	g_data->world.cam.fov = ft_atoi(params[3]);

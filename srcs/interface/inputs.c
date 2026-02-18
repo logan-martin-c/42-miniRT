@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:47 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/15 22:45:19 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/18 11:49:40 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,6 @@ int	key_press(int keycode, t_global_data *g_data)
 		g_data->key.space = 1;
 	if (keycode == CTRL_KEY)
 		g_data->key.ctrl = 1;
-	// if (keycode == C_KEY)
-	// 	funky_colors(vars);
-	// if (keycode == P_KEY)
-	// 	persp_mode(vars);
 	// if (keycode == PLUS_KEY)
 	// 	change_speed(keycode, vars);
 	// if (keycode == MINUS_KEY)
@@ -82,11 +78,4 @@ void	set_hooks(t_global_data *g_data)
 	mlx_loop_hook(g_data->mlx.mlx, update_display, g_data);
 	mlx_mouse_move(g_data->mlx.mlx, g_data->mlx.win, WIN_WIDTH / 2, WIN_HEIGHT
 		/ 2);
-}
-
-void	update_move_status(t_cam_data *cam, t_interface *intf)
-{
-	cam->move.x = intf->a - intf->d;
-	cam->move.y = intf->space - intf->ctrl;
-	cam->move.z = intf->s - intf->w;
 }
