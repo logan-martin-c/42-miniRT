@@ -6,11 +6,12 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:30:17 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/18 11:50:07 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/18 15:31:51 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+//
 #include "colors_maths.h"
 #include "mlx_utils.h"
 
@@ -26,8 +27,7 @@ int	update_display(t_global_data *g_data)
 	elapsed = time - last_time;
 	last_time = time;
 	fps = 1000000 / elapsed;
-	rotate_cam(&g_data->world.cam, &g_data->mlx);
-	update_cam_pos(&g_data->key, &g_data->world.cam, elapsed);
+	move_cam(&g_data->world, &g_data->mlx, &g_data->key, elapsed);
 	render_canva((t_pos_xyz){0, 0, 0}, (t_pos_xyz){WIN_WIDTH, WIN_HEIGHT, 0},
 		&g_data->world, &g_data->mlx);
 	mlx_put_image_to_window(g_data->mlx.mlx, g_data->mlx.win,

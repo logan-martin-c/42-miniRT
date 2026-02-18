@@ -6,6 +6,7 @@ SRCS_DIR = srcs
 SRCS = main.c\
 		init.c\
 		interface/inputs.c\
+		interface/velocity.c\
 		parsing/objects.c\
 		parsing/open_map.c\
 		parsing/params.c\

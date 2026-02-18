@@ -17,10 +17,7 @@ int	key_press(int keycode, t_global_data *g_data)
 	if (keycode == ESC)
 		win_close(g_data);
 	if (keycode == W_KEY)
-	{
 		g_data->key.w = 1;
-		printf("w on\n");
-	}
 	if (keycode == A_KEY)
 		g_data->key.a = 1;
 	if (keycode == S_KEY)
@@ -41,10 +38,7 @@ int	key_press(int keycode, t_global_data *g_data)
 int	key_release(int keycode, t_global_data *g_data)
 {
 	if (keycode == W_KEY)
-	{
 		g_data->key.w = 0;
-		printf("w off\n");
-	}
 	if (keycode == A_KEY)
 		g_data->key.a = 0;
 	if (keycode == S_KEY)

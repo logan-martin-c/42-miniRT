@@ -6,27 +6,28 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 12:27:34 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/18 12:03:10 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/18 15:35:10 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+//
 #include "vectors_maths_1.h"
 #include "vectors_maths_2.h"
 #include "vectors_rotations.h"
 
-void	sin_cos_cam(t_cam_data *cam)
-{
-	double	yaw;
-	double	pitch;
-
-	yaw = cam->angle.y / NORM_PREC;
-	pitch = cam->angle.x / NORM_PREC;
-	cam->cos_yaw = cos(yaw);
-	cam->sin_yaw = sin(yaw);
-	cam->cos_pitch = cos(pitch);
-	cam->sin_pitch = sin(pitch);
-}
+// void	sin_cos_cam(t_cam_data *cam)
+// {
+// 	double	yaw;
+// 	double	pitch;
+//
+// 	yaw = cam->angle.y / NORM_PREC;
+// 	pitch = cam->angle.x / NORM_PREC;
+// 	cam->cos_yaw = cos(yaw);
+// 	cam->sin_yaw = sin(yaw);
+// 	cam->cos_pitch = cos(pitch);
+// 	cam->sin_pitch = sin(pitch);
+// }
 
 static inline int	init_pos(int *x, int *y, int *l_x, int *l_y)
 {
@@ -42,7 +43,7 @@ static inline int	init_pos(int *x, int *y, int *l_x, int *l_y)
 	return (0);
 }
 
-void	rotate_cam(t_cam_data *cam, t_mlx_data *mlx)
+void	rotate_cam(t_cam_data *cam, t_mlx_data *mlx, bool *rotating)
 {
 	int			x;
 	int			y;
@@ -52,6 +53,7 @@ void	rotate_cam(t_cam_data *cam, t_mlx_data *mlx)
 	mlx_mouse_get_pos(mlx->mlx, mlx->win, &x, &y);
 	if (init_pos(&x, &y, &l_x, &l_y))
 		return ;
+	*rotating = true;
 	// if (x > 300 || y > 300 || x < -300 || y < -300)
 	// {
 	// 	l_x -= x;
@@ -61,33 +63,61 @@ void	rotate_cam(t_cam_data *cam, t_mlx_data *mlx)
 	// 	mlx_mouse_move(mlx->mlx, mlx->win, WIN_WIDTH / 2,
 	//		WIN_HEIGHT / 2);
 	// }
-	cam->move = vector_rot(cam->move, (float)(y - l_y) * 1e-3, (float)(x - l_x
-				) * 1e-3, 0);
+	cam->move = vector_rot(cam->move, (float)(y - l_y) *1e-3, (float)(x - l_x)
+			*1e-3, 0);
 	l_x = x;
 	l_y = y;
 	cam->right = vector_norm(vector_cross((t_pos_xyz){0, 1, 0}, cam->move));
 	cam->up = vector_norm(vector_cross(cam->move, cam->right));
 }
 
-void	update_cam_pos(t_interface *input, t_cam_data *cam, int elapsed)
+void	update_cam_pos(t_interface *input, t_cam_data *cam, int elapsed,
+		bool *moving)
 {
-	double	x;
-	double	y;
-	double	z;
-	double	factor;
+	double		x;
+	double		y;
+	double		z;
+	double		factor;
+	t_pos_xyz	lasting;
+	float		lasting_mag;
+	t_pos_xyz	moving_vector;
 
-	factor = elapsed / 1000000.0 * (float)cam->speed;
 	x = input->d - input->a;
 	y = input->space - input->ctrl;
 	z = input->w - input->s;
-	if (!x && !y && !z)
+	lasting = get_lasting();
+	lasting_mag = vector_mag(lasting);
+	if (!x && !y && !z && !lasting_mag)
 		return ;
+	*moving = true;
+	moving_vector = (t_pos_xyz){0, 0, 0};
+	factor = elapsed / 1000000.0 * (float)cam->speed;
 	if (x)
-		cam->pos = vectors_add(cam->pos, vector_mult(cam->right, x * factor));
-	if (y)
-		cam->pos = vectors_add(cam->pos, vector_mult((t_pos_xyz){0, 1, 0}, y
+		moving_vector = vectors_add(moving_vector, vector_mult(cam->right, x
 					* factor));
+	if (y)
+		moving_vector = vectors_add(moving_vector, vector_mult((t_pos_xyz){0, 1,
+					0}, y * factor));
 	if (z)
-		cam->pos = vectors_add(cam->pos, vector_mult(cam->move, z * factor));
-	// printf("z : %lf\n", cam->pos.z);
+		moving_vector = vectors_add(moving_vector, vector_mult(cam->move, z
+					* factor));
+	if (!x && !y && !z && lasting_mag)
+	{
+		cam->pos = vectors_add(cam->pos, vector_mult(lasting, factor));
+		set_moving_vector(0, moving_vector, elapsed);
+	}
+	else
+	{
+		cam->pos = vectors_add(cam->pos, vector_mult(moving_vector, factor));
+		set_moving_vector(1, moving_vector, elapsed);
+	}
+}
+
+int	move_cam(t_world_data *world, t_mlx_data *mlx, t_interface *key,
+		int elapsed)
+{
+	world->moving = false;
+	world->rotating = false;
+	rotate_cam(&world->cam, mlx, &world->rotating);
+	update_cam_pos(key, &world->cam, elapsed, &world->moving);
 }

@@ -82,6 +82,8 @@ typedef struct s_world_data
 {
 	t_object				*objs;
 	int						obj_count;
+	bool					moving;
+	bool					rotating;
 	t_cam_data				cam;
 	t_light_data			light;
 	t_ambient_light_data	ambient_light;
@@ -161,8 +163,8 @@ int							get_color_chars(unsigned char a, unsigned char r,
 t_pos_xyz					project(t_pos_xyz pos, t_cam_data *cam_data);
 // void						my_mlx_pixel_put(t_mlx_data *mlx, t_pos_xyz pos,
 // 								int color);
-void						update_cam_pos(t_interface *input, t_cam_data *cam, int elapsed);
-void						rotate_cam(t_cam_data *cam, t_mlx_data *mlx);
+void						update_cam_pos(t_interface *input, t_cam_data *cam, int elapsed, bool *moving);
+void						rotate_cam(t_cam_data *cam, t_mlx_data *mlx, bool *moving);
 void						trace_rays(t_world_data *world, t_mlx_data *mlx);
 // t_pos_xyz					vector_norm(t_pos_xyz a);
 // t_pos_xyz					vector_cross(t_pos_xyz a, t_pos_xyz b);
@@ -173,6 +175,9 @@ double    					sphere_collision(t_pos_xyz ray, t_sphere *sphere, t_pos_xyz cam_p
 
 // INPUT
 void						set_hooks(t_global_data *g_data);
+int							move_cam(t_world_data *world, t_mlx_data *mlx, t_interface *key, int elapsed);
+void						set_moving_vector(bool moving, t_pos_xyz move, int elapsed);
+t_pos_xyz					get_lasting(void);
 
 // UTILS
 int							ft_puterr(char *error);
