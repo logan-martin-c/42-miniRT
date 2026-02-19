@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 12:27:34 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/18 15:35:10 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/18 16:02:50 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,20 +90,19 @@ void	update_cam_pos(t_interface *input, t_cam_data *cam, int elapsed,
 	if (!x && !y && !z && !lasting_mag)
 		return ;
 	*moving = true;
-	moving_vector = (t_pos_xyz){0, 0, 0};
+	moving_vector = lasting;
 	factor = elapsed / 1000000.0 * (float)cam->speed;
 	if (x)
-		moving_vector = vectors_add(moving_vector, vector_mult(cam->right, x
-					* factor));
+		moving_vector = vectors_add(moving_vector, vector_mult(cam->right, x));
 	if (y)
-		moving_vector = vectors_add(moving_vector, vector_mult((t_pos_xyz){0, 1,
-					0}, y * factor));
+		moving_vector = vectors_add(moving_vector,
+				vector_mult((t_pos_xyz){0, 1, 0}, y));
 	if (z)
-		moving_vector = vectors_add(moving_vector, vector_mult(cam->move, z
-					* factor));
+		moving_vector = vectors_add(moving_vector, vector_mult(cam->move, z));
+	moving_vector = vector_max_mag(moving_vector, factor);
 	if (!x && !y && !z && lasting_mag)
 	{
-		cam->pos = vectors_add(cam->pos, vector_mult(lasting, factor));
+		cam->pos = vectors_add(cam->pos, vector_mult(moving_vector, factor));
 		set_moving_vector(0, moving_vector, elapsed);
 	}
 	else
@@ -113,7 +112,7 @@ void	update_cam_pos(t_interface *input, t_cam_data *cam, int elapsed,
 	}
 }
 
-int	move_cam(t_world_data *world, t_mlx_data *mlx, t_interface *key,
+void	move_cam(t_world_data *world, t_mlx_data *mlx, t_interface *key,
 		int elapsed)
 {
 	world->moving = false;

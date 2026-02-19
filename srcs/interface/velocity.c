@@ -6,13 +6,12 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 15:33:06 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/18 15:34:46 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/18 16:04:30 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 //
-#include "../../includes/vectors_maths_1.h"
 #include "vectors_maths_1.h"
 
 t_pos_xyz	velocity(int mode, t_pos_xyz moving_vector)
@@ -31,8 +30,8 @@ t_pos_xyz	get_lasting(void)
 
 void	set_moving_vector(bool moving, t_pos_xyz move, int elapsed)
 {
-	static float    veloc = 0;
-	t_pos_xyz       moving_vector;
+	static float	veloc = 0;
+	t_pos_xyz		moving_vector;
 
 	moving_vector = get_lasting();
 	if (moving)
@@ -42,7 +41,7 @@ void	set_moving_vector(bool moving, t_pos_xyz move, int elapsed)
 	}
 	else if (!moving && veloc > 0)
 	{
-		veloc -= 0.05 * (veloc);
+		veloc -= 2.0 * veloc * (float)elapsed * 1e-6;
 		moving_vector = vector_mult(moving_vector, veloc);
 	}
 	velocity(1, moving_vector);

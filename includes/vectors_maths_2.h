@@ -39,4 +39,14 @@ static inline t_pos_xyz	vector_cross(t_pos_xyz a, t_pos_xyz b)
 	return (ret);
 }
 
+static inline t_pos_xyz	vector_max_mag(t_pos_xyz a, float max_mag)
+{
+	int	mag;
+
+	mag = vector_mag(a);
+	if (mag > max_mag)
+		a = vector_mult(vector_norm(a), max_mag);
+	return (a);
+}
+
 #endif

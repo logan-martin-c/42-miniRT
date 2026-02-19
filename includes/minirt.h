@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/18 11:59:22 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/18 16:02:58 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ double    					sphere_collision(t_pos_xyz ray, t_sphere *sphere, t_pos_xyz cam_p
 
 // INPUT
 void						set_hooks(t_global_data *g_data);
-int							move_cam(t_world_data *world, t_mlx_data *mlx, t_interface *key, int elapsed);
+void						move_cam(t_world_data *world, t_mlx_data *mlx, t_interface *key, int elapsed);
 void						set_moving_vector(bool moving, t_pos_xyz move, int elapsed);
 t_pos_xyz					get_lasting(void);
 

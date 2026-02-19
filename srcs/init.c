@@ -40,7 +40,7 @@ void	init_cam(t_cam_data *cam)
 	cam->angle.y = 0;
 	cam->angle.z = 1 * NORM_PREC;
 	cam->fov = CAM_FOV;
-	cam->speed = 30;
+	cam->speed = 501;
 }
 
 void	init_light(t_light_data *light)

@@ -23,3 +23,10 @@ long	ft_min(long a, long b)
 		return (a);
 	return (b);
 }
+
+float	ft_min_float(float a, float b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
