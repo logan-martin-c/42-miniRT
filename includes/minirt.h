@@ -171,7 +171,7 @@ void						trace_rays(t_world_data *world, t_mlx_data *mlx);
 void						render_canva(t_pos_xyz start, t_pos_xyz end,
 								t_world_data *world, t_mlx_data *mlx);
 // int							get_prev_color(t_pos_xyz pos, t_mlx_data *mlx);
-double    					sphere_collision(t_pos_xyz ray, t_sphere *sphere, t_pos_xyz cam_pos);
+double    					sphere_collision(t_pos_xyz ray, t_object *object, t_pos_xyz cam_pos);
 
 // INPUT
 void						set_hooks(t_global_data *g_data);

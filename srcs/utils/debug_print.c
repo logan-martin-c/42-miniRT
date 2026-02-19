@@ -22,11 +22,11 @@ void	print_objects(t_parsing_data *p_data, t_world_data *world)
 	while (obj_lst)
 	{
 		if (((t_object *)(obj_lst->content))->e_type == _sphere)
-			print_sphere(((t_object *)(obj_lst->content))->data);
+			print_sphere(obj_lst->content);
 		else if (((t_object *)(obj_lst->content))->e_type == _plane)
-			print_plane(((t_object *)(obj_lst->content))->data);
+			print_plane(obj_lst->content);
 		else if (((t_object *)(obj_lst->content))->e_type == _cylinder)
-			print_cylinder(((t_object *)(obj_lst->content))->data);
+			print_cylinder(obj_lst->content);
 		obj_lst = obj_lst->next;
 	}
 	print_cam(&world->cam);
@@ -45,11 +45,11 @@ void	print_array(t_world_data *world)
 	while (++obj_count < world->obj_count)
 	{
 		if (array[obj_count].e_type == _sphere)
-			print_sphere(array[obj_count].data);
+			print_sphere(&array[obj_count]);
 		else if (array[obj_count].e_type == _plane)
-			print_plane(array[obj_count].data);
+			print_plane(&array[obj_count]);
 		else if (array[obj_count].e_type == _cylinder)
-			print_cylinder(array[obj_count].data);
+			print_cylinder(&array[obj_count]);
 	}
 	print_cam(&world->cam);
 	print_light(&world->light);

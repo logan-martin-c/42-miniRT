@@ -12,17 +12,17 @@
 
 #include "minirt.h"
 
-void	print_sphere(t_sphere *sphere)
+void	print_sphere(t_object *object)
 {
 	t_color	color;
 
-	color = parse_color(sphere->color);
+	color = parse_color(object->color);
 	printf("Sphere :\n");
 	printf("\tpos :\n");
-	printf("\t\tx : %lf\n", (double)sphere->pos.x);
-	printf("\t\ty : %lf\n", (double)sphere->pos.y);
-	printf("\t\tz : %lf\n", (double)sphere->pos.z);
-	printf("\tdiameter : %f\n", (float)sphere->diameter);
+	printf("\t\tx : %lf\n", (double)object->pos.x);
+	printf("\t\ty : %lf\n", (double)object->pos.y);
+	printf("\t\tz : %lf\n", (double)object->pos.z);
+	printf("\tdiameter : %f\n", (float)object->u_data.sphere.diameter);
 	printf("\tcolor:\n");
 	printf("\t\ta : %u\n", color.alpha);
 	printf("\t\tr : %u\n", color.red);
@@ -30,20 +30,20 @@ void	print_sphere(t_sphere *sphere)
 	printf("\t\tb : %u\n", color.blue);
 }
 
-void	print_plane(t_plane *plane)
+void	print_plane(t_object *object)
 {
 	t_color	color;
 
-	color = parse_color(plane->color);
+	color = parse_color(object->color);
 	printf("Plane :\n");
 	printf("\tpos :\n");
-	printf("\t\tx : %lf\n", (double)plane->pos.x);
-	printf("\t\ty : %lf\n", (double)plane->pos.y);
-	printf("\t\tz : %lf\n", (double)plane->pos.z);
+	printf("\t\tx : %lf\n", (double)object->pos.x);
+	printf("\t\ty : %lf\n", (double)object->pos.y);
+	printf("\t\tz : %lf\n", (double)object->pos.z);
 	printf("\tvector :\n");
-	printf("\t\tx : %lf\n", (double)plane->rot.x);
-	printf("\t\ty : %lf\n", (double)plane->rot.y);
-	printf("\t\tz : %lf\n", (double)plane->rot.z);
+	printf("\t\tx : %lf\n", (double)object->u_data.plane.rot.x);
+	printf("\t\ty : %lf\n", (double)object->u_data.plane.rot.y);
+	printf("\t\tz : %lf\n", (double)object->u_data.plane.rot.z);
 	printf("\tcolor:\n");
 	printf("\t\ta : %u\n", color.alpha);
 	printf("\t\tr : %u\n", color.red);
@@ -51,22 +51,22 @@ void	print_plane(t_plane *plane)
 	printf("\t\tb : %u\n", color.blue);
 }
 
-void	print_cylinder(t_cylinder *cylinder)
+void	print_cylinder(t_object *object)
 {
 	t_color	color;
 
-	color = parse_color(cylinder->color);
+	color = parse_color(object->color);
 	printf("Cylinder :\n");
 	printf("\tpos :\n");
-	printf("\t\tx : %lf\n", (double)cylinder->pos.x);
-	printf("\t\ty : %lf\n", (double)cylinder->pos.y);
-	printf("\t\tz : %lf\n", (double)cylinder->pos.z);
+	printf("\t\tx : %lf\n", (double)object->pos.x);
+	printf("\t\ty : %lf\n", (double)object->pos.y);
+	printf("\t\tz : %lf\n", (double)object->pos.z);
 	printf("\tvector :\n");
-	printf("\t\tx : %lf\n", (double)cylinder->rot.x);
-	printf("\t\ty : %lf\n", (double)cylinder->rot.y);
-	printf("\t\tz : %lf\n", (double)cylinder->rot.z);
-	printf("\tdiameter : %f\n", (float)cylinder->diameter);
-	printf("\theight : %f\n", (float)cylinder->height);
+	printf("\t\tx : %lf\n", (double)object->u_data.cylinder.rot.x);
+	printf("\t\ty : %lf\n", (double)object->u_data.cylinder.rot.y);
+	printf("\t\tz : %lf\n", (double)object->u_data.cylinder.rot.z);
+	printf("\tdiameter : %f\n", (float)object->u_data.cylinder.diameter);
+	printf("\theight : %f\n", (float)object->u_data.cylinder.height);
 	printf("\tcolor:\n");
 	printf("\t\ta : %u\n", color.alpha);
 	printf("\t\tr : %u\n", color.red);

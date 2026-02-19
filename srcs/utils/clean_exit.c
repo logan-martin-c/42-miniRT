@@ -12,21 +12,24 @@
 
 #include "minirt.h"
 
-void	free_node(void *node)
-{
-	free(((t_object *)(node))->data);
-	free(node);
-}
+// void	free_node(void *node)
+// {
+// 	free(((t_object *)(node))->data);
+// 	free(node);
+// }
 
-void	free_objs_array(t_object *array, int size)
-{
-	int	i;
-
-	i = -1;
-	while (++i < size)
-		free(array[i].data);
-	free(array);
-}
+// void	free_objs_array(t_object *array, int size)
+// {
+// 	int	i;
+//
+// 	i = -1;
+// 	while (++i < size)
+// 	{
+// 		if (array[i].e_type != _sphere)
+// 			free(array[i].data);
+// 	}
+// 	free(array);
+// }
 
 void	clean_exit(int exit_status, t_global_data *g_data,
 		t_parsing_data *p_data)
@@ -41,9 +44,10 @@ void	clean_exit(int exit_status, t_global_data *g_data,
 			gnl = get_next_line(p_data->map_fd);
 			free(gnl);
 		}
-		ft_lstclear(&p_data->obj_lst, free_node);
+		ft_lstclear(&p_data->obj_lst, free);
 	}
-	free_objs_array(g_data->world.objs, g_data->world.obj_count);
+	free(g_data->world.objs);
+	// free_objs_array(g_data->world.objs, g_data->world.obj_count);
 	if (g_data->mlx.mlx)
 	{
 		mlx_do_key_autorepeaton(g_data->mlx.mlx);

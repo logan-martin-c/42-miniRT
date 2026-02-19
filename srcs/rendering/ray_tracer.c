@@ -57,12 +57,12 @@ int	check_colision(t_pos_xyz ray, t_object *objects, t_pos_xyz cam_pos,
 	while (++i < obj_count)
 	{
 		if (objects[i].e_type == _sphere)
-			new_t = sphere_collision(ray, (t_sphere *)objects[i].data, cam_pos);
+			new_t = sphere_collision(ray, &objects[i], cam_pos);
 		else
 			return (color);
 		if (new_t != -1 && (t == -1 || new_t < t))
 		{
-			color = ((t_sphere *)objects[i].data)->color;
+			color = objects[i].color;
 			t = new_t;
 		}
 	}

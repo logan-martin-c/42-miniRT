@@ -57,9 +57,7 @@ void	lst_map_to_array(t_parsing_data *p_data, t_world_data *world)
 	i = -1;
 	while (++i < p_data->obj_count)
 	{
-		world->objs[i] = *(t_object *)p_data->obj_lst->content;
-		world->objs[i].e_type = ((t_object *)p_data->obj_lst->content)->e_type;
-		world->objs[i].data = ((t_object *)p_data->obj_lst->content)->data;
+		memcpy(&world->objs[i], (t_object *)p_data->obj_lst->content, sizeof(t_object));
 		next = p_data->obj_lst->next;
 		free(p_data->obj_lst->content);
 		free(p_data->obj_lst);
@@ -79,5 +77,5 @@ void	parser(int ac, char *av[], t_global_data *g_data,
 	if (DEBUG)
 		print_objects(p_data, &g_data->world);
 	lst_map_to_array(p_data, &g_data->world);
-	ft_lstclear(&p_data->obj_lst, free_node);
+	ft_lstclear(&p_data->obj_lst, free);
 }

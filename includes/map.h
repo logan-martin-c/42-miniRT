@@ -78,30 +78,6 @@ typedef struct s_map_data
 	bool			light;
 }					t_map_data;
 
-typedef struct s_object
-{
-	enum
-	{
-		_sphere,
-		_plane,
-		_cylinder
-	} e_type;
-	void			*data;
-}					t_object;
-
-typedef struct s_ambient_lighting
-{
-	char			ratio;
-	int				color;
-}					t_ambient_lighting;
-
-// typedef struct s_camera
-// {
-// 	t_pos_xyz		pos;
-// 	t_pos_xyz		rot;
-// 	int				fov;
-// }					t_camera;
-
 typedef struct s_sphere
 {
 	t_pos_xyz		pos;
@@ -125,5 +101,36 @@ typedef struct s_cylinder
 	float			height;
 	int				color;
 }					t_cylinder;
+
+typedef struct s_object
+{
+	enum
+	{
+		_sphere,
+		_plane,
+		_cylinder
+	} e_type;
+	int				color;
+	t_pos_xyz		pos;
+	union
+	{
+		t_sphere	sphere;
+		t_plane		plane;
+		t_cylinder	cylinder;
+	}				u_data;
+}					t_object;
+
+typedef struct s_ambient_lighting
+{
+	char			ratio;
+	int				color;
+}					t_ambient_lighting;
+
+// typedef struct s_camera
+// {
+// 	t_pos_xyz		pos;
+// 	t_pos_xyz		rot;
+// 	int				fov;
+// }					t_camera;
 
 #endif
