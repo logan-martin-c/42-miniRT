@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:24:04 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/20 17:24:12 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/02/20 18:07:41 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@ int	main(int ac, char *av[])
 	t_global_data	g_data;
 	t_parsing_data	p_data;
 
-	printf("%s\n", av[1]);
 	init(&g_data, &p_data, av[0]);
 	parser(ac, av, &g_data, &p_data);
-	// if (DEBUG)
-	// 	print_array(&g_data.world);
+	if (DEBUG)
+		print_array(&g_data.world);
 	if (init_mlx(&g_data.mlx))
 	{
 		ft_perror("mlx", g_data.prog_name);

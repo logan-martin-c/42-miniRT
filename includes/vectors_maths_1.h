@@ -13,22 +13,22 @@
 #ifndef VECTORS_MATHS_1_H
 # define VECTORS_MATHS_1_H
 
-static inline t_pos_xyz	vectors_add(t_pos_xyz a, t_pos_xyz b)
+static inline t_vect3	vectors_add(t_vect3 a, t_vect3 b)
 {
-	return ((t_pos_xyz){a.x + b.x, a.y + b.y, a.z + b.z});
+	return ((t_vect3){a.x + b.x, a.y + b.y, a.z + b.z});
 }
 
-static inline t_pos_xyz	vectors_sub(t_pos_xyz a, t_pos_xyz b)
+static inline t_vect3	vectors_sub(t_vect3 a, t_vect3 b)
 {
-	return ((t_pos_xyz){a.x - b.x, a.y - b.y, a.z - b.z});
+	return ((t_vect3){a.x - b.x, a.y - b.y, a.z - b.z});
 }
 
-static inline double	dot_product(t_pos_xyz a, t_pos_xyz b)
+static inline double	dot_product(t_vect3 a, t_vect3 b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
 
-static inline t_pos_xyz	vector_mult(t_pos_xyz a, double scal)
+static inline t_vect3	vector_mult(t_vect3 a, double scal)
 {
 	a.x *= scal;
 	a.y *= scal;

@@ -1,6 +1,6 @@
 CC = cc
-CFLAGS += -Wall -Wextra -Werror -Wpedantic
-DFLAGS += -g3 -D DEBUG=1
+CFLAGS += -Wall -Wextra -Werror -Wpedantic -O3
+DFLAGS += -g3 -D DEBUG=1 -O3
 
 SRCS_DIR = srcs
 SRCS = main.c\

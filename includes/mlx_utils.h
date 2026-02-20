@@ -13,7 +13,7 @@
 #ifndef MLX_UTILS_H
 # define MLX_UTILS_H
 
-static inline void	my_mlx_pixel_put(t_mlx_data *mlx, t_pos_xyz pos, int color)
+static inline void	my_mlx_pixel_put(t_mlx_data *mlx, t_vect3 pos, int color)
 {
 	char	*dst;
 
@@ -32,7 +32,7 @@ static inline void	my_mlx_pixel_put(t_mlx_data *mlx, t_pos_xyz pos, int color)
 	*(unsigned int *)dst = color;
 }
 
-static inline int	get_prev_color(t_pos_xyz pos, t_mlx_data *mlx)
+static inline int	get_prev_color(t_vect3 pos, t_mlx_data *mlx)
 {
 	if (pos.x < 0 || pos.x >= WIN_WIDTH || pos.y < 0 || pos.y >= WIN_HEIGHT)
 		return (0);

@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-int	parse_pos(char *str, t_pos_xyz *pos, char normalized)
+int	parse_pos(char *str, t_vect3 *pos, char normalized)
 {
 	char	**spl_str;
 

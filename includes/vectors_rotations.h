@@ -14,9 +14,9 @@
 # define VECTORS_ROTATIONS_H
 # include "minirt.h"
 
-static inline t_pos_xyz	vector_rot(t_pos_xyz prev_pos, float pitch, float yaw, float roll)
+static inline t_vect3	vector_rot(t_vect3 prev_pos, float pitch, float yaw, float roll)
 {
-	t_pos_xyz	new_pos;
+	t_vect3	new_pos;
 	float		s;
 	float		c;
 	float		temp;

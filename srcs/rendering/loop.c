@@ -28,7 +28,7 @@ int	update_display(t_global_data *g_data)
 	last_time = time;
 	fps = 1000000 / elapsed;
 	move_cam(&g_data->world, &g_data->mlx, &g_data->key, elapsed);
-	render_canva((t_pos_xyz){0, 0, 0}, (t_pos_xyz){WIN_WIDTH, WIN_HEIGHT, 0},
+	render_canva((t_vect3){0, 0, 0}, (t_vect3){WIN_WIDTH, WIN_HEIGHT, 0},
 		&g_data->world, &g_data->mlx);
 	mlx_put_image_to_window(g_data->mlx.mlx, g_data->mlx.win,
 		g_data->mlx.s_img_data.img, 0, 0);

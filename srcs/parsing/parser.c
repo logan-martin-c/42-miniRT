@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:48:12 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/15 23:49:34 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/20 09:59:32 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	lst_map_to_array(t_parsing_data *p_data, t_world_data *world)
 	i = -1;
 	while (++i < p_data->obj_count)
 	{
-		memcpy(&world->objs[i], (t_object *)p_data->obj_lst->content, sizeof(t_object));
+		memcpy(&world->objs[i], (t_object *)p_data->obj_lst->content,
+			sizeof(t_object));
 		next = p_data->obj_lst->next;
 		free(p_data->obj_lst->content);
 		free(p_data->obj_lst);

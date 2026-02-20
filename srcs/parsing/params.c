@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   params.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:51:58 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/17 14:53:38 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/20 18:05:52 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	set_cam(t_parsing_data *p_data, char *obj_line, t_global_data *g_data)
 		return (ft_free_strs(params), ft_maperror("camera : invalid parameters",
 				g_data->prog_name));
 	if (parse_pos(params[1], &g_data->world.cam.pos, 0) || parse_pos(params[2],
-			&g_data->world.cam.move, 1) || !ft_isdigit_str(params[3]))
+			&g_data->world.cam.forward, 1) || !ft_isdigit_str(params[3]))
 		return (ft_free_strs(params), ft_maperror("camera : invalid parameters",
 				g_data->prog_name));
 	g_data->world.cam.fov = ft_atoi(params[3]);
@@ -56,11 +56,11 @@ int	set_light(t_parsing_data *p_data, char *obj_line, t_global_data *g_data)
 			&g_data->world.light.color))
 		return (ft_free_strs(params), ft_maperror("light : invalid parameters",
 				g_data->prog_name));
-	raw_ratio = ft_atof(params[2]);
+	g_data->world.light.ratio = ft_atof(params[2]);
 	if (raw_ratio > 1 || raw_ratio < 0)
 		return (ft_free_strs(params), ft_maperror("light : invalid ratio",
 				g_data->prog_name));
-	g_data->world.light.ratio = 255 * raw_ratio;
+	//g_data->world.light.ratio = 255 * raw_ratio;
 	p_data->map_data.light = 1;
 	return (ft_free_strs(params), 0);
 }

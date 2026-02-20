@@ -49,7 +49,7 @@ int	check_args_count(char **args, unsigned int min, unsigned int max)
 	return (i);
 }
 
-int	is_normalized(t_pos_xyz pos)
+int	is_normalized(t_vect3 pos)
 {
 	double	magnitude;
 

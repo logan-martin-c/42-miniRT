@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 12:27:34 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/18 16:02:50 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/20 09:59:55 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,6 @@
 #include "vectors_maths_1.h"
 #include "vectors_maths_2.h"
 #include "vectors_rotations.h"
-
-// void	sin_cos_cam(t_cam_data *cam)
-// {
-// 	double	yaw;
-// 	double	pitch;
-//
-// 	yaw = cam->angle.y / NORM_PREC;
-// 	pitch = cam->angle.x / NORM_PREC;
-// 	cam->cos_yaw = cos(yaw);
-// 	cam->sin_yaw = sin(yaw);
-// 	cam->cos_pitch = cos(pitch);
-// 	cam->sin_pitch = sin(pitch);
-// }
 
 static inline int	init_pos(int *x, int *y, int *l_x, int *l_y)
 {
@@ -63,24 +50,24 @@ void	rotate_cam(t_cam_data *cam, t_mlx_data *mlx, bool *rotating)
 	// 	mlx_mouse_move(mlx->mlx, mlx->win, WIN_WIDTH / 2,
 	//		WIN_HEIGHT / 2);
 	// }
-	cam->move = vector_rot(cam->move, (float)(y - l_y) *1e-3, (float)(x - l_x)
-			*1e-3, 0);
+	cam->forward = vector_rot(cam->forward, (float)(y - l_y) * 1e-3, (float)(x
+				- l_x) * 1e-3, 0);
 	l_x = x;
 	l_y = y;
-	cam->right = vector_norm(vector_cross((t_pos_xyz){0, 1, 0}, cam->move));
-	cam->up = vector_norm(vector_cross(cam->move, cam->right));
+	cam->right = vector_norm(vector_cross((t_vect3){0, 1, 0}, cam->forward));
+	cam->up = vector_norm(vector_cross(cam->forward, cam->right));
 }
 
 void	update_cam_pos(t_interface *input, t_cam_data *cam, int elapsed,
 		bool *moving)
 {
-	double		x;
-	double		y;
-	double		z;
-	double		factor;
-	t_pos_xyz	lasting;
-	float		lasting_mag;
-	t_pos_xyz	moving_vector;
+	double	x;
+	double	y;
+	double	z;
+	double	factor;
+	t_vect3	lasting;
+	float	lasting_mag;
+	t_vect3	moving_vector;
 
 	x = input->d - input->a;
 	y = input->space - input->ctrl;
@@ -95,10 +82,11 @@ void	update_cam_pos(t_interface *input, t_cam_data *cam, int elapsed,
 	if (x)
 		moving_vector = vectors_add(moving_vector, vector_mult(cam->right, x));
 	if (y)
-		moving_vector = vectors_add(moving_vector,
-				vector_mult((t_pos_xyz){0, 1, 0}, y));
+		moving_vector = vectors_add(moving_vector, vector_mult((t_vect3){0, 1,
+					0}, y));
 	if (z)
-		moving_vector = vectors_add(moving_vector, vector_mult(cam->move, z));
+		moving_vector = vectors_add(moving_vector, vector_mult(cam->forward,
+					z));
 	moving_vector = vector_max_mag(moving_vector, factor);
 	if (!x && !y && !z && lasting_mag)
 	{
