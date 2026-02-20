@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:24:04 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/15 23:39:35 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/20 17:24:12 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int ac, char *av[])
 	t_global_data	g_data;
 	t_parsing_data	p_data;
 
+	printf("%s\n", av[1]);
 	init(&g_data, &p_data, av[0]);
 	parser(ac, av, &g_data, &p_data);
 	// if (DEBUG)

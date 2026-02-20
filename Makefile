@@ -1,6 +1,6 @@
 CC = cc
-CFLAGS += -Wall -Wextra -Werror -Wpedantic -O3
-DFLAGS += -g3 -D DEBUG=1 -O3
+CFLAGS += -Wall -Wextra -Werror -Wpedantic
+DFLAGS += -g3 -D DEBUG=1
 
 SRCS_DIR = srcs
 SRCS = main.c\
@@ -18,6 +18,7 @@ SRCS = main.c\
 		rendering/object_collision.c\
 		rendering/project.c\
 		rendering/ray_tracer.c\
+		rendering/shading.c\
 		utils/clean_exit.c\
 		utils/debug_obj_print.c\
 		utils/debug_params_print.c\

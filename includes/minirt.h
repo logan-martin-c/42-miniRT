@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/18 16:02:58 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/20 16:08:01 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,8 @@ int							update_display(t_global_data *data);
 int							get_color(t_color p_color);
 int							get_color_chars(unsigned char a, unsigned char r,
 								unsigned char g, unsigned char b);
+int 						shading(t_pos_xyz ray, t_pos_xyz cam_pos, float t,
+								t_object object, t_world_data *world);
 // int							color_sup(int color_a, int color_b);
 t_pos_xyz					project(t_pos_xyz pos, t_cam_data *cam_data);
 // void						my_mlx_pixel_put(t_mlx_data *mlx, t_pos_xyz pos,
