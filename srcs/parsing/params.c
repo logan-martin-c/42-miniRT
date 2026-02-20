@@ -26,7 +26,7 @@ int	set_cam(t_parsing_data *p_data, char *obj_line, t_global_data *g_data)
 		return (ft_free_strs(params), ft_maperror("camera : invalid parameters",
 				g_data->prog_name));
 	if (parse_pos(params[1], &g_data->world.cam.pos, 0) || parse_pos(params[2],
-			&g_data->world.cam.move, 1) || !ft_isdigit_str(params[3]))
+			&g_data->world.cam.forward, 1) || !ft_isdigit_str(params[3]))
 		return (ft_free_strs(params), ft_maperror("camera : invalid parameters",
 				g_data->prog_name));
 	g_data->world.cam.fov = ft_atoi(params[3]);

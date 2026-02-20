@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:47 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/18 11:49:40 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/20 10:00:28 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,6 @@ int	key_press(int keycode, t_global_data *g_data)
 		g_data->key.space = 1;
 	if (keycode == CTRL_KEY)
 		g_data->key.ctrl = 1;
-	// if (keycode == PLUS_KEY)
-	// 	change_speed(keycode, vars);
-	// if (keycode == MINUS_KEY)
-	// 	change_speed(keycode, vars);
 	return (0);
 }
 

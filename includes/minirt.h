@@ -66,8 +66,8 @@ typedef struct s_mlx_data
 
 typedef struct s_viewport
 {
-	t_pos_xyz				down;
-	t_pos_xyz				right;
+	t_vect3				down;
+	t_vect3				right;
 	double					aspect_ratio;
 	double					theta;
 	double					tan_theta;
@@ -142,7 +142,7 @@ void						parser(int ac, char *av[], t_global_data *g_data,
 								t_parsing_data *p_data);
 void						check_args(int ac, char **av, char *prog_name);
 int							open_map(char *filename, char *progname);
-int							parse_pos(char *str, t_pos_xyz *pos,
+int							parse_pos(char *str, t_vect3 *pos,
 								char normalized);
 int							parse_raw_color(char *str, int *color);
 int							parse_float(char *str, float *value);
@@ -160,24 +160,24 @@ int							get_color(t_color p_color);
 int							get_color_chars(unsigned char a, unsigned char r,
 								unsigned char g, unsigned char b);
 // int							color_sup(int color_a, int color_b);
-t_pos_xyz					project(t_pos_xyz pos, t_cam_data *cam_data);
-// void						my_mlx_pixel_put(t_mlx_data *mlx, t_pos_xyz pos,
+t_vect3					project(t_vect3 pos, t_cam_data *cam_data);
+// void						my_mlx_pixel_put(t_mlx_data *mlx, t_vect3 pos,
 // 								int color);
 void						update_cam_pos(t_interface *input, t_cam_data *cam, int elapsed, bool *moving);
 void						rotate_cam(t_cam_data *cam, t_mlx_data *mlx, bool *moving);
 void						trace_rays(t_world_data *world, t_mlx_data *mlx);
-// t_pos_xyz					vector_norm(t_pos_xyz a);
-// t_pos_xyz					vector_cross(t_pos_xyz a, t_pos_xyz b);
-void						render_canva(t_pos_xyz start, t_pos_xyz end,
+// t_vect3					vector_norm(t_vect3 a);
+// t_vect3					vector_cross(t_vect3 a, t_vect3 b);
+void						render_canva(t_vect3 start, t_vect3 end,
 								t_world_data *world, t_mlx_data *mlx);
-// int							get_prev_color(t_pos_xyz pos, t_mlx_data *mlx);
-double    					sphere_collision(t_pos_xyz ray, t_object *object, t_pos_xyz cam_pos);
+// int							get_prev_color(t_vect3 pos, t_mlx_data *mlx);
+double    					sphere_collision(t_vect3 ray, t_object *object, t_vect3 cam_pos);
 
 // INPUT
 void						set_hooks(t_global_data *g_data);
 void						move_cam(t_world_data *world, t_mlx_data *mlx, t_interface *key, int elapsed);
-void						set_moving_vector(bool moving, t_pos_xyz move, int elapsed);
-t_pos_xyz					get_lasting(void);
+void						set_moving_vector(bool moving, t_vect3 move, int elapsed);
+t_vect3					get_lasting(void);
 
 // UTILS
 int							ft_puterr(char *error);
@@ -196,7 +196,7 @@ void						print_objects(t_parsing_data *p_data,
 void						print_array(t_world_data *world);
 int							check_args_count(char **args, unsigned int min,
 								unsigned int max);
-int							is_normalized(t_pos_xyz pos);
+int							is_normalized(t_vect3 pos);
 t_obj_type					get_obj_type(char *obj_line);
 
 #endif

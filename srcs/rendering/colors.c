@@ -48,7 +48,7 @@ int	get_color_chars(unsigned char a, unsigned char r, unsigned char g,
 	return (color);
 }
 
-// int	get_prev_color(t_pos_xyz pos, t_mlx_data *mlx)
+// int	get_prev_color(t_vect3 pos, t_mlx_data *mlx)
 // {
 // 	if (pos.x < 0 || pos.x >= WIN_WIDTH || pos.y < 0 || pos.y >= WIN_HEIGHT)
 // 		return (0);

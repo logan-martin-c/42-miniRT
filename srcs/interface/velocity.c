@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 15:33:06 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/18 16:04:30 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/20 10:00:36 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 //
 #include "vectors_maths_1.h"
 
-t_pos_xyz	velocity(int mode, t_pos_xyz moving_vector)
+t_vect3	velocity(int mode, t_vect3 moving_vector)
 {
-	static t_pos_xyz	last_moving_vector;
+	static t_vect3	last_moving_vector;
 
 	if (mode)
 		last_moving_vector = moving_vector;
 	return (last_moving_vector);
 }
 
-t_pos_xyz	get_lasting(void)
+t_vect3	get_lasting(void)
 {
-	return (velocity(0, (t_pos_xyz){0, 0, 0}));
+	return (velocity(0, (t_vect3){0, 0, 0}));
 }
 
-void	set_moving_vector(bool moving, t_pos_xyz move, int elapsed)
+void	set_moving_vector(bool moving, t_vect3 move, int elapsed)
 {
 	static float	veloc = 0;
-	t_pos_xyz		moving_vector;
+	t_vect3			moving_vector;
 
 	moving_vector = get_lasting();
 	if (moving)

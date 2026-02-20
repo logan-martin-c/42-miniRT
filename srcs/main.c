@@ -19,8 +19,8 @@ int	main(int ac, char *av[])
 
 	init(&g_data, &p_data, av[0]);
 	parser(ac, av, &g_data, &p_data);
-	// if (DEBUG)
-	// 	print_array(&g_data.world);
+	if (DEBUG)
+		print_array(&g_data.world);
 	if (init_mlx(&g_data.mlx))
 	{
 		ft_perror("mlx", g_data.prog_name);

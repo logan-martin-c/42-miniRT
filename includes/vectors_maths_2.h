@@ -13,12 +13,12 @@
 #ifndef VECTORS_MATHS_2_H
 # define VECTORS_MATHS_2_H
 
-static inline double	vector_mag(t_pos_xyz a)
+static inline double	vector_mag(t_vect3 a)
 {
 	return (sqrt(a.x * a.x + a.y * a.y + a.z * a.z));
 }
 
-static inline t_pos_xyz	vector_norm(t_pos_xyz a)
+static inline t_vect3	vector_norm(t_vect3 a)
 {
 	double	mag;
 
@@ -29,9 +29,9 @@ static inline t_pos_xyz	vector_norm(t_pos_xyz a)
 	return (a);
 }
 
-static inline t_pos_xyz	vector_cross(t_pos_xyz a, t_pos_xyz b)
+static inline t_vect3	vector_cross(t_vect3 a, t_vect3 b)
 {
-	t_pos_xyz	ret;
+	t_vect3	ret;
 
 	ret.x = a.y * b.z - a.z * b.y;
 	ret.y = a.z * b.x - a.x * b.z;
@@ -39,7 +39,7 @@ static inline t_pos_xyz	vector_cross(t_pos_xyz a, t_pos_xyz b)
 	return (ret);
 }
 
-static inline t_pos_xyz	vector_max_mag(t_pos_xyz a, float max_mag)
+static inline t_vect3	vector_max_mag(t_vect3 a, float max_mag)
 {
 	int	mag;
 

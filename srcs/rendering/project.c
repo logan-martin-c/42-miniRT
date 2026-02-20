@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-// t_pos_xyz	apply_perspective(t_pos_xyz *xyz, t_pos_xyz *xy, double factor)
+// t_vect3	apply_perspective(t_vect3 *xyz, t_vect3 *xy, double factor)
 // {
 // 	xyz->z = -xyz->z;
 // 	xy->x = (WIN_WIDTH / 2.0f + xyz->x * factor / xyz->z);
@@ -21,9 +21,9 @@
 // 	return (*xy);
 // }
 
-// t_pos_xyz	project(t_pos_xyz pos, t_cam_data *cam_data)
+// t_vect3	project(t_vect3 pos, t_cam_data *cam_data)
 // {
-// 	t_pos_xyz	new_pos;
+// 	t_vect3	new_pos;
 // 	float		yy;
 // 	float		xx;
 

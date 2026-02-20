@@ -41,9 +41,9 @@ void	print_plane(t_object *object)
 	printf("\t\ty : %lf\n", (double)object->pos.y);
 	printf("\t\tz : %lf\n", (double)object->pos.z);
 	printf("\tvector :\n");
-	printf("\t\tx : %lf\n", (double)object->u_data.plane.rot.x);
-	printf("\t\ty : %lf\n", (double)object->u_data.plane.rot.y);
-	printf("\t\tz : %lf\n", (double)object->u_data.plane.rot.z);
+	printf("\t\tx : %lf\n", (double)object->rot.x);
+	printf("\t\ty : %lf\n", (double)object->rot.y);
+	printf("\t\tz : %lf\n", (double)object->rot.z);
 	printf("\tcolor:\n");
 	printf("\t\ta : %u\n", color.alpha);
 	printf("\t\tr : %u\n", color.red);
@@ -62,9 +62,9 @@ void	print_cylinder(t_object *object)
 	printf("\t\ty : %lf\n", (double)object->pos.y);
 	printf("\t\tz : %lf\n", (double)object->pos.z);
 	printf("\tvector :\n");
-	printf("\t\tx : %lf\n", (double)object->u_data.cylinder.rot.x);
-	printf("\t\ty : %lf\n", (double)object->u_data.cylinder.rot.y);
-	printf("\t\tz : %lf\n", (double)object->u_data.cylinder.rot.z);
+	printf("\t\tx : %lf\n", (double)object->rot.x);
+	printf("\t\ty : %lf\n", (double)object->rot.y);
+	printf("\t\tz : %lf\n", (double)object->rot.z);
 	printf("\tdiameter : %f\n", (float)object->u_data.cylinder.diameter);
 	printf("\theight : %f\n", (float)object->u_data.cylinder.height);
 	printf("\tcolor:\n");

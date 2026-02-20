@@ -30,7 +30,7 @@ void	init_viewport(t_viewport *viewport, int fov)
 	viewport->step_h = viewport->vp_h * INV_WIN_HEIGHT;
 }
 
-t_pos_xyz	get_ray(int x, int y, t_viewport *viewport, t_cam_data *cam)
+t_vect3	get_ray(int x, int y, t_viewport *viewport, t_cam_data *cam)
 {
 	double	u;
 	double	v;
@@ -38,12 +38,12 @@ t_pos_xyz	get_ray(int x, int y, t_viewport *viewport, t_cam_data *cam)
 	u = (2.0 * (x + 0.5) * INV_WIN_WIDTH - 1.0) * viewport->aspect_ratio
 		* viewport->tan_theta;
 	v = (1.0 - 2.0 * (y + 0.5) * INV_WIN_HEIGHT) * viewport->tan_theta;
-	return (vector_norm(vectors_add(cam->move,
+	return (vector_norm(vectors_add(cam->forward,
 				vectors_add(vector_mult(cam->right, u), vector_mult(cam->up,
 						v)))));
 }
 
-int	check_colision(t_pos_xyz ray, t_object *objects, t_pos_xyz cam_pos,
+int	check_colision(t_vect3 ray, t_object *objects, t_vect3 cam_pos,
 		int obj_count)
 {
 	int		color;
@@ -69,11 +69,11 @@ int	check_colision(t_pos_xyz ray, t_object *objects, t_pos_xyz cam_pos,
 	return (color);
 }
 
-void	render_canva(t_pos_xyz start, t_pos_xyz end, t_world_data *world,
+void	render_canva(t_vect3 start, t_vect3 end, t_world_data *world,
 		t_mlx_data *mlx)
 {
-	t_pos_xyz	pointer;
-	t_pos_xyz	ray;
+	t_vect3	pointer;
+	t_vect3	ray;
 
 	pointer.y = start.y;
 	while (pointer.y <= end.y)
