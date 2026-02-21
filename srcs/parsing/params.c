@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:51:58 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/21 17:19:39 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/21 18:14:07 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,34 +40,6 @@ int	set_cam(t_parsing_data *p_data, char *obj_line, t_global_data *g_data)
 	return (ft_free_strs(params), 0);
 }
 
-int	set_light(t_parsing_data *p_data, char *obj_line, t_global_data *g_data)
-{
-	char	**params;
-	float	raw_ratio;
-
-	if (p_data->map_data.light)
-		return (ft_maperror("Multiple light definition is forbidden",
-				p_data->line_nb, g_data->prog_name));
-	params = ft_split_charset(obj_line, " \t\v\f\r");
-	if (!params)
-		return (ft_perror(NULL, g_data->prog_name));
-	if (check_args_count(params, 4, 4) == -1)
-		return (ft_free_strs(params), ft_maperror("light : invalid parameters",
-				p_data->line_nb, g_data->prog_name));
-	if (parse_pos(params[1], &g_data->world.light.pos, 0)
-		|| !ft_isfloat_str(params[2]) || parse_raw_color(params[3],
-			&g_data->world.light.color))
-		return (ft_free_strs(params), ft_maperror("light : invalid parameters",
-				p_data->line_nb, g_data->prog_name));
-	raw_ratio = ft_atof(params[2]);
-	if (raw_ratio > 1 || raw_ratio < 0)
-		return (ft_free_strs(params), ft_maperror("light : invalid ratio",
-				p_data->line_nb, g_data->prog_name));
-	g_data->world.light.ratio = 255 * raw_ratio;
-	p_data->map_data.light = 1;
-	return (ft_free_strs(params), 0);
-}
-
 int	set_ambient_light(t_parsing_data *p_data, char *obj_line,
 		t_global_data *g_data)
 {
@@ -95,8 +67,7 @@ int	set_ambient_light(t_parsing_data *p_data, char *obj_line,
 			ft_maperror("ambient light : invalid ratio", p_data->line_nb,
 				g_data->prog_name));
 	g_data->world.ambient_light.ratio = 255 * raw_ratio;
-	p_data->map_data.ambient_light = 1;
-	return (ft_free_strs(params), 0);
+	return (p_data->map_data.ambient_light = 1, ft_free_strs(params), 0);
 }
 
 void	parse_params(t_parsing_data *p_data, char *obj_line,
@@ -107,8 +78,6 @@ void	parse_params(t_parsing_data *p_data, char *obj_line,
 	ret = 1;
 	if (!ft_strncmp(obj_line, "C", 1) && ft_isspace(obj_line[1]))
 		ret = set_cam(p_data, obj_line, g_data);
-	else if (!ft_strncmp(obj_line, "L", 1) && ft_isspace(obj_line[1]))
-		ret = set_light(p_data, obj_line, g_data);
 	else if (!ft_strncmp(obj_line, "A", 1) && ft_isspace(obj_line[1]))
 		ret = set_ambient_light(p_data, obj_line, g_data);
 	if (ret)

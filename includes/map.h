@@ -62,13 +62,6 @@ typedef struct s_cam_data
 	t_vect3		up;
 }					t_cam_data;
 
-typedef struct s_light_data
-{
-	t_vect3		pos;
-	unsigned char	ratio;
-	int				color;
-}					t_light_data;
-
 typedef struct s_ambient_light_data
 {
 	unsigned char	ratio;
@@ -79,7 +72,6 @@ typedef struct s_map_data
 {
 	bool			cam;
 	bool			ambient_light;
-	bool			light;
 }					t_map_data;
 
 typedef struct s_sphere
@@ -94,13 +86,19 @@ typedef struct s_cylinder
 	float			height;
 }					t_cylinder;
 
+typedef struct s_light
+{
+	float			ratio;
+}					t_light;
+
 typedef struct s_object
 {
 	enum
 	{
 		_sphere,
 		_plane,
-		_cylinder
+		_cylinder,
+		_light
 	} e_type;
 	int				color;
 	t_vect3		pos;
@@ -109,6 +107,7 @@ typedef struct s_object
 	{
 		t_sphere	sphere;
 		t_cylinder	cylinder;
+		t_light		light;
 	}				u_data;
 }					t_object;
 

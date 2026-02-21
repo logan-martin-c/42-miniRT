@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:51:26 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/21 17:20:26 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/21 18:15:09 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ int	new_sphere(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data, NULL);
 	}
 	if (check_args_count(params, 4, 4) == -1)
-		return (ft_free_strs(params),
-			ft_maperror("sphere : invalid parameters", p_data->line_nb,
-				g_data->prog_name));
+		return (ft_free_strs(params), ft_maperror("sphere : invalid parameters",
+				p_data->line_nb, g_data->prog_name));
 	if (parse_pos(params[1], &node->pos, 0) || parse_float(params[2],
 			&node->u_data.sphere.diameter) || parse_raw_color(params[3],
 			&node->color))
@@ -90,6 +89,30 @@ int	new_cylinder(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	return (ft_free_strs(params), 0);
 }
 
+int	new_light(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
+		t_object *node)
+{
+	char	**params;
+
+	params = ft_split_charset(obj_line, " \t\v\f\r");
+	if (!params)
+		return (ft_perror(NULL, g_data->prog_name));
+	if (check_args_count(params, 4, 4) == -1)
+		return (ft_free_strs(params), ft_maperror("light : invalid parameters",
+				p_data->line_nb, g_data->prog_name));
+	if (parse_pos(params[1], &node->pos, 0) || !ft_isfloat_str(params[2])
+		|| parse_raw_color(params[3], &node->color))
+		return (ft_free_strs(params), ft_maperror("light : invalid parameters",
+				p_data->line_nb, g_data->prog_name));
+	node->u_data.light.ratio = ft_atof(params[2]);
+	if (node->u_data.light.ratio > 1 || node->u_data.light.ratio < 0)
+		return (ft_free_strs(params), ft_maperror("light : invalid ratio",
+				p_data->line_nb, g_data->prog_name));
+	node->e_type = _light;
+	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
+	return (ft_free_strs(params), 0);
+}
+
 void	parse_object(t_parsing_data *p_data, char *obj_line,
 		t_global_data *g_data)
 {
@@ -100,21 +123,15 @@ void	parse_object(t_parsing_data *p_data, char *obj_line,
 	node = malloc(sizeof(t_object));
 	if (!node)
 		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data, NULL);
-	if (!ft_strncmp(obj_line, "sp", 1) && ft_isspace(obj_line[2]))
-	{
+	if (!ft_strncmp(obj_line, "sp", 2) && ft_isspace(obj_line[2]))
 		ret = new_sphere(p_data, obj_line, g_data, node);
-		p_data->obj_count++;
-	}
-	else if (!ft_strncmp(obj_line, "pl", 1) && ft_isspace(obj_line[2]))
-	{
+	else if (!ft_strncmp(obj_line, "pl", 2) && ft_isspace(obj_line[2]))
 		ret = new_plane(p_data, obj_line, g_data, node);
-		p_data->obj_count++;
-	}
-	else if (!ft_strncmp(obj_line, "cy", 1) && ft_isspace(obj_line[2]))
-	{
+	else if (!ft_strncmp(obj_line, "cy", 2) && ft_isspace(obj_line[2]))
 		ret = new_cylinder(p_data, obj_line, g_data, node);
-		p_data->obj_count++;
-	}
+	else if (!ft_strncmp(obj_line, "L", 1) && ft_isspace(obj_line[1]))
+		ret = new_light(p_data, obj_line, g_data, node);
 	if (ret)
 		(free(obj_line), free(node), clean_exit(1, g_data, p_data, NULL));
+	p_data->obj_count++;
 }

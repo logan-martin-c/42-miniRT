@@ -73,3 +73,21 @@ void	print_cylinder(t_object *object)
 	printf("\t\tg : %u\n", color.green);
 	printf("\t\tb : %u\n", color.blue);
 }
+
+void	print_light(t_object *object)
+{
+	t_color	color;
+
+	color = parse_color(object->color);
+	printf("Light :\n");
+	printf("\tpos :\n");
+	printf("\t\tx : %lf\n", (double)object->pos.x);
+	printf("\t\ty : %lf\n", (double)object->pos.y);
+	printf("\t\tz : %lf\n", (double)object->pos.z);
+	printf("\tratio : %f\n", (float)object->u_data.light.ratio);
+	printf("\tcolor:\n");
+	printf("\t\ta : %u\n", color.alpha);
+	printf("\t\tr : %u\n", color.red);
+	printf("\t\tg : %u\n", color.green);
+	printf("\t\tb : %u\n", color.blue);
+}

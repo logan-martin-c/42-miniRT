@@ -43,15 +43,6 @@ void	init_cam(t_cam_data *cam)
 	cam->speed = 40;
 }
 
-void	init_light(t_light_data *light)
-{
-	light->pos.x = LIGHT_X;
-	light->pos.y = LIGHT_Y;
-	light->pos.z = LIGHT_Z;
-	light->ratio = LIGHT_RAT * 255;
-	light->color = get_color_chars(0, LIGHT_R, LIGHT_G, LIGHT_B);
-}
-
 void	init_ambient_light(t_ambient_light_data *ambient_light)
 {
 	ambient_light->ratio = A_LIGHT_RAT * 255;
@@ -67,6 +58,5 @@ void	init(t_global_data *g_data, t_parsing_data *p_data, t_exec_data *e_data,
 	g_data->prog_name = get_progname(av_zero);
 	g_data->e_data = e_data;
 	init_cam(&g_data->world.cam);
-	init_light(&g_data->world.light);
 	init_ambient_light(&g_data->world.ambient_light);
 }

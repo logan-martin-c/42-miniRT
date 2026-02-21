@@ -94,7 +94,6 @@ typedef struct s_world_data
 	bool					moving;
 	bool					rotating;
 	t_cam_data				cam;
-	t_light_data			light;
 	t_ambient_light_data	ambient_light;
 	t_viewport				viewport;
 }							t_world_data;
@@ -194,7 +193,6 @@ void						trace_rays(t_world_data *world, t_mlx_data *mlx);
 void						render_canva(t_vect2 start, t_vect2 end,
 								t_world_data *world, t_mlx_data *mlx);
 // int							get_prev_color(t_vect3 pos, t_mlx_data *mlx);
-double    					sphere_collision(t_vect3 ray, t_object *object, t_vect3 cam_pos);
 int							init_threads(t_exec_data *e_data, t_global_data
 	*g_data);
 void						create_tasks(t_exec_data *e_data);

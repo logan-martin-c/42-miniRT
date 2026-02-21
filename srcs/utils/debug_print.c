@@ -27,10 +27,11 @@ void	print_objects(t_parsing_data *p_data, t_world_data *world)
 			print_plane(obj_lst->content);
 		else if (((t_object *)(obj_lst->content))->e_type == _cylinder)
 			print_cylinder(obj_lst->content);
+		else if (((t_object *)(obj_lst->content))->e_type == _light)
+			print_light(obj_lst->content);
 		obj_lst = obj_lst->next;
 	}
 	print_cam(&world->cam);
-	print_light(&world->light);
 	print_ambient_light(&world->ambient_light);
 }
 
@@ -50,8 +51,9 @@ void	print_array(t_world_data *world)
 			print_plane(&array[obj_count]);
 		else if (array[obj_count].e_type == _cylinder)
 			print_cylinder(&array[obj_count]);
+		else if (array[obj_count].e_type == _light)
+			print_light(&array[obj_count]);
 	}
 	print_cam(&world->cam);
-	print_light(&world->light);
 	print_ambient_light(&world->ambient_light);
 }

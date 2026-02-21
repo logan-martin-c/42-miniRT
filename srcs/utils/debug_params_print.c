@@ -23,25 +23,7 @@ void	print_cam(t_cam_data *cam)
 	printf("\t\tx : %lf\n", (double)cam->angle.x);
 	printf("\t\ty : %lf\n", (double)cam->angle.y);
 	printf("\t\tz : %lf\n", (double)cam->angle.z);
-	printf("\fFOV : %d\n", cam->fov);
-}
-
-void	print_light(t_light_data *light)
-{
-	t_color	color;
-
-	color = parse_color(light->color);
-	printf("Light :\n");
-	printf("\tpos :\n");
-	printf("\t\tx : %lf\n", (double)light->pos.x);
-	printf("\t\ty : %lf\n", (double)light->pos.y);
-	printf("\t\tz : %lf\n", (double)light->pos.z);
-	printf("\tratio : %f\n", (float)light->ratio / 255);
-	printf("\tcolor:\n");
-	printf("\t\ta : %u\n", color.alpha);
-	printf("\t\tr : %u\n", color.red);
-	printf("\t\tg : %u\n", color.green);
-	printf("\t\tb : %u\n", color.blue);
+	printf("\tFOV : %d\n", cam->fov);
 }
 
 void	print_ambient_light(t_ambient_light_data *ambient_light)

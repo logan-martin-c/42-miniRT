@@ -16,7 +16,8 @@
 #include "vectors_maths_2.h"
 #include <stdio.h>
 
-double	sphere_collision(t_vect3 ray, t_object *object, t_vect3 cam_pos)
+static inline double	sphere_collision(t_vect3 ray, t_object *object, t_vect3
+	cam_pos)
 {
 	t_vect3	l;
 	float	b;

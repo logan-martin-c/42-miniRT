@@ -19,8 +19,6 @@ SRCS = main.c\
 		rendering/loop.c\
 		rendering/move.c\
 		rendering/multithreading.c\
-		rendering/object_collision.c\
-		rendering/project.c\
 		rendering/ray_tracer.c\
 		utils/clean_exit.c\
 		utils/debug_obj_print.c\
