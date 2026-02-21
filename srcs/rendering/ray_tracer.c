@@ -43,7 +43,7 @@ t_vect3	get_ray(int x, int y, t_viewport *viewport, t_cam_data *cam)
 						v)))));
 }
 
-int	check_colision(t_vect3 ray, t_object *objects, t_vect3 cam_pos,
+int	get_pixel_color(t_vect3 ray, t_object *objects, t_vect3 cam_pos,
 		int obj_count)
 {
 	int		color;
@@ -69,10 +69,10 @@ int	check_colision(t_vect3 ray, t_object *objects, t_vect3 cam_pos,
 	return (color);
 }
 
-void	render_canva(t_vect3 start, t_vect3 end, t_world_data *world,
+void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 		t_mlx_data *mlx)
 {
-	t_vect3	pointer;
+	t_vect2	pointer;
 	t_vect3	ray;
 
 	pointer.y = start.y;
@@ -86,11 +86,10 @@ void	render_canva(t_vect3 start, t_vect3 end, t_world_data *world,
 				mlx,
 				pointer,
 				/*color_sup(*/
-				check_colision(ray,
+				get_pixel_color(ray,
 					world->objs,
 					world->cam.pos,
-					world->obj_count) /*, get_prev_color(pointer,
-   mlx))*/);
+					world->obj_count) /*, get_prev_color(pointer, mlx))*/);
 			pointer.x++;
 		}
 		pointer.y++;

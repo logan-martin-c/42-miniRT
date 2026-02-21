@@ -26,7 +26,7 @@ char	*get_progname(char *av_zero)
 
 int	win_close(t_global_data *g_data)
 {
-	clean_exit(0, g_data, NULL);
+	clean_exit(0, g_data, NULL, g_data->e_data);
 	return (0);
 }
 

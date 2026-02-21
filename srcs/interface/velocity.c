@@ -41,7 +41,7 @@ void	set_moving_vector(bool moving, t_vect3 move, int elapsed)
 	}
 	else if (!moving && veloc > 0)
 	{
-		veloc -= 2.0 * veloc * (float)elapsed * 1e-6;
+		veloc -= 0.1 * veloc * (float)elapsed * 1e-6;
 		moving_vector = vector_mult(moving_vector, veloc);
 	}
 	velocity(1, moving_vector);

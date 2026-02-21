@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:58:52 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/15 19:30:10 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/21 17:11:48 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	init_cam(t_cam_data *cam)
 	cam->pos.z = CAM_Z;
 	cam->angle.x = 0;
 	cam->angle.y = 0;
-	cam->angle.z = 1 * NORM_PREC;
+	cam->angle.z = 1;
 	cam->fov = CAM_FOV;
-	cam->speed = 50;
+	cam->speed = 40;
 }
 
 void	init_light(t_light_data *light)
@@ -58,11 +58,14 @@ void	init_ambient_light(t_ambient_light_data *ambient_light)
 	ambient_light->color = get_color_chars(0, A_LIGHT_R, A_LIGHT_G, A_LIGHT_B);
 }
 
-void	init(t_global_data *g_data, t_parsing_data *p_data, char *av_zero)
+void	init(t_global_data *g_data, t_parsing_data *p_data, t_exec_data *e_data,
+		char *av_zero)
 {
 	ft_bzero(g_data, sizeof(t_global_data));
 	ft_bzero(p_data, sizeof(t_parsing_data));
+	ft_bzero(e_data, sizeof(t_exec_data));
 	g_data->prog_name = get_progname(av_zero);
+	g_data->e_data = e_data;
 	init_cam(&g_data->world.cam);
 	init_light(&g_data->world.light);
 	init_ambient_light(&g_data->world.ambient_light);

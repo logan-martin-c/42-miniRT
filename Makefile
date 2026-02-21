@@ -2,9 +2,12 @@ CC = cc
 CFLAGS += -Wall -Wextra -Werror -Wpedantic -O3
 DFLAGS += -g3 -D DEBUG=1 -O3
 
+LIBS += -lpthread -latomic
+
 SRCS_DIR = srcs
 SRCS = main.c\
 		init.c\
+		interface/gui.c\
 		interface/inputs.c\
 		interface/velocity.c\
 		parsing/objects.c\
@@ -15,6 +18,7 @@ SRCS = main.c\
 		rendering/colors.c\
 		rendering/loop.c\
 		rendering/move.c\
+		rendering/multithreading.c\
 		rendering/object_collision.c\
 		rendering/project.c\
 		rendering/ray_tracer.c\
@@ -64,10 +68,10 @@ $(OBJS_DIR)/%_DEBUG.o : $(SRCS_DIR)/%.c
 	$(CC) $(DFLAGS) -MMD -I$(INCLUDES) -I$(LIBFT_DIR) -I$(MLX_DIR) -c $< -o $@
 
 $(NAME) : $(OBJS) $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -I$(INCLUDES) -I$(LIBFT_DIR) -I$(MLX_DIR) -L $(LIBFT_DIR) -L $(MLX_DIR) -lft -lmlx -L /usr/lib -lXext -lX11 -lm -lz
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -I$(INCLUDES) -I$(LIBFT_DIR) -I$(MLX_DIR) -L $(LIBFT_DIR) -L $(MLX_DIR) -lft -lmlx -L /usr/lib -lXext -lX11 -lm -lz $(LIBS)
 
 $(DNAME) : $(DOBJS) $(LIBFT) $(MLX)
-	$(CC) $(DFLAGS) -o $(DNAME) $(DOBJS) -I$(INCLUDES) -I$(LIBFT_DIR) -I$(MLX_DIR) -L $(LIBFT_DIR) -L $(MLX_DIR) -lft -lmlx -L /usr/lib -lXext -lX11 -lm -lz
+	$(CC) $(DFLAGS) -o $(DNAME) $(DOBJS) -I$(INCLUDES) -I$(LIBFT_DIR) -I$(MLX_DIR) -L $(LIBFT_DIR) -L $(MLX_DIR) -lft -lmlx -L /usr/lib -lXext -lX11 -lm -lz $(LIBS)
 
 clean :
 	$(RM) -rf $(OBJS) $(DEPS) $(DOBJS) $(DDEPS) $(OBJS_DIR)

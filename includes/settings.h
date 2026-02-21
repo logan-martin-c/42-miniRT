@@ -17,8 +17,7 @@
 # define WIN_WIDTH 1280
 
 //Normalized vectors settings
-# define NORM_PREC 10e8
-# define NORM_TOLERANCE 1000000
+# define NORM_TOLERANCE 1e-2
 
 // Default cam settings (when not defined in the map)
 // --POSITION--
@@ -52,4 +51,5 @@
 # define A_LIGHT_G 255
 # define A_LIGHT_B 255
 
+# define RENDERING_SQUARE 240
 #endif

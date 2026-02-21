@@ -12,8 +12,20 @@
 
 #include "minirt.h"
 
+void	clean_exec(t_exec_data *e_data)
+{
+	unsigned int	i;
+
+	i = -1;
+	e_data->stop = true;
+	while (++i < e_data->nb_threads)
+		pthread_join(e_data->threads[i], NULL);
+	free(e_data->threads);
+	free(e_data->tasks);
+}
+
 void	clean_exit(int exit_status, t_global_data *g_data,
-		t_parsing_data *p_data)
+		t_parsing_data *p_data, t_exec_data *e_data)
 {
 	char	*gnl;
 
@@ -26,6 +38,8 @@ void	clean_exit(int exit_status, t_global_data *g_data,
 		ft_lstclear(&p_data->obj_lst, free);
 	}
 	free(g_data->world.objs);
+	if (e_data)
+		clean_exec(e_data);
 	if (g_data->mlx.mlx)
 	{
 		mlx_do_key_autorepeaton(g_data->mlx.mlx);

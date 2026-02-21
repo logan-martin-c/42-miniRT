@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 18:43:44 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/12 13:20:06 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/21 17:11:52 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,27 @@ int	ft_error(char *error, char *progname)
 	return (EXIT_FAILURE);
 }
 
-int	ft_maperror(char *error, char *progname)
+int	ft_maperror(char *error, int line_nb, char *progname)
 {
 	char	*error_str;
+	char	*line;
 
 	error_str = NULL;
+	line = ft_itoa(line_nb);
 	if (error)
-		error_str = ft_strjoin_mult(3, "Error\n", error, "\n");
+		error_str = ft_strjoin_mult(5, "Error\n", error, " on line ", line,
+				"\n");
 	if (!error_str && progname)
 	{
 		perror(progname);
+		free(line);
 		return (EXIT_FAILURE);
 	}
 	if (!progname)
-		return (EXIT_FAILURE);
+		return (free(line), EXIT_FAILURE);
 	ft_putstr_fd(error_str, 2);
 	free(error_str);
+	free(line);
 	return (EXIT_FAILURE);
 }
 

@@ -24,8 +24,9 @@ void	parse_line(t_parsing_data *p_data, char *obj_line,
 		parse_object(p_data, obj_line, g_data);
 	else
 	{
-		ft_maperror("Invalid object type", g_data->prog_name);
-		(free(obj_line), clean_exit(1, g_data, p_data));
+		printf("%d\n", type);
+		ft_maperror("Invalid object type", p_data->line_nb, g_data->prog_name);
+		(free(obj_line), clean_exit(1, g_data, p_data, NULL));
 		exit(EXIT_FAILURE);
 	}
 }
@@ -34,6 +35,7 @@ int	parse_map(t_global_data *g_data, t_parsing_data *p_data)
 {
 	char	*obj_line;
 
+	p_data->line_nb = 1;
 	obj_line = "";
 	while (obj_line)
 	{
@@ -44,6 +46,7 @@ int	parse_map(t_global_data *g_data, t_parsing_data *p_data)
 			obj_line[ft_strlen(obj_line) - 1] = '\0';
 		parse_line(p_data, obj_line, g_data);
 		free(obj_line);
+		++p_data->line_nb;
 	}
 	return (0);
 }

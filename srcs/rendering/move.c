@@ -78,24 +78,25 @@ void	update_cam_pos(t_interface *input, t_cam_data *cam, int elapsed,
 		return ;
 	*moving = true;
 	moving_vector = lasting;
-	factor = elapsed / 1000000.0 * (float)cam->speed;
+	factor = ((float)elapsed / 1000000.0) * (float)cam->speed * 5;
 	if (x)
-		moving_vector = vectors_add(moving_vector, vector_mult(cam->right, x));
+		moving_vector = vectors_add(moving_vector, vector_mult(cam->right, x
+			* factor));
 	if (y)
 		moving_vector = vectors_add(moving_vector, vector_mult((t_vect3){0, 1,
-					0}, y));
+					0}, y * factor));
 	if (z)
 		moving_vector = vectors_add(moving_vector, vector_mult(cam->forward,
-					z));
-	moving_vector = vector_max_mag(moving_vector, factor);
+					z * factor));
+	moving_vector = vector_max_mag(moving_vector, cam->speed);
 	if (!x && !y && !z && lasting_mag)
 	{
-		cam->pos = vectors_add(cam->pos, vector_mult(moving_vector, factor));
+		cam->pos = vectors_add(cam->pos, vector_mult(moving_vector, elapsed / 1000000.0));
 		set_moving_vector(0, moving_vector, elapsed);
 	}
 	else
 	{
-		cam->pos = vectors_add(cam->pos, vector_mult(moving_vector, factor));
+		cam->pos = vectors_add(cam->pos, vector_mult(moving_vector, elapsed / 1000000.0));
 		set_moving_vector(1, moving_vector, elapsed);
 	}
 }

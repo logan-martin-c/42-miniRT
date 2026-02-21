@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:51:26 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/20 09:58:29 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/21 17:20:26 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ int	new_sphere(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	if (!params)
 	{
 		free(node);
-		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data);
+		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data, NULL);
 	}
 	if (check_args_count(params, 4, 4) == -1)
-		return (ft_free_strs(params), ft_maperror("sphere : invalid parameters",
+		return (ft_free_strs(params),
+			ft_maperror("sphere : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
 	if (parse_pos(params[1], &node->pos, 0) || parse_float(params[2],
 			&node->u_data.sphere.diameter) || parse_raw_color(params[3],
 			&node->color))
 		return (ft_free_strs(params),
-			ft_maperror("u_data.sphere : invalid parameters",
+			ft_maperror("u_data.sphere : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
 	node->u_data.sphere.radius = node->u_data.sphere.diameter / 2;
 	node->rot = (t_vect3){0, 0, -1};
@@ -48,15 +49,15 @@ int	new_plane(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	if (!params)
 	{
 		free(node);
-		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data);
+		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data, NULL);
 	}
 	if (!params[1] || !params[2] || !params[3] || params[4])
 		return (ft_free_strs(params), ft_maperror("plane : invalid parameters",
-				g_data->prog_name));
+				p_data->line_nb, g_data->prog_name));
 	if (parse_pos(params[1], &node->pos, 0) || parse_pos(params[2], &node->rot,
 			1) || parse_raw_color(params[3], &node->color))
 		return (ft_free_strs(params), ft_maperror("plane : invalid parameters",
-				g_data->prog_name));
+				p_data->line_nb, g_data->prog_name));
 	node->e_type = _plane;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
 	return (ft_free_strs(params), 0);
@@ -71,17 +72,19 @@ int	new_cylinder(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	if (!params)
 	{
 		free(node);
-		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data);
+		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data, NULL);
 	}
 	if (check_args_count(params, 6, 6) == -1)
 		return (ft_free_strs(params),
-			ft_maperror("cylinder : invalid parameters", g_data->prog_name));
+			ft_maperror("cylinder : invalid parameters", p_data->line_nb,
+				g_data->prog_name));
 	if (parse_pos(params[1], &node->pos, 0) || parse_pos(params[2], &node->rot,
 			1) || parse_float(params[3], &node->u_data.cylinder.diameter)
 		|| parse_float(params[4], &node->u_data.cylinder.height)
 		|| parse_raw_color(params[5], &node->color))
 		return (ft_free_strs(params),
-			ft_maperror("cylinder : invalid parameters", g_data->prog_name));
+			ft_maperror("cylinder : invalid parameters", p_data->line_nb,
+				g_data->prog_name));
 	node->e_type = _cylinder;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
 	return (ft_free_strs(params), 0);
@@ -96,7 +99,7 @@ void	parse_object(t_parsing_data *p_data, char *obj_line,
 	ret = 1;
 	node = malloc(sizeof(t_object));
 	if (!node)
-		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data);
+		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data, NULL);
 	if (!ft_strncmp(obj_line, "sp", 1) && ft_isspace(obj_line[2]))
 	{
 		ret = new_sphere(p_data, obj_line, g_data, node);
@@ -113,5 +116,5 @@ void	parse_object(t_parsing_data *p_data, char *obj_line,
 		p_data->obj_count++;
 	}
 	if (ret)
-		(free(obj_line), free(node), clean_exit(1, g_data, p_data));
+		(free(obj_line), free(node), clean_exit(1, g_data, p_data, NULL));
 }

@@ -23,6 +23,12 @@ typedef struct s_vect3
 	float			z;
 }					t_vect3;
 
+typedef struct s_vect2
+{
+	int				x;
+	int				y;
+}					t_vect2;
+
 typedef struct s_color
 {
 	unsigned char	alpha;
