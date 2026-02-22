@@ -43,6 +43,8 @@ typedef struct s_list
 
 // Protos
 long				ft_abs(long n);
+float				ft_abs_float(float n);
+double				ft_abs_double(double n);
 double				ft_atod(const char *str);
 float				ft_atof(const char *str);
 int					ft_atoi(const char *str);

@@ -10,48 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTORS_MATHS_2_H
-# define VECTORS_MATHS_2_H
+#ifndef VECTORS_MATHS_3_H
+# define VECTORS_MATHS_3_H
 
-static inline double	vector_mag(t_vect3 a)
+# include "minirt.h"
+
+static inline float fast_rand()
 {
-	return (sqrt(a.x * a.x + a.y * a.y + a.z * a.z));
+    static unsigned int  xorshift_state = 42;
+
+    xorshift_state ^= xorshift_state << 13;
+    xorshift_state ^= xorshift_state >> 17;
+    xorshift_state ^= xorshift_state << 5;
+    return (xorshift_state * (1.0f / 4294967296.0f));
 }
 
-static inline t_vect3	vector_norm(t_vect3 a)
+static inline t_vect3 get_random_vector(float min, float max)
 {
-	double	mag;
+    t_vect3 v;
 
-	mag = vector_mag(a);
-	a.x = a.x / mag;
-	a.y = a.y / mag;
-	a.z = a.z / mag;
-	return (a);
+    v.x = fast_rand() * (max - min) + min;
+    v.y = fast_rand() * (max - min) + min;
+    v.z = fast_rand() * (max - min) + min;
+    return (v);
 }
 
-static inline t_vect3	vector_cross(t_vect3 a, t_vect3 b)
+static inline t_vect3  get_diffuse_vector(t_vect3 normal)
 {
-	t_vect3	ret;
+    t_vect3    v;
 
-	ret.x = a.y * b.z - a.z * b.y;
-	ret.y = a.z * b.x - a.x * b.z;
-	ret.z = a.x * b.y - a.y * b.x;
-	return (ret);
-}
-
-static inline t_vect3	vector_max_mag(t_vect3 a, float max_mag)
-{
-	int	mag;
-
-	mag = vector_mag(a);
-	if (mag > max_mag)
-		a = vector_mult(vector_norm(a), max_mag);
-	return (a);
-}
-
-static inline float	vectors_angle(t_vect3 a, t_vect3 b)
-{
-	return (dot_product(vector_norm(a), vector_norm(b)));
+    while (1)
+    {
+        v = vector_norm(get_random_vector(-1, 1));
+        if (dot_product(normal, v) <= 0)
+            return (v);
+    }
 }
 
 #endif

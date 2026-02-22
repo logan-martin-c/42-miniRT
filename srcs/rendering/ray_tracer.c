@@ -16,7 +16,9 @@
 #include "mlx_utils.h"
 #include "vectors_maths_1.h"
 #include "vectors_maths_2.h"
+#include "vectors_maths_3.h"
 #include "object_collision.h"
+#include "object_normal.h"
 #define _USE_MATH_DEFINES
 
 void	init_viewport(t_viewport *viewport, int fov)
@@ -66,29 +68,42 @@ static inline float	check_object_collision(t_object *object, float t, t_vect3
 	return (t);
 }
 
-int	get_pixel_color(t_vect3 ray, t_world_data *world)
+int	get_pixel_color(t_vect3 ray, t_world_data *world, t_vect3 origin, int
+	bounce)
 {
 	int		color;
 	int		i;
+	int		nearest_i;
 	float	t;
 	float	new_t;
 
 	i = -1;
 	t = -1;
-	color = color_intensity(world->ambient_light.color, world->ambient_light
-		.ratio);
+	if (bounce > BOUNCES)
+		return (color_intensity(world->ambient_light.color, world->ambient_light
+			.ratio));
+	color = BLACK;
 	while (++i < world->obj_count)
 	{
-		new_t = check_object_collision(&world->objs[i], t, ray, world->cam.pos);
+		new_t = check_object_collision(&world->objs[i], t, ray, origin);
 		if (new_t != -1 && (t == -1 || new_t < t))
 		{
 			color = world->objs[i].color;
+			nearest_i = i;
 			t = new_t;
 		}
 	}
-	return (light_filter(color_intensity(world->ambient_light.color,
-		world->ambient_light
-		.ratio), color));
+	if (t == -1)
+		return (color_intensity(world->ambient_light.color, world->ambient_light
+			.ratio));
+	return (color_sup(color, get_pixel_color(sphere_normal(&world->objs[nearest_i],
+		get_collision_point(ray, world->cam.pos, t), ray), world,
+	 	get_collision_point(ray, world->cam.pos, t), bounce + 1)));
+	// t_vect3 normal;
+	// normal = get_diffuse_vector(sphere_normal(&world->objs[nearest_i], get_collision_point
+	// 	(ray, world->cam.pos, t), ray));
+	// return (get_color_chars(255, ft_abs_float(normal.x) * 255.0,
+	// 	ft_abs_float(normal.y) * 255.0, ft_abs_float(normal.z) * 255.0));
 }
 
 void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
@@ -105,7 +120,7 @@ void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 		{
 			ray = get_ray(pointer.x, pointer.y, &world->viewport, &world->cam);
 			my_mlx_pixel_put(mlx, pointer, /*color_sup(*/ get_pixel_color(ray,
-					world) /*,
+					world, world->cam.pos, 0) /*,
 					get_prev_color(pointer, mlx))*/);
 			pointer.x++;
 		}

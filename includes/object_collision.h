@@ -10,11 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#ifndef OBJECT_COLLISION_H
+# define OBJECT_COLLISION_H
+
+# include "minirt.h"
 //
-#include "vectors_maths_1.h"
-#include "vectors_maths_2.h"
-#include <stdio.h>
+# include "vectors_maths_1.h"
+# include "vectors_maths_2.h"
+# include <stdio.h>
 
 static inline double	sphere_collision(t_vect3 ray, t_object *object, t_vect3
 	cam_pos)
@@ -38,3 +41,15 @@ static inline double	sphere_collision(t_vect3 ray, t_object *object, t_vect3
 		return (t);
 	return (-1.0);
 }
+
+t_vect3 get_collision_point(t_vect3 ray, t_vect3 cam_pos, float t)
+{
+	t_vect3 point;
+
+	point.x = cam_pos.x + t * ray.x;
+	point.y = cam_pos.y + t * ray.y;
+	point.z = cam_pos.z + t * ray.z;
+	return (point);
+}
+
+#endif
