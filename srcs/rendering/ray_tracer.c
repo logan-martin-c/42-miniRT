@@ -66,8 +66,7 @@ static inline float	check_object_collision(t_object *object, float t, t_vect3
 	return (t);
 }
 
-int	get_pixel_color(t_vect3 ray, t_object *objects, t_vect3 cam_pos,
-		int obj_count)
+int	get_pixel_color(t_vect3 ray, t_world_data *world)
 {
 	int		color;
 	int		i;
@@ -76,13 +75,13 @@ int	get_pixel_color(t_vect3 ray, t_object *objects, t_vect3 cam_pos,
 
 	i = -1;
 	t = -1;
-	color = BLACK;
-	while (++i < obj_count)
+	color = world->ambient_light.color;
+	while (++i < world->obj_count)
 	{
-		new_t = check_object_collision(&objects[i], t, ray, cam_pos);
+		new_t = check_object_collision(&world->objs[i], t, ray, world->cam.pos);
 		if (new_t != -1 && (t == -1 || new_t < t))
 		{
-			color = objects[i].color;
+			color = world->objs[i].color;
 			t = new_t;
 		}
 	}
@@ -103,7 +102,7 @@ void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 		{
 			ray = get_ray(pointer.x, pointer.y, &world->viewport, &world->cam);
 			my_mlx_pixel_put(mlx, pointer, /*color_sup(*/ get_pixel_color(ray,
-					world->objs, world->cam.pos, world->obj_count) /*,
+					world) /*,
 					get_prev_color(pointer, mlx))*/);
 			pointer.x++;
 		}
