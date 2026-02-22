@@ -44,7 +44,6 @@ int	set_ambient_light(t_parsing_data *p_data, char *obj_line,
 		t_global_data *g_data)
 {
 	char	**params;
-	float	raw_ratio;
 
 	if (p_data->map_data.ambient_light)
 		return (ft_maperror("Multiple ambient light definition is forbidden",
@@ -61,12 +60,11 @@ int	set_ambient_light(t_parsing_data *p_data, char *obj_line,
 		return (ft_free_strs(params),
 			ft_maperror("ambient light : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
-	raw_ratio = ft_atof(params[1]);
-	if (raw_ratio > 1 || raw_ratio < 0)
+	g_data->world.ambient_light.ratio = ft_atof(params[1]);
+	if (g_data->world.ambient_light.ratio > 1 || g_data->world.ambient_light.ratio < 0)
 		return (ft_free_strs(params),
 			ft_maperror("ambient light : invalid ratio", p_data->line_nb,
 				g_data->prog_name));
-	g_data->world.ambient_light.ratio = 255 * raw_ratio;
 	return (p_data->map_data.ambient_light = 1, ft_free_strs(params), 0);
 }
 

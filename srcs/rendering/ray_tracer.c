@@ -75,7 +75,8 @@ int	get_pixel_color(t_vect3 ray, t_world_data *world)
 
 	i = -1;
 	t = -1;
-	color = world->ambient_light.color;
+	color = color_intensity(world->ambient_light.color, world->ambient_light
+		.ratio);
 	while (++i < world->obj_count)
 	{
 		new_t = check_object_collision(&world->objs[i], t, ray, world->cam.pos);

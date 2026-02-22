@@ -49,3 +49,14 @@ static inline int	color_gradient(int start, int end, float progress)
 			- p_color_start.blue) * progress;
 	return (get_color(p_color_progress));
 }
+
+static inline int	color_intensity(int color, float intensity)
+{
+	t_color	p_color;
+
+	p_color = parse_color(color);
+	p_color.red *= intensity;
+	p_color.green *= intensity;
+	p_color.blue *= intensity;
+	return (get_color(p_color));
+}

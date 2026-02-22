@@ -32,7 +32,7 @@ void	print_ambient_light(t_ambient_light_data *ambient_light)
 
 	color = parse_color(ambient_light->color);
 	printf("Ambient light :\n");
-	printf("\tratio : %f\n", (float)ambient_light->ratio / 255);
+	printf("\tratio : %f\n", (float)ambient_light->ratio);
 	printf("\tcolor:\n");
 	printf("\t\ta : %u\n", color.alpha);
 	printf("\t\tr : %u\n", color.red);

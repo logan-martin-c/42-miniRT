@@ -64,7 +64,7 @@ typedef struct s_cam_data
 
 typedef struct s_ambient_light_data
 {
-	unsigned char	ratio;
+	float			ratio;
 	int				color;
 }					t_ambient_light_data;
 
@@ -110,11 +110,5 @@ typedef struct s_object
 		t_light		light;
 	}				u_data;
 }					t_object;
-
-typedef struct s_ambient_lighting
-{
-	char			ratio;
-	int				color;
-}					t_ambient_lighting;
 
 #endif
