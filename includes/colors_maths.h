@@ -60,3 +60,16 @@ static inline int	color_intensity(int color, float intensity)
 	p_color.blue *= intensity;
 	return (get_color(p_color));
 }
+
+static inline int	light_filter(int light, int filter)
+{
+	t_color	p_light;
+	t_color	p_filter;
+
+	p_light = parse_color(light);
+	p_filter = parse_color(filter);
+	p_light.red = ft_min(p_light.red, p_filter.red);
+	p_light.green = ft_min(p_light.green, p_filter.green);
+	p_light.blue = ft_min(p_light.blue, p_filter.blue);
+	return (get_color(p_light));
+}

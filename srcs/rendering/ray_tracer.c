@@ -86,7 +86,9 @@ int	get_pixel_color(t_vect3 ray, t_world_data *world)
 			t = new_t;
 		}
 	}
-	return (color);
+	return (light_filter(color_intensity(world->ambient_light.color,
+		world->ambient_light
+		.ratio), color));
 }
 
 void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
