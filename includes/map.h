@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:51 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/20 18:02:57 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/02/24 14:01:57 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ typedef struct s_vect3
 	float			y;
 	float			z;
 }					t_vect3;
+
+typedef struct s_vect2
+{
+	int				x;
+	int				y;
+}					t_vect2;
 
 typedef struct s_color
 {
@@ -56,13 +62,6 @@ typedef struct s_cam_data
 	t_vect3		up;
 }					t_cam_data;
 
-typedef struct s_light_data
-{
-	t_vect3		pos;
-	float		ratio;
-	int				color;
-}					t_light_data;
-
 typedef struct s_ambient_light_data
 {
 	unsigned char	ratio;
@@ -73,7 +72,6 @@ typedef struct s_map_data
 {
 	bool			cam;
 	bool			ambient_light;
-	bool			light;
 }					t_map_data;
 
 typedef struct s_sphere
@@ -88,13 +86,19 @@ typedef struct s_cylinder
 	float			height;
 }					t_cylinder;
 
+typedef struct s_light
+{
+	float			ratio;
+}					t_light;
+
 typedef struct s_object
 {
 	enum
 	{
 		_sphere,
 		_plane,
-		_cylinder
+		_cylinder,
+		_light
 	} e_type;
 	int				color;
 	t_vect3		pos;
@@ -103,6 +107,7 @@ typedef struct s_object
 	{
 		t_sphere	sphere;
 		t_cylinder	cylinder;
+		t_light		light;
 	}				u_data;
 }					t_object;
 

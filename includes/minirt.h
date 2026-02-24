@@ -22,6 +22,9 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <string.h>
+# include <pthread.h>
+# include <unistd.h>
+# include<stdatomic.h>
 
 // KEYCODES
 # define ESC 65307
@@ -50,6 +53,12 @@
 #  define DEBUG 0
 # endif
 
+typedef struct	s_tasks
+{
+	t_vect2	start;
+	t_vect2	end;
+}							t_tasks;
+
 typedef struct s_mlx_data
 {
 	void					*mlx;
@@ -66,8 +75,8 @@ typedef struct s_mlx_data
 
 typedef struct s_viewport
 {
-	t_vect3				down;
-	t_vect3				right;
+	t_vect3					down;
+	t_vect3					right;
 	double					aspect_ratio;
 	double					theta;
 	double					tan_theta;
@@ -85,7 +94,6 @@ typedef struct s_world_data
 	bool					moving;
 	bool					rotating;
 	t_cam_data				cam;
-	t_light_data			light;
 	t_ambient_light_data	ambient_light;
 	t_viewport				viewport;
 }							t_world_data;
@@ -96,6 +104,7 @@ typedef struct s_parsing_data
 	t_list					*obj_lst;
 	int						obj_count;
 	t_map_data				map_data;
+	int						line_nb;
 }							t_parsing_data;
 
 typedef struct s_interface
@@ -108,12 +117,26 @@ typedef struct s_interface
 	bool					ctrl;
 }							t_interface;
 
+typedef struct s_exec_data
+{
+	pthread_t				*threads;
+	unsigned int			nb_threads;
+	_Atomic bool			stop;
+	pthread_mutex_t			mutex;
+	t_tasks					*tasks;
+	_Atomic	int				current_task;
+	_Atomic int				tasks_done;
+	_Atomic int				to_do;
+	_Atomic bool			rendering;
+}							t_exec_data;
+
 typedef struct s_global_data
 {
 	char					*prog_name;
 	t_mlx_data				mlx;
 	t_interface				key;
 	t_world_data			world;
+	t_exec_data				*e_data;
 }							t_global_data;
 
 typedef enum e_obj_type
@@ -133,8 +156,7 @@ typedef struct s_int_color
 
 // INIT
 int							init_mlx(t_mlx_data *mlx);
-void						init(t_global_data *g_data, t_parsing_data *p_data,
-								char *av_zero);
+void						init(t_global_data *g_data, t_parsing_data *p_data, t_exec_data *e_data, char *av_zero);
 void						init_viewport(t_viewport *viewport, int fov);
 
 // PARSING
@@ -162,7 +184,7 @@ int							get_color_chars(unsigned char a, unsigned char r,
 int 						shading(t_vect3 ray, t_vect3 cam_pos, float t,
 								t_object object, t_world_data *world);
 // int							color_sup(int color_a, int color_b);
-t_vect3					project(t_vect3 pos, t_cam_data *cam_data);
+t_vect3						project(t_vect3 pos, t_cam_data *cam_data);
 // void						my_mlx_pixel_put(t_mlx_data *mlx, t_vect3 pos,
 // 								int color);
 void						update_cam_pos(t_interface *input, t_cam_data *cam, int elapsed, bool *moving);
@@ -170,28 +192,33 @@ void						rotate_cam(t_cam_data *cam, t_mlx_data *mlx, bool *moving);
 void						trace_rays(t_world_data *world, t_mlx_data *mlx);
 // t_vect3					vector_norm(t_vect3 a);
 // t_vect3					vector_cross(t_vect3 a, t_vect3 b);
-void						render_canva(t_vect3 start, t_vect3 end,
+void						render_canva(t_vect2 start, t_vect2 end,
 								t_world_data *world, t_mlx_data *mlx);
 // int							get_prev_color(t_vect3 pos, t_mlx_data *mlx);
-double    					sphere_collision(t_vect3 ray, t_object *object, t_vect3 cam_pos);
+int							init_threads(t_exec_data *e_data, t_global_data
+	*g_data);
+void						create_tasks(t_exec_data *e_data);
 
-// INPUT
+// INTERFACE
 void						set_hooks(t_global_data *g_data);
 void						move_cam(t_world_data *world, t_mlx_data *mlx, t_interface *key, int elapsed);
 void						set_moving_vector(bool moving, t_vect3 move, int elapsed);
-t_vect3					get_lasting(void);
+t_vect3						get_lasting(void);
+void						display_gui(t_world_data *world, t_mlx_data *mlx,
+	int
+	elapsed);
 
 // UTILS
 int							ft_puterr(char *error);
 int							ft_error(char *error, char *progname);
-int							ft_maperror(char *error, char *progname);
+int							ft_maperror(char *error, int line_nb, char *progname);
 int							ft_perror(char *optional_name, char *progname);
 char						*get_progname(char *av_zero);
 unsigned long				get_time(unsigned long start);
 unsigned long				get_utime(unsigned long start);
 void						free_node(void *node);
 void						clean_exit(int exit_status, t_global_data *g_data,
-								t_parsing_data *p_data);
+		t_parsing_data *p_data, t_exec_data *e_data);
 int							win_close(t_global_data *g_data);
 void						print_objects(t_parsing_data *p_data,
 								t_world_data *world);

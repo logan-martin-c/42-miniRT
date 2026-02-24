@@ -13,7 +13,7 @@
 #ifndef MLX_UTILS_H
 # define MLX_UTILS_H
 
-static inline void	my_mlx_pixel_put(t_mlx_data *mlx, t_vect3 pos, int color)
+static inline void	my_mlx_pixel_put(t_mlx_data *mlx, t_vect2 pos, int color)
 {
 	char	*dst;
 
