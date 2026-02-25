@@ -36,7 +36,7 @@ int	parse_pos(char *str, t_vect3 *pos, char normalized)
 
 int	parse_raw_color(char *str, int *color)
 {
-	t_int_color	c;
+	t_long_color	c;
 	int			args_count;
 	char		**spl_str;
 	int			i;

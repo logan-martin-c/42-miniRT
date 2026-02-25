@@ -149,10 +149,10 @@ typedef enum e_obj_type
 
 typedef struct s_long_color
 {
-	long						a;
-	long						r;
-	long						v;
-	long						b;
+	unsigned long			a;
+	unsigned long			r;
+	unsigned long			v;
+	unsigned long			b;
 }							t_long_color;
 
 // INIT
