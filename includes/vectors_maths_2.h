@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vectors_maths.c                                    :+:      :+:    :+:   */
+/*   vectors_maths_2.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 09:43:55 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/16 11:11:51 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/25 14:22:34 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,14 @@ static inline t_vect3	vector_max_mag(t_vect3 a, float max_mag)
 	if (mag > max_mag)
 		a = vector_mult(vector_norm(a), max_mag);
 	return (a);
+}
+
+static inline t_vect3 vector_reflect(t_vect3 i, t_vect3 n)
+{
+    // R = I - 2 * dot(I, N) * N
+    double dot = dot_product(i, n);
+    t_vect3 scaled_n = vector_mult(n, 2.0 * dot);
+    return (vectors_sub(i, scaled_n));
 }
 
 #endif

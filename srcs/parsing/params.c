@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:51:58 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/24 14:01:24 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/02/24 17:24:55 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	set_ambient_light(t_parsing_data *p_data, char *obj_line,
 		return (ft_free_strs(params),
 			ft_maperror("ambient light : invalid ratio", p_data->line_nb,
 				g_data->prog_name));
-	g_data->world.ambient_light.ratio = 255 * raw_ratio;
+	g_data->world.ambient_light.ratio = raw_ratio;
 	return (p_data->map_data.ambient_light = 1, ft_free_strs(params), 0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/02/20 18:18:40 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/02/25 17:22:44 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,82 @@ t_vect3 get_p_pos(t_vect3 ray, t_vect3 cam_pos, float t)
 	return (p);
 }
 
-/// @brief more structs needed.
-float compute_lighting(t_vect3 p, t_vect3 n, t_world_data *world)
+typedef struct s_shader_compute
 {
+	t_vect3 amb_rgb;
+	t_vect3 obj_rgb;
+	t_vect3 light_rgb;
+	t_vect3 light_ray_dir;
+	t_vect3 n_light_normal;
+	t_vect3 n_point_normal;
+	t_vect3 n_view_normal;
+	t_vect3 reflection_direction;
+	t_vect3 neg_light_normal;
+	float dot_nl;
+	float dot_rv;
 	float intensity;
-	t_vect3 l;
-	float dot_l;
+	t_vect3 diffuse;
+	float spec_power;
+	t_vect3 specular;
+	t_vect3 final_pixel_color;
+} t_shader_compute;
 
-	intensity = 0.2;// world->ambient_light.ratio;
-	l = vectors_sub(world->light.pos, p);
-	dot_l = dot_product(n, l);
-	if (dot_l > 0)
-		intensity += world->light.ratio * dot_l / (vector_mag(n) * vector_mag(l));
-	return (ft_min_float(intensity, 1));
+
+/// @brief convert colors to vec3 to get float from 0 to 1. albedo * light color * dot_l
+int compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal, t_object object ,t_world_data *world)
+{
+	t_shader_compute shader;
+	int i;
+
+	i = 0;
+	shader.amb_rgb = color_to_vec3(world->ambient_light.color);
+	shader.obj_rgb = color_to_vec3(object.color);
+	shader.n_point_normal = vector_norm(point_normal);
+	shader.n_view_normal = vector_norm(vectors_sub(world->cam.pos, point_r_c));
+	shader.final_pixel_color = (t_vect3){0, 0, 0};
+	shader.final_pixel_color = vectors_mult(vector_mult(shader.amb_rgb, world->ambient_light.ratio), shader.obj_rgb);
+	while(i < world->obj_count)
+	{
+		if (world->objs[i].e_type == _light)
+		{
+			shader.light_ray_dir = vectors_sub(world->objs[i].pos, point_r_c);
+			shader.dot_nl = dot_product(vector_norm(point_normal), vector_norm(shader.light_ray_dir));
+			if (shader.dot_nl > 0)
+			{
+				shader.light_rgb = color_to_vec3(world->objs[i].color);
+				shader.intensity = world->objs[i].u_data.light.ratio * shader.dot_nl;
+				shader.diffuse = vector_mult(vectors_mult(shader.light_rgb, shader.obj_rgb), shader.intensity);
+				shader.neg_light_normal = vector_norm(vector_mult(shader.light_ray_dir, -1.0));
+				shader.reflection_direction = vector_reflect(shader.neg_light_normal, shader.n_point_normal);
+				shader.dot_rv = ft_max_float(0.0f, dot_product(shader.reflection_direction, shader.n_view_normal));
+				shader.spec_power = pow(shader.dot_rv, 32);
+				shader.specular = vector_mult(vector_mult(shader.light_rgb, world->objs[i].u_data.light.ratio), shader.spec_power);
+				shader.final_pixel_color = vectors_add(shader.final_pixel_color, vectors_add(shader.diffuse, shader.specular));
+			}
+		}
+		i++;
+	}
+	return (vec3_to_color(shader.final_pixel_color));
 }
 
-int apply_lighting(int o_color, float intensity)
+
+
+/// @brief calc P space pos, calc P normal, calc direct light intensity, return adjusted color
+int shading(t_vect3 ray, float t, t_object object, t_world_data *world)
+{
+	t_vect3 point_ray_colision;
+	t_vect3 point_normal;
+
+	point_ray_colision = get_p_pos(ray, world->cam.pos, t);
+	point_normal = get_p_normal(object, point_ray_colision);
+	//n = vector_norm(n);
+	return (compute_direct_light(point_ray_colision, point_normal, object, world));
+	
+}
+
+
+
+/* int apply_lighting(int o_color, float intensity)
 {
 	t_color obj_splt_colors;
 
@@ -62,17 +122,4 @@ int apply_lighting(int o_color, float intensity)
 	obj_splt_colors.green *= intensity;
 	obj_splt_colors.blue *= intensity;
 	return (get_color(obj_splt_colors));
-}
-
-/// @brief calc P space pos, calc P normal, calc direct light intensity, return adjusted color
-int shading(t_vect3 ray, t_vect3 cam_pos, float t, t_object object, t_world_data *world)
-{
-	t_vect3 p;
-	t_vect3 n;
-
-	p = get_p_pos(ray, cam_pos, t);
-	n = get_p_normal(object, p);
-	//n = vector_norm(n);
-	return (apply_lighting(object.color , compute_lighting(p, n, world)));
-	
-}
+} */

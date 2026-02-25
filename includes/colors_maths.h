@@ -1,14 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colors_maths.c                                     :+:      :+:    :+:   */
+/*   colors_maths.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 11:22:24 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/16 11:10:13 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/24 16:48:06 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+static inline t_vect3 color_to_vec3(int argb)
+{
+	t_vect3 color;
+
+        color.x = ((argb >> 16) & 0xFF) / 255.0f;
+		color.y = ((argb >> 8) & 0xFF) / 255.0f;
+   		color.z = (argb & 0xFF) / 255.0f;
+	return (color);
+}
+
+static inline int vec3_to_color(t_vect3 color)
+{
+    if (color.x > 1.0f) color.x = 1.0f;
+    if (color.y > 1.0f) color.y = 1.0f;
+    if (color.z > 1.0f) color.z = 1.0f;
+
+    int r = (int)(color.x * 255.0f);
+    int g = (int)(color.y * 255.0f);
+    int b = (int)(color.z * 255.0f);
+
+    return (255 << 24) | (r << 16) | (g << 8) | b;
+}
 
 static inline int	color_sup(int front, int back)
 {

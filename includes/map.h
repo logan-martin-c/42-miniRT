@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:51 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/24 14:01:57 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/02/24 17:24:14 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_cam_data
 
 typedef struct s_ambient_light_data
 {
-	unsigned char	ratio;
+	float	ratio;
 	int				color;
 }					t_ambient_light_data;
 

@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:36:21 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/24 14:01:41 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/02/24 17:36:06 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 #include "vectors_maths_2.h"
 #include "object_collision.h"
 #define _USE_MATH_DEFINES
-
+#ifndef M_PI
+# define M_PI 3.14159265358979323846
+#endif
 void	init_viewport(t_viewport *viewport, int fov)
 {
 	viewport->aspect_ratio = (double)WIN_WIDTH * (double)INV_WIN_HEIGHT;
@@ -68,7 +70,7 @@ static inline float	check_object_collision(t_object *object, float t, t_vect3
 
 int	get_pixel_color(t_vect3 ray, t_world_data *world)
 {
-	int		color;
+	int		bg_color;
 	int		i;
 	float	t;
 	float	new_t;
@@ -76,20 +78,21 @@ int	get_pixel_color(t_vect3 ray, t_world_data *world)
 
 	i = -1;
 	t = -1;
-	color = world->ambient_light.color;
+	closest_obj_index = 0;
+	bg_color = vec3_to_color(vector_mult(color_to_vec3(world->ambient_light.color), world->ambient_light.ratio));
 	while (++i < world->obj_count)
 	{
 		new_t = check_object_collision(&world->objs[i], t, ray, world->cam.pos);
 		if (new_t != -1 && (t == -1 || new_t < t))
 		{
-			color = world->objs[i].color;
+			bg_color = world->objs[i].color;
 			t = new_t;
 			closest_obj_index = i;
 		}
 	}
 	if (t == -1)
-		return (color);
-	return (shading(ray, cam_pos, t, objects[closest_obj_index], world));
+		return (bg_color);
+	return (shading(ray, t, world->objs[closest_obj_index], world));
 }
 
 void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
