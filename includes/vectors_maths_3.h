@@ -15,9 +15,9 @@
 
 # include "minirt.h"
 
-static inline float fast_rand()
+static inline float fast_rand(void)
 {
-    static unsigned int  xorshift_state = 42;
+    static _Thread_local unsigned int  xorshift_state = 42;
 
     xorshift_state ^= xorshift_state << 13;
     xorshift_state ^= xorshift_state >> 17;
@@ -32,19 +32,28 @@ static inline t_vect3 get_random_vector(float min, float max)
     v.x = fast_rand() * (max - min) + min;
     v.y = fast_rand() * (max - min) + min;
     v.z = fast_rand() * (max - min) + min;
+    vector_norm(v);
     return (v);
 }
 
-static inline t_vect3  get_diffuse_vector(t_vect3 normal)
+static inline t_vect3  get_diffuse_vector(t_vect3 normal, float reflectance)
 {
-    t_vect3    v;
+    t_vect3 v;
 
+    if (reflectance == 1)
+        return (normal);
     while (1)
     {
-        v = vector_norm(get_random_vector(-1, 1));
-        if (dot_product(normal, v) <= 0)
+        v = vectors_add(get_random_vector(- (1 - reflectance), (1 - reflectance)), normal);
+        if (dot_product(vector_norm(normal), vector_norm(v)) >= 0)
             return (v);
     }
+    return (vectors_add(get_random_vector(- (1 - reflectance), (1 - reflectance)), normal));
+}
+
+static inline t_vect3 reflect(t_vect3 v, t_vect3 n)
+{
+    return (vector_norm(vectors_sub(v, vector_mult(n, dot_product(v, n) * 2))));
 }
 
 #endif

@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
+//
+#include "vectors_maths_1.h"
+#include "colors_maths.h"
 
 t_color	parse_color(int color)
 {
@@ -46,6 +49,15 @@ int	get_color_chars(unsigned char a, unsigned char r, unsigned char g,
 	color += (g << 8) & 65535;
 	color += b & 255;
 	return (color);
+}
+
+int	get_sky_color(int ambient_color, t_vect3 ray)
+{
+	float	upness;
+
+	upness = dot_product(ray, (t_vect3){0, 1, 0});
+	upness = (upness + 1) / 8;
+	return (color_intensity(ambient_color, 0.75 + upness));
 }
 
 // int	get_prev_color(t_vect3 pos, t_mlx_data *mlx)

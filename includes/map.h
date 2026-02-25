@@ -78,6 +78,7 @@ typedef struct s_sphere
 {
 	float			diameter;
 	float			radius;
+	float			reflectance;
 }					t_sphere;
 
 typedef struct s_cylinder

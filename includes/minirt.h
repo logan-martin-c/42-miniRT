@@ -89,6 +89,7 @@ typedef struct s_viewport
 
 typedef struct s_world_data
 {
+	long					static_frames;
 	t_object				*objs;
 	int						obj_count;
 	bool					moving;
@@ -146,13 +147,13 @@ typedef enum e_obj_type
 	_obj_none,
 }							t_obj_type;
 
-typedef struct s_int_color
+typedef struct s_long_color
 {
-	int						a;
-	int						r;
-	int						v;
-	int						b;
-}							t_int_color;
+	long						a;
+	long						r;
+	long						v;
+	long						b;
+}							t_long_color;
 
 // INIT
 int							init_mlx(t_mlx_data *mlx);
@@ -196,6 +197,7 @@ void						render_canva(t_vect2 start, t_vect2 end,
 int							init_threads(t_exec_data *e_data, t_global_data
 	*g_data);
 void						create_tasks(t_exec_data *e_data);
+int							get_sky_color(int ambient_color, t_vect3 ray);
 
 // INTERFACE
 void						set_hooks(t_global_data *g_data);

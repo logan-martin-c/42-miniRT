@@ -23,7 +23,7 @@ int	new_sphere(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 		free(node);
 		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data, NULL);
 	}
-	if (check_args_count(params, 4, 4) == -1)
+	if (check_args_count(params, 4, 5) == -1)
 		return (ft_free_strs(params), ft_maperror("sphere : invalid parameters",
 				p_data->line_nb, g_data->prog_name));
 	if (parse_pos(params[1], &node->pos, 0) || parse_float(params[2],
@@ -33,6 +33,8 @@ int	new_sphere(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 			ft_maperror("u_data.sphere : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
 	node->u_data.sphere.radius = node->u_data.sphere.diameter / 2;
+	if (params[4])
+		node->u_data.sphere.reflectance = ft_atof(params[4]);
 	node->rot = (t_vect3){0, 0, -1};
 	node->e_type = _sphere;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));

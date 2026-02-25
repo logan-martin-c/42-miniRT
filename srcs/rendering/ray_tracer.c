@@ -76,12 +76,15 @@ int	get_pixel_color(t_vect3 ray, t_world_data *world, t_vect3 origin, int
 	int		nearest_i;
 	float	t;
 	float	new_t;
+	t_vect3	normal;
+	t_vect3	collision_point;
+	t_vect3	reflect_vector;
 
 	i = -1;
 	t = -1;
 	if (bounce > BOUNCES)
-		return (color_intensity(world->ambient_light.color, world->ambient_light
-			.ratio));
+		return (get_sky_color(color_intensity(world->ambient_light.color, world->ambient_light
+			.ratio), ray));
 	color = BLACK;
 	while (++i < world->obj_count)
 	{
@@ -94,16 +97,15 @@ int	get_pixel_color(t_vect3 ray, t_world_data *world, t_vect3 origin, int
 		}
 	}
 	if (t == -1)
-		return (color_intensity(world->ambient_light.color, world->ambient_light
-			.ratio));
-	return (color_sup(color, get_pixel_color(sphere_normal(&world->objs[nearest_i],
-		get_collision_point(ray, world->cam.pos, t), ray), world,
-	 	get_collision_point(ray, world->cam.pos, t), bounce + 1)));
-	// t_vect3 normal;
-	// normal = get_diffuse_vector(sphere_normal(&world->objs[nearest_i], get_collision_point
-	// 	(ray, world->cam.pos, t), ray));
-	// return (get_color_chars(255, ft_abs_float(normal.x) * 255.0,
-	// 	ft_abs_float(normal.y) * 255.0, ft_abs_float(normal.z) * 255.0));
+		return (get_sky_color(color_intensity(world->ambient_light.color, world->ambient_light
+			.ratio), ray));
+	if (bounce + 1 > BOUNCES)
+		return (color_gradient(color, get_sky_color(color_intensity(world->ambient_light.color, world->ambient_light.ratio), ray), world->objs[nearest_i].u_data.sphere.reflectance));
+	collision_point = get_collision_point(ray, origin, t - t * 1e-3);
+	normal = sphere_normal(&world->objs[nearest_i], collision_point, ray);
+	normal = get_diffuse_vector(normal, world->objs[nearest_i].u_data.sphere.reflectance);
+	reflect_vector = vector_norm(reflect(ray, normal));
+	return (color_gradient(color, get_pixel_color(reflect_vector, world, collision_point, bounce + 1), world->objs[nearest_i].u_data.sphere.reflectance));
 }
 
 void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
@@ -111,6 +113,7 @@ void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 {
 	t_vect2	pointer;
 	t_vect3	ray;
+	static t_long_color color_tab[WIN_HEIGHT * WIN_WIDTH];
 
 	pointer.y = start.y;
 	while (pointer.y <= end.y)
@@ -119,9 +122,19 @@ void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 		while (pointer.x <= end.x)
 		{
 			ray = get_ray(pointer.x, pointer.y, &world->viewport, &world->cam);
-			my_mlx_pixel_put(mlx, pointer, /*color_sup(*/ get_pixel_color(ray,
-					world, world->cam.pos, 0) /*,
-					get_prev_color(pointer, mlx))*/);
+			if (!world->moving && !world->rotating)
+			{
+				float progress = ((float)1 / ((float)++world->static_frames / 4));
+				my_mlx_pixel_put(mlx, pointer, color_gradient(get_prev_color(pointer, color_tab), get_pixel_color(ray,
+						world, world->cam.pos, 0), 0.5));
+			}
+			else
+			{
+				my_mlx_pixel_put(mlx, pointer, /*color_sup(*/ get_pixel_color(ray,
+						world, world->cam.pos, 0) /*,
+						get_prev_color(pointer, mlx))*/);
+				world->static_frames = 1;
+			}
 			pointer.x++;
 		}
 		pointer.y++;
