@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:24:04 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/20 16:41:43 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/26 11:44:58 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	main(int ac, char *av[])
 		clean_exit(EXIT_FAILURE, &g_data, &p_data, NULL);
 	}
 	init_viewport(&g_data.world.viewport, g_data.world.cam.fov);
-	if (init_threads(&e_data, &g_data))
+	if (init_exec(&e_data, &g_data))
 	{
 		ft_perror("threads", g_data.prog_name);
-		clean_exit(EXIT_FAILURE, &g_data, &p_data, NULL);
+		clean_exit(EXIT_FAILURE, &g_data, &p_data, &e_data);
 	}
 	set_hooks(&g_data);
 	mlx_do_key_autorepeatoff(g_data.mlx.mlx);

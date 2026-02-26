@@ -29,6 +29,12 @@ typedef struct s_vect2
 	int				y;
 }					t_vect2;
 
+typedef struct s_ray
+{
+	t_vect3			origin;
+	t_vect3			dir;
+}					t_ray;
+
 typedef struct s_color
 {
 	unsigned char	alpha;

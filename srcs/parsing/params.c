@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:51:58 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/21 18:14:07 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/26 11:46:45 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ int	set_cam(t_parsing_data *p_data, char *obj_line, t_global_data *g_data)
 	g_data->world.cam.fov = ft_atoi(params[3]);
 	if (g_data->world.cam.fov > 180 || g_data->world.cam.fov < 0)
 		return (ft_free_strs(params),
-			ft_maperror("camera : invalid "
-				"parameters",
-				p_data->line_nb,
+			ft_maperror("camera : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
 	p_data->map_data.cam = 1;
 	return (ft_free_strs(params), 0);
@@ -61,7 +59,8 @@ int	set_ambient_light(t_parsing_data *p_data, char *obj_line,
 			ft_maperror("ambient light : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
 	g_data->world.ambient_light.ratio = ft_atof(params[1]);
-	if (g_data->world.ambient_light.ratio > 1 || g_data->world.ambient_light.ratio < 0)
+	if (g_data->world.ambient_light.ratio > 1
+		|| g_data->world.ambient_light.ratio < 0)
 		return (ft_free_strs(params),
 			ft_maperror("ambient light : invalid ratio", p_data->line_nb,
 				g_data->prog_name));

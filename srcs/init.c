@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:58:52 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/21 17:11:48 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/26 11:51:22 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,15 @@ void	init(t_global_data *g_data, t_parsing_data *p_data, t_exec_data *e_data,
 	g_data->e_data = e_data;
 	init_cam(&g_data->world.cam);
 	init_ambient_light(&g_data->world.ambient_light);
+}
+
+int	init_exec(t_exec_data *e_data, t_global_data *g_data)
+{
+	g_data->world.color_tab = malloc(sizeof(t_long_color) * WIN_HEIGHT
+			* WIN_WIDTH * 100);
+	if (!g_data->world.color_tab)
+		return (1);
+	if (init_threads(e_data, g_data))
+		return (1);
+	return (0);
 }

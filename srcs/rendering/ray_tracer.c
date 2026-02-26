@@ -6,19 +6,20 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:36:21 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/21 18:26:27 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/26 11:57:09 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 //
 #include "colors_maths.h"
+#include "colors_maths_long.h"
 #include "mlx_utils.h"
+#include "object_collision.h"
+#include "object_normal.h"
 #include "vectors_maths_1.h"
 #include "vectors_maths_2.h"
 #include "vectors_maths_3.h"
-#include "object_collision.h"
-#include "object_normal.h"
 #define _USE_MATH_DEFINES
 
 void	init_viewport(t_viewport *viewport, int fov)
@@ -33,8 +34,8 @@ void	init_viewport(t_viewport *viewport, int fov)
 	viewport->step_h = viewport->vp_h * INV_WIN_HEIGHT;
 }
 
-static inline t_vect3	get_ray(int x, int y, t_viewport *viewport,
-	t_cam_data *cam)
+static inline t_vect3	get_ray_dir(int x, int y, t_viewport *viewport,
+		t_cam_data *cam)
 {
 	double	u;
 	double	v;
@@ -47,73 +48,39 @@ static inline t_vect3	get_ray(int x, int y, t_viewport *viewport,
 						v)))));
 }
 
-static inline float	check_object_collision(t_object *object, float t, t_vect3
-	ray,
-		t_vect3 cam_pos)
+int	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 {
-	float	new_t;
+	t_nearest_object	nearest;
+	t_vect3				normal;
+	t_vect3				collision_point;
 
-	if (object->e_type == _sphere)
-		new_t = sphere_collision(ray, object, cam_pos);
-	else if (object->e_type == _cylinder)
-		return (t);
-	else if (object->e_type == _plane)
-		return (t);
-	else if (object->e_type == _light)
-		return (t);
-	else
-		return (t);
-	if (new_t != -1 && (t == -1 || new_t < t))
-		return (new_t);
-	return (t);
-}
-
-int	get_pixel_color(t_vect3 ray, t_world_data *world, t_vect3 origin, int
-	bounce)
-{
-	int		color;
-	int		i;
-	int		nearest_i;
-	float	t;
-	float	new_t;
-	t_vect3	normal;
-	t_vect3	collision_point;
-	t_vect3	reflect_vector;
-
-	i = -1;
-	t = -1;
+	nearest.t = -1;
 	if (bounce > BOUNCES)
-		return (get_sky_color(color_intensity(world->ambient_light.color, world->ambient_light
-			.ratio), ray));
-	color = BLACK;
-	while (++i < world->obj_count)
-	{
-		new_t = check_object_collision(&world->objs[i], t, ray, origin);
-		if (new_t != -1 && (t == -1 || new_t < t))
-		{
-			color = world->objs[i].color;
-			nearest_i = i;
-			t = new_t;
-		}
-	}
-	if (t == -1)
-		return (get_sky_color(color_intensity(world->ambient_light.color, world->ambient_light
-			.ratio), ray));
+		return (get_sky_color(color_intensity(world->ambient_light.color,
+					world->ambient_light.ratio), ray.dir));
+	nearest = get_nearest_object(ray, world);
+	if (nearest.t == -1)
+		return (get_sky_color(color_intensity(world->ambient_light.color,
+					world->ambient_light.ratio), ray.dir));
 	if (bounce + 1 > BOUNCES)
-		return (color_gradient(color, get_sky_color(color_intensity(world->ambient_light.color, world->ambient_light.ratio), ray), world->objs[nearest_i].u_data.sphere.reflectance));
-	collision_point = get_collision_point(ray, origin, t - t * 1e-3);
-	normal = sphere_normal(&world->objs[nearest_i], collision_point, ray);
-	normal = get_diffuse_vector(normal, world->objs[nearest_i].u_data.sphere.reflectance);
-	reflect_vector = vector_norm(reflect(ray, normal));
-	return (color_gradient(color, get_pixel_color(reflect_vector, world, collision_point, bounce + 1), world->objs[nearest_i].u_data.sphere.reflectance));
+		return (color_gradient(nearest.obj->color,
+				get_sky_color(color_intensity(world->ambient_light.color,
+						world->ambient_light.ratio), ray.dir),
+				nearest.obj->u_data.sphere.reflectance));
+	collision_point = get_collision_point(ray, nearest.t - nearest.t * 1e-3);
+	normal = sphere_normal(nearest.obj, collision_point, ray.dir);
+	normal = get_diffuse_vector(normal, nearest.obj->u_data.sphere.reflectance);
+	ray.dir = vector_norm(reflect(ray.dir, normal));
+	ray.origin = collision_point;
+	return (color_gradient(nearest.obj->color, get_pixel_color(ray, world,
+				bounce + 1), nearest.obj->u_data.sphere.reflectance));
 }
 
 void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 		t_mlx_data *mlx)
 {
 	t_vect2	pointer;
-	t_vect3	ray;
-	static t_long_color color_tab[WIN_HEIGHT * WIN_WIDTH];
+	t_ray	ray;
 
 	pointer.y = start.y;
 	while (pointer.y <= end.y)
@@ -121,20 +88,15 @@ void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 		pointer.x = start.x;
 		while (pointer.x <= end.x)
 		{
-			ray = get_ray(pointer.x, pointer.y, &world->viewport, &world->cam);
+			ray.dir = get_ray_dir(pointer.x, pointer.y, &world->viewport,
+					&world->cam);
+			ray.origin = world->cam.pos;
 			if (!world->moving && !world->rotating)
-			{
-				float progress = ((float)1 / ((float)++world->static_frames / 4));
-				my_mlx_pixel_put(mlx, pointer, color_gradient(get_prev_color(pointer, color_tab), get_pixel_color(ray,
-						world, world->cam.pos, 0), 0.5));
-			}
+				my_mlx_pixel_put(mlx, pointer, get_color_summed(pointer,
+						world->color_tab, get_pixel_color(ray, world, 0),
+						world->static_frames));
 			else
-			{
-				my_mlx_pixel_put(mlx, pointer, /*color_sup(*/ get_pixel_color(ray,
-						world, world->cam.pos, 0) /*,
-						get_prev_color(pointer, mlx))*/);
-				world->static_frames = 1;
-			}
+				my_mlx_pixel_put(mlx, pointer, get_pixel_color(ray, world, 0));
 			pointer.x++;
 		}
 		pointer.y++;

@@ -16,7 +16,7 @@
 # define WIN_HEIGHT 720
 # define WIN_WIDTH 1280
 
-# define BOUNCES 2
+# define BOUNCES 10
 
 //Normalized vectors settings
 # define NORM_TOLERANCE 1e-2
