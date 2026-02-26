@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/02/26 11:39:05 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/02/26 15:09:25 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ typedef struct s_shader_compute
 	float spec_power;
 	t_vect3 specular;
 	t_vect3 final_pixel_color;
-	float shadow_t;
+	t_nearest_object shadow_t;
+	t_ray light_ray;
 } t_shader_compute;
 
 void ini_compute_dl(t_shader_compute *shader, t_vect3 point_r_c, t_vect3 point_normal, t_object object ,t_world_data *world)
@@ -75,7 +76,7 @@ void compute_direct_specular(t_shader_compute *shader, t_world_data *world, int 
 	shader->reflection_direction = vector_reflect(shader->neg_light_normal, shader->n_point_normal);
 	shader->dot_rv = ft_max_float(0.0f, dot_product(shader->reflection_direction, shader->n_view_normal));
 	shader->spec_power = pow(shader->dot_rv, 32);
-	shader->specular = vector_mult(vector_mult(shader->light_rgb, world->objs[i].u_data.light.ratio), shader->spec_power);
+	shader->specular = vector_mult(vector_mult(shader->light_rgb, world->lights[i].ratio), shader->spec_power);
 }
 
 /// @brief convert colors to vec3 to get float from 0 to 1. albedo * light color * dot_l
@@ -86,22 +87,23 @@ int compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal, t_object objec
 
 	i = 0;
 	ini_compute_dl(&shader,  point_r_c,  point_normal,  object , world);
-	while(i < world->obj_count)
+	while(i < world->light_count)
 	{
-		if (world->objs[i].e_type == _light)
-		{
-			shader.light_ray_dir = vectors_sub(world->objs[i].pos, point_r_c);
-			//shader.shadow_t = check_object_collision();
+			shader.light_ray_dir = vectors_sub(world->lights[i].pos, point_r_c);
+			shader.light_ray.dir = shader.light_ray_dir;
+			shader.light_ray.origin = point_r_c;
+			shader.shadow_t = get_nearest_object(shader.light_ray, world);
+			/* if (shader.shadow_t.t > 0.001 && shader.shadow_t.t < 1)
+				continue; */
 			shader.dot_nl = dot_product(vector_norm(point_normal), vector_norm(shader.light_ray_dir));
 			if (shader.dot_nl > 0)
 			{
-				shader.light_rgb = color_to_vec3(world->objs[i].color);
-				shader.intensity = world->objs[i].u_data.light.ratio * shader.dot_nl;
+				shader.light_rgb = color_to_vec3(world->lights[i].color);
+				shader.intensity = world->lights[i].ratio * shader.dot_nl;
 				shader.diffuse = vector_mult(vectors_mult(shader.light_rgb, shader.obj_rgb), shader.intensity);
 				compute_direct_specular(&shader, world, i);
 				shader.final_pixel_color = vectors_add(shader.final_pixel_color, vectors_add(shader.diffuse, shader.specular));
 			}
-		}
 		i++;
 	}
 	return (vec3_to_color(shader.final_pixel_color));

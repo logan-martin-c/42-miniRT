@@ -51,8 +51,6 @@ void	print_array(t_world_data *world)
 			print_plane(&array[obj_count]);
 		else if (array[obj_count].e_type == _cylinder)
 			print_cylinder(&array[obj_count]);
-		else if (array[obj_count].e_type == _light)
-			print_light(&array[obj_count]);
 	}
 	print_cam(&world->cam);
 	print_ambient_light(&world->ambient_light);

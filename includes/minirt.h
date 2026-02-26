@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/26 12:20:07 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/02/26 14:51:53 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,9 @@ typedef struct s_world_data
 {
 	long					static_frames;
 	t_object				*objs;
+	t_light					*lights;
 	int						obj_count;
+	int						light_count;
 	bool					moving;
 	bool					rotating;
 	t_cam_data				cam;
@@ -121,6 +123,7 @@ typedef struct s_parsing_data
 	int						map_fd;
 	t_list					*obj_lst;
 	int						obj_count;
+	int						light_count;
 	t_map_data				map_data;
 	int						line_nb;
 }							t_parsing_data;
@@ -185,12 +188,16 @@ int							parse_pos(char *str, t_vect3 *pos, char normalized);
 int							parse_raw_color(char *str, int *color);
 int							parse_float(char *str, float *value);
 t_color						parse_color(int color);
-void						lst_map_to_array(t_parsing_data *p_data,
-								t_world_data *world);
 void						parse_object(t_parsing_data *p_data, char *obj_line,
 								t_global_data *g_data);
 void						parse_params(t_parsing_data *p_data, char *obj_line,
 								t_global_data *g_data);
+int							lst_map_to_array(t_parsing_data *p_data,
+								t_world_data *world);
+int							lst_objs_to_array(t_object **objs, t_list *obj_lst,
+								int obj_count);
+int							lst_lights_to_array(t_light **lights,
+								t_list *obj_lst, int light_count);
 
 // RENDER
 int							update_display(t_global_data *data);

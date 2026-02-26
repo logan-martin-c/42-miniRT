@@ -10,6 +10,7 @@ SRCS = main.c\
 		interface/gui.c\
 		interface/inputs.c\
 		interface/velocity.c\
+		parsing/map_to_array.c\
 		parsing/objects.c\
 		parsing/open_map.c\
 		parsing/params.c\

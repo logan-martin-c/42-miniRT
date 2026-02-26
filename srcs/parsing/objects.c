@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:51:26 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/21 18:15:09 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/26 14:44:50 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,9 @@ int	new_light(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	if (check_args_count(params, 4, 4) == -1)
 		return (ft_free_strs(params), ft_maperror("light : invalid parameters",
 				p_data->line_nb, g_data->prog_name));
-	if (parse_pos(params[1], &node->pos, 0) || !ft_isfloat_str(params[2])
-		|| parse_raw_color(params[3], &node->color))
+	if (parse_pos(params[1], &node->u_data.light.pos, 0)
+		|| !ft_isfloat_str(params[2]) || parse_raw_color(params[3],
+			&node->u_data.light.color))
 		return (ft_free_strs(params), ft_maperror("light : invalid parameters",
 				p_data->line_nb, g_data->prog_name));
 	node->u_data.light.ratio = ft_atof(params[2]);
@@ -112,6 +113,7 @@ int	new_light(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 				p_data->line_nb, g_data->prog_name));
 	node->e_type = _light;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
+	p_data->light_count++;
 	return (ft_free_strs(params), 0);
 }
 
