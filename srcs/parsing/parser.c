@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:48:12 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/20 09:59:32 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/26 14:46:07 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,6 @@ int	parse_map(t_global_data *g_data, t_parsing_data *p_data)
 	return (0);
 }
 
-void	lst_map_to_array(t_parsing_data *p_data, t_world_data *world)
-{
-	t_list	*next;
-	int		i;
-
-	world->objs = malloc(sizeof(t_object) * (p_data->obj_count));
-	i = -1;
-	while (++i < p_data->obj_count)
-	{
-		memcpy(&world->objs[i], (t_object *)p_data->obj_lst->content,
-			sizeof(t_object));
-		next = p_data->obj_lst->next;
-		free(p_data->obj_lst->content);
-		free(p_data->obj_lst);
-		p_data->obj_lst = next;
-	}
-	world->obj_count = p_data->obj_count;
-}
-
 void	parser(int ac, char *av[], t_global_data *g_data,
 		t_parsing_data *p_data)
 {
@@ -80,6 +61,10 @@ void	parser(int ac, char *av[], t_global_data *g_data,
 	p_data->map_fd = -1;
 	if (DEBUG)
 		print_objects(p_data, &g_data->world);
-	lst_map_to_array(p_data, &g_data->world);
+	if (lst_map_to_array(p_data, &g_data->world))
+	{
+		ft_perror(NULL, g_data->prog_name);
+		clean_exit(1, g_data, p_data, NULL);
+	}
 	ft_lstclear(&p_data->obj_lst, free);
 }

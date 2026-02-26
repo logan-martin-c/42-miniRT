@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 11:40:00 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/20 09:59:15 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/02/26 14:48:28 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ void	clean_exec(t_exec_data *e_data)
 	free(e_data->tasks);
 }
 
+void	free_world(t_world_data *world)
+{
+	free(world->objs);
+	free(world->lights);
+	free(world->color_tab);
+}
+
 void	clean_exit(int exit_status, t_global_data *g_data,
 		t_parsing_data *p_data, t_exec_data *e_data)
 {
@@ -37,7 +44,7 @@ void	clean_exit(int exit_status, t_global_data *g_data,
 		free(gnl);
 		ft_lstclear(&p_data->obj_lst, free);
 	}
-	free(g_data->world.objs);
+	free_world(&g_data->world);
 	if (e_data)
 		clean_exec(e_data);
 	if (g_data->mlx.mlx)
