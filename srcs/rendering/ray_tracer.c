@@ -34,15 +34,24 @@ void	init_viewport(t_viewport *viewport, int fov)
 	viewport->step_h = viewport->vp_h * INV_WIN_HEIGHT;
 }
 
-static inline t_vect3	get_ray_dir(int x, int y, t_viewport *viewport,
-		t_cam_data *cam)
+static inline t_vect3	get_ray_dir(t_vect2 pos, t_viewport *viewport,
+		t_cam_data *cam, bool moving)
 {
 	double	u;
 	double	v;
+	float	rx;
+	float	ry;
 
-	u = (2.0 * (x + 0.5) * INV_WIN_WIDTH - 1.0) * viewport->aspect_ratio
+	rx = 0.5;
+	ry = 0.5;
+	if (!moving)
+	{
+		rx = fast_rand();
+		ry = fast_rand();
+	}
+	u = (2.0 * (pos.x + rx) * INV_WIN_WIDTH - 1.0) * viewport->aspect_ratio
 		* viewport->tan_theta;
-	v = (1.0 - 2.0 * (y + 0.5) * INV_WIN_HEIGHT) * viewport->tan_theta;
+	v = (1.0 - 2.0 * (pos.y + ry) * INV_WIN_HEIGHT) * viewport->tan_theta;
 	return (vector_norm(vectors_add(cam->forward,
 				vectors_add(vector_mult(cam->right, u), vector_mult(cam->up,
 						v)))));
@@ -88,8 +97,8 @@ void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 		pointer.x = start.x;
 		while (pointer.x <= end.x)
 		{
-			ray.dir = get_ray_dir(pointer.x, pointer.y, &world->viewport,
-					&world->cam);
+			ray.dir = get_ray_dir(pointer, &world->viewport,
+					&world->cam, world->moving || world->rotating);
 			ray.origin = world->cam.pos;
 			if (!world->moving && !world->rotating)
 				my_mlx_pixel_put(mlx, pointer, get_color_summed(pointer,

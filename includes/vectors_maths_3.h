@@ -44,11 +44,15 @@ static inline t_vect3  get_diffuse_vector(t_vect3 normal, float reflectance)
         return (normal);
     while (1)
     {
-        v = vectors_add(get_random_vector(- (1 - reflectance), (1 - reflectance)), normal);
+        v = get_random_vector(- (1 - reflectance), (1 - reflectance));
+        if (v.x * v.y * v.z > 1.0f)
+            continue ;
+        v = vectors_add(v, normal);
         if (dot_product(vector_norm(normal), vector_norm(v)) >= 0)
             return (v);
+        else
+            return (vectors_sub((t_vect3){0, 0, 0}, v));
     }
-    return (vectors_add(get_random_vector(- (1 - reflectance), (1 - reflectance)), normal));
 }
 
 static inline t_vect3 reflect(t_vect3 v, t_vect3 n)
