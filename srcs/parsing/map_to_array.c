@@ -41,12 +41,10 @@ int	lst_lights_to_array(t_light **lights, t_list *obj_lst, int light_count)
 	i = -1;
 	while (++i < light_count)
 	{
-		if (((t_object *)obj_lst->content)->e_type != _light)
-		{
-			memcpy(&lights[0][i],
-				&(((t_object *)obj_lst->content)->u_data.light),
+		if (((t_object *)obj_lst->content)->e_type == _light)
+			memcpy(lights[0] + i,
+				&((t_object *)obj_lst->content)->u_data.light,
 				sizeof(t_light));
-		}
 		else
 			i--;
 		obj_lst = obj_lst->next;
