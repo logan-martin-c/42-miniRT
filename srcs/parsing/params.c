@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:51:58 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/24 17:24:55 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/02/26 12:19:50 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ int	set_cam(t_parsing_data *p_data, char *obj_line, t_global_data *g_data)
 	g_data->world.cam.fov = ft_atoi(params[3]);
 	if (g_data->world.cam.fov > 180 || g_data->world.cam.fov < 0)
 		return (ft_free_strs(params),
-			ft_maperror("camera : invalid "
-				"parameters",
-				p_data->line_nb,
+			ft_maperror("camera : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
 	p_data->map_data.cam = 1;
 	return (ft_free_strs(params), 0);
@@ -44,7 +42,6 @@ int	set_ambient_light(t_parsing_data *p_data, char *obj_line,
 		t_global_data *g_data)
 {
 	char	**params;
-	float	raw_ratio;
 
 	if (p_data->map_data.ambient_light)
 		return (ft_maperror("Multiple ambient light definition is forbidden",
@@ -61,12 +58,12 @@ int	set_ambient_light(t_parsing_data *p_data, char *obj_line,
 		return (ft_free_strs(params),
 			ft_maperror("ambient light : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
-	raw_ratio = ft_atof(params[1]);
-	if (raw_ratio > 1 || raw_ratio < 0)
+	g_data->world.ambient_light.ratio = ft_atof(params[1]);
+	if (g_data->world.ambient_light.ratio > 1
+		|| g_data->world.ambient_light.ratio < 0)
 		return (ft_free_strs(params),
 			ft_maperror("ambient light : invalid ratio", p_data->line_nb,
 				g_data->prog_name));
-	g_data->world.ambient_light.ratio = raw_ratio;
 	return (p_data->map_data.ambient_light = 1, ft_free_strs(params), 0);
 }
 

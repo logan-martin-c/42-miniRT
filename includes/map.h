@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:51 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/24 17:24:14 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/02/26 12:19:52 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ typedef struct s_vect2
 	int				x;
 	int				y;
 }					t_vect2;
+
+typedef struct s_ray
+{
+	t_vect3			origin;
+	t_vect3			dir;
+}					t_ray;
 
 typedef struct s_color
 {
@@ -64,7 +70,7 @@ typedef struct s_cam_data
 
 typedef struct s_ambient_light_data
 {
-	float	ratio;
+	float			ratio;
 	int				color;
 }					t_ambient_light_data;
 
@@ -78,6 +84,7 @@ typedef struct s_sphere
 {
 	float			diameter;
 	float			radius;
+	float			reflectance;
 }					t_sphere;
 
 typedef struct s_cylinder
@@ -110,11 +117,5 @@ typedef struct s_object
 		t_light		light;
 	}				u_data;
 }					t_object;
-
-typedef struct s_ambient_lighting
-{
-	char			ratio;
-	int				color;
-}					t_ambient_lighting;
 
 #endif

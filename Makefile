@@ -15,6 +15,7 @@ SRCS = main.c\
 		parsing/params.c\
 		parsing/parser.c\
 		parsing/sub_parameters.c\
+		rendering/collisions.c\
 		rendering/colors.c\
 		rendering/loop.c\
 		rendering/move.c\

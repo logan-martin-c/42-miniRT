@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 09:43:55 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/25 14:22:34 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/02/26 12:21:31 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ static inline t_vect3 vector_reflect(t_vect3 i, t_vect3 n)
     double dot = dot_product(i, n);
     t_vect3 scaled_n = vector_mult(n, 2.0 * dot);
     return (vectors_sub(i, scaled_n));
+}
+static inline float	vectors_angle(t_vect3 a, t_vect3 b)
+{
+	return (dot_product(vector_norm(a), vector_norm(b)));
 }
 
 #endif

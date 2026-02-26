@@ -21,3 +21,17 @@ long	ft_abs(long n)
 		return (-n);
 	return (n);
 }
+
+float	ft_abs_float(float n)
+{
+	if (n < 0.0)
+		return (-n);
+	return (n);
+}
+
+double	ft_abs_double(double n)
+{
+	if (n < 0.0)
+		return (-n);
+	return (n);
+}

@@ -54,12 +54,12 @@ int	parse_raw_color(char *str, int *color)
 	else
 		c.a = 255;
 	c.r = ft_atoi(spl_str[++i]);
-	c.v = ft_atoi(spl_str[++i]);
+	c.g = ft_atoi(spl_str[++i]);
 	c.b = ft_atoi(spl_str[++i]);
-	if (c.a > 255 || c.a < 0 || c.r > 255 || c.r < 0 || c.v > 255 || c.v < 0
+	if (c.a > 255 || c.a < 0 || c.r > 255 || c.r < 0 || c.g > 255 || c.g < 0
 		|| c.b > 255 || c.b < 0)
 		return (ft_free_strs(spl_str), 2);
-	*color = get_color_chars(c.a, c.r, c.v, c.b);
+	*color = get_color_chars(c.a, c.r, c.g, c.b);
 	return (ft_free_strs(spl_str), 0);
 }
 

@@ -32,11 +32,11 @@ static inline void	my_mlx_pixel_put(t_mlx_data *mlx, t_vect2 pos, int color)
 	*(unsigned int *)dst = color;
 }
 
-static inline int	get_prev_color(t_vect3 pos, t_mlx_data *mlx)
+static inline t_long_color	get_prev_color(t_vect2 pos, t_long_color *color_tab)
 {
 	if (pos.x < 0 || pos.x >= WIN_WIDTH || pos.y < 0 || pos.y >= WIN_HEIGHT)
-		return (0);
-	return (mlx->s_img_data.addr[((int)pos.y * LINE_SIZE + (int)pos.x * BPP)]);
+		return ((t_long_color){0, 0, 0, 0});
+	return (color_tab[((int)pos.y * LINE_SIZE + (int)pos.x)]);
 }
 
 #endif
