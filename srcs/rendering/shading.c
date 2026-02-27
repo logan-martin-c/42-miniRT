@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/02/26 15:09:25 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/02/27 23:09:05 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_shader_compute
 	t_vect3 obj_rgb;
 	t_vect3 light_rgb;
 	t_vect3 light_ray_dir;
+	double light_ray_dist;
 	t_vect3 n_light_normal;
 	t_vect3 n_point_normal;
 	t_vect3 n_view_normal;
@@ -79,48 +80,50 @@ void compute_direct_specular(t_shader_compute *shader, t_world_data *world, int 
 	shader->specular = vector_mult(vector_mult(shader->light_rgb, world->lights[i].ratio), shader->spec_power);
 }
 
-/// @brief convert colors to vec3 to get float from 0 to 1. albedo * light color * dot_l
+
 int compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal, t_object object ,t_world_data *world)
 {
-	t_shader_compute shader;
-	int i;
+    t_shader_compute shader;
+    int i = 0;
 
-	i = 0;
-	ini_compute_dl(&shader,  point_r_c,  point_normal,  object , world);
-	while(i < world->light_count)
-	{
-			shader.light_ray_dir = vectors_sub(world->lights[i].pos, point_r_c);
-			shader.light_ray.dir = shader.light_ray_dir;
-			shader.light_ray.origin = point_r_c;
-			shader.shadow_t = get_nearest_object(shader.light_ray, world);
-			/* if (shader.shadow_t.t > 0.001 && shader.shadow_t.t < 1)
-				continue; */
-			shader.dot_nl = dot_product(vector_norm(point_normal), vector_norm(shader.light_ray_dir));
-			if (shader.dot_nl > 0)
-			{
-				shader.light_rgb = color_to_vec3(world->lights[i].color);
-				shader.intensity = world->lights[i].ratio * shader.dot_nl;
-				shader.diffuse = vector_mult(vectors_mult(shader.light_rgb, shader.obj_rgb), shader.intensity);
-				compute_direct_specular(&shader, world, i);
-				shader.final_pixel_color = vectors_add(shader.final_pixel_color, vectors_add(shader.diffuse, shader.specular));
-			}
-		i++;
-	}
-	return (vec3_to_color(shader.final_pixel_color));
+    ini_compute_dl(&shader, point_r_c, point_normal, object , world);
+    t_vect3 shadow_origin = vectors_add(point_r_c, vector_mult(shader.n_point_normal, 0.001f));
+    while(i < world->light_count)
+    {
+        shader.light_ray_dir = vectors_sub(world->lights[i].pos, point_r_c);
+        shader.light_ray_dist = vector_mag(shader.light_ray_dir);
+        shader.light_ray.dir = vector_norm(shader.light_ray_dir);
+        shader.light_ray.origin = shadow_origin;
+        shader.shadow_t = get_nearest_object(shader.light_ray, world);
+        if (shader.shadow_t.t > 0.001f && shader.shadow_t.t < shader.light_ray_dist)
+        {
+            i++;
+            continue;
+        }
+        shader.dot_nl = dot_product(shader.n_point_normal, shader.light_ray.dir);
+        if (shader.dot_nl > 0)
+        {
+            shader.light_rgb = color_to_vec3(world->lights[i].color);
+            shader.intensity = world->lights[i].ratio * shader.dot_nl;
+            shader.diffuse = vector_mult(vectors_mult(shader.light_rgb, shader.obj_rgb), shader.intensity);
+            compute_direct_specular(&shader, world, i);
+            shader.final_pixel_color = vectors_add(shader.final_pixel_color, vectors_add(shader.diffuse, shader.specular));
+        }
+        i++;
+    }
+    return (vec3_to_color(shader.final_pixel_color));
 }
 
-
-
 /// @brief calc P space pos, calc P normal, calc direct light intensity, return adjusted color
-int shading(t_vect3 ray, float t, t_object object, t_world_data *world)
+int shading(t_vect3 ray, t_nearest_object nearest, t_world_data *world)
 {
 	t_vect3 point_ray_colision;
 	t_vect3 point_normal;
 
-	point_ray_colision = get_p_pos(ray, world->cam.pos, t);
-	point_normal = get_p_normal(object, point_ray_colision);
+	point_ray_colision = get_p_pos(ray, world->cam.pos, nearest.t);
+	point_normal = get_p_normal(*(nearest.obj), point_ray_colision);
 	//n = vector_norm(n);
-	return (compute_direct_light(point_ray_colision, point_normal, object, world));
+	return (compute_direct_light(point_ray_colision, point_normal, *(nearest.obj), world));
 	
 }
 

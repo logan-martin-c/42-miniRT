@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:36:21 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/26 15:06:43 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/02/27 23:12:07 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,28 @@ int	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 	t_vect3				normal;
 	t_vect3				collision_point;
 
+	(void)bounce;
+	(void)collision_point;
+	(void)normal;
 	nearest.t = -1;
-	if (bounce > BOUNCES)
+	/* if (bounce > BOUNCES)
 		return (get_sky_color(color_intensity(world->ambient_light.color,
-					world->ambient_light.ratio), ray.dir));
+					world->ambient_light.ratio), ray.dir)); */
 	nearest = get_nearest_object(ray, world);
 	if (nearest.t == -1)
 		return (get_sky_color(color_intensity(world->ambient_light.color,
 					world->ambient_light.ratio), ray.dir));
-	if (bounce + 1 > BOUNCES)
+	/* if (bounce + 1 > BOUNCES)
 		return (color_gradient(nearest.obj->color,
 				get_sky_color(color_intensity(world->ambient_light.color,
 						world->ambient_light.ratio), ray.dir),
-				nearest.obj->u_data.sphere.reflectance));
-	collision_point = get_collision_point(ray, nearest.t - nearest.t * 1e-3);
+				nearest.obj->u_data.sphere.reflectance)); */
+	/* collision_point = get_collision_point(ray, nearest.t - nearest.t * 1e-3);
 	normal = sphere_normal(nearest.obj, collision_point, ray.dir);
 	normal = get_diffuse_vector(normal, nearest.obj->u_data.sphere.reflectance);
 	ray.dir = vector_norm(reflect(ray.dir, normal));
-	ray.origin = collision_point;
-	return (shading(ray.dir, nearest.t, *nearest.obj, world));
+	ray.origin = collision_point; */
+	return (shading(ray.dir, nearest, world));
 	// return (color_gradient(nearest.obj->color, get_pixel_color(ray, world,
 	// 			bounce + 1), nearest.obj->u_data.sphere.reflectance));
 }
