@@ -56,12 +56,11 @@ int	update_fov(int button, int x, int y, t_global_data *g_data)
 {
 	(void)x;
 	(void)y;
-	printf("test\n");
 	if (button == 1 || button == 3)
 		object_picker(button, x, y, g_data);
-	if (button == 4)
+	if (button == 4 && g_data->world.cam.fov > 1)
 		g_data->world.cam.fov--;
-	if (button == 5 && g_data->world.cam.fov > 1)
+	if (button == 5 && g_data->world.cam.fov < 180)
 		g_data->world.cam.fov++;
 	init_viewport(&g_data->world.viewport, g_data->world.cam.fov);
 	g_data->world.static_frames = -1;

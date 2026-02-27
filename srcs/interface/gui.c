@@ -51,4 +51,5 @@ void	display_gui(t_world_data *world, t_mlx_data *mlx, int elapsed)
 	display_int("x: ", world->cam.pos.x, mlx, false);
 	display_int("y: ", world->cam.pos.y, mlx, false);
 	display_int("z: ", world->cam.pos.z, mlx, false);
+	display_int("fov: ", world->cam.fov, mlx, false);
 }
