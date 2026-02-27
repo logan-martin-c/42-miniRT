@@ -55,9 +55,39 @@ static inline t_vect3  get_diffuse_vector(t_vect3 normal, float reflectance)
     }
 }
 
+static inline   t_vect3 refract(t_ray ray, t_vect3 n, float refraction)
+{
+    float cos_theta;
+    t_vect3 r_out_perp;
+    t_vect3 r_out_parralel;
+
+    if (refraction == ray.origin_refraction)
+        return (ray.dir);
+    cos_theta = ft_min_float(dot_product(vectors_sub((t_vect3){0, 0, 0}, ray.dir), n), 1.0);
+    r_out_perp = vector_mult(vectors_add(ray.dir, vector_mult(n, cos_theta)), ray.origin_refraction / refraction);
+    r_out_parralel = vector_mult(n, - sqrt(ft_abs_float(1.0 - (vector_mag(r_out_perp) * vector_mag(r_out_perp)))));
+    return (vectors_add(r_out_perp, r_out_parralel));
+}
+
 static inline t_vect3 reflect(t_vect3 v, t_vect3 n)
 {
+    // t_vect3 ret;
+    //
+    // ret = vector_norm(vectors_sub(v, vector_mult(n, dot_product(v, n) * 2)));
+    // if (dot_product(v, ret) >= 0.9)
+    //     return (n);
+    // return (ret);
     return (vector_norm(vectors_sub(v, vector_mult(n, dot_product(v, n) * 2))));
+}
+
+static inline t_vect3   get_bounce(t_ray ray, t_vect3 n, int color, float refraction)
+{
+    t_color p_color;
+
+    p_color = parse_color(color);
+    if (p_color.alpha == 255)
+        return (reflect(ray.dir, n));
+    return (refract(ray, n, refraction));
 }
 
 #endif

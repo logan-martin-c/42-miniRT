@@ -30,7 +30,7 @@ int	key_press(int keycode, t_global_data *g_data)
 		g_data->key.ctrl = 1;
 	if (keycode == PLUS_KEY)
 		g_data->world.cam.speed++;
-	if (keycode == MINUS_KEY)
+	if (keycode == MINUS_KEY && g_data->world.cam.speed > 0)
 		g_data->world.cam.speed--;
 	return (0);
 }

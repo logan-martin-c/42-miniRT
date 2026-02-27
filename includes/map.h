@@ -33,6 +33,12 @@ typedef struct s_ray
 {
 	t_vect3			origin;
 	t_vect3			dir;
+	float			origin_refraction;
+	enum
+	{
+		_reflected,
+		_refracted
+	}				blend_mode;
 }					t_ray;
 
 typedef struct s_color
@@ -85,6 +91,7 @@ typedef struct s_sphere
 	float			diameter;
 	float			radius;
 	float			reflectance;
+	float			refraction;
 }					t_sphere;
 
 typedef struct s_cylinder

@@ -62,11 +62,8 @@ int	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 	t_nearest_object	nearest;
 	t_vect3				normal;
 	t_vect3				collision_point;
+	bool				direction;
 
-	nearest.t = -1;
-	if (bounce > BOUNCES)
-		return (get_sky_color(color_intensity(world->ambient_light.color,
-					world->ambient_light.ratio), ray.dir));
 	nearest = get_nearest_object(ray, world);
 	if (nearest.t == -1)
 		return (get_sky_color(color_intensity(world->ambient_light.color,
@@ -76,11 +73,20 @@ int	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 				get_sky_color(color_intensity(world->ambient_light.color,
 						world->ambient_light.ratio), ray.dir),
 				nearest.obj->u_data.sphere.reflectance));
-	collision_point = get_collision_point(ray, nearest.t - nearest.t * 1e-3);
-	normal = sphere_normal(nearest.obj, collision_point, ray.dir);
+	collision_point = get_collision_point(ray, nearest.t - nearest.t * 1e-6);
+	normal = sphere_normal(nearest.obj, collision_point, ray.dir, &direction);
 	normal = get_diffuse_vector(normal, nearest.obj->u_data.sphere.reflectance);
-	ray.dir = vector_norm(reflect(ray.dir, normal));
+	if (direction)
+		ray.dir = get_bounce(ray, normal, nearest.obj->color, 1.0);
+	else
+		ray.dir = get_bounce(ray, normal, nearest.obj->color, nearest.obj->u_data.sphere.refraction);
 	ray.origin = collision_point;
+	if (direction)
+		ray.origin_refraction = 1.0;
+	else
+		ray.origin_refraction = nearest.obj->u_data.sphere.refraction;
+	// return (color_gradient(nearest.obj->color, get_pixel_color(ray, world,
+	// 	bounce + 1), 1 - parse_color(nearest.obj->color).alpha / 255.0));
 	return (color_gradient(nearest.obj->color, get_pixel_color(ray, world,
 				bounce + 1), nearest.obj->u_data.sphere.reflectance));
 }
@@ -100,6 +106,7 @@ void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 			ray.dir = get_ray_dir(pointer, &world->viewport,
 					&world->cam, world->moving || world->rotating);
 			ray.origin = world->cam.pos;
+			ray.origin_refraction = 1;
 			if (!world->moving && !world->rotating)
 				my_mlx_pixel_put(mlx, pointer, get_color_summed(pointer,
 						world->color_tab, get_pixel_color(ray, world, 0),
