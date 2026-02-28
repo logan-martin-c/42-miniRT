@@ -33,10 +33,10 @@ static inline double	sphere_collision(t_ray ray, t_object *object)
 		* object->u_data.sphere.radius;
 	sqrt_delta = sqrt(b * b - 4 * 1.0 * c);
 	t = (-b - sqrt_delta) / 2.0;
-	if (t > 0)
+	if (t > 0.0001)
 		return (t);
 	t = (-b + sqrt_delta) / 2.0;
-	if (t > 0)
+	if (t > 0.0001)
 		return (t);
 	return (-1.0);
 }

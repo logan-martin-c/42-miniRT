@@ -20,6 +20,7 @@
 #include "vectors_maths_1.h"
 #include "vectors_maths_2.h"
 #include "vectors_maths_3.h"
+#include "refraction.h"
 #define _USE_MATH_DEFINES
 
 void	init_viewport(t_viewport *viewport, int fov)
@@ -64,29 +65,24 @@ int	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 	t_vect3				collision_point;
 	bool				direction;
 
+	if (bounce > BOUNCES)
+		return (BLACK);
 	nearest = get_nearest_object(ray, world);
 	if (nearest.t == -1)
 		return (get_sky_color(color_intensity(world->ambient_light.color,
-					world->ambient_light.ratio), ray.dir));
-	if (bounce + 1 > BOUNCES)
-		return (color_gradient(nearest.obj->color,
-				get_sky_color(color_intensity(world->ambient_light.color,
-						world->ambient_light.ratio), ray.dir),
-				nearest.obj->u_data.sphere.reflectance));
-	collision_point = get_collision_point(ray, nearest.t - nearest.t * 1e-6);
+				world->ambient_light.ratio), ray.dir));
+	collision_point = get_collision_point(ray, nearest.t);
 	normal = sphere_normal(nearest.obj, collision_point, ray.dir, &direction);
 	normal = get_diffuse_vector(normal, nearest.obj->u_data.sphere.reflectance);
 	if (direction)
-		ray.dir = get_bounce(ray, normal, nearest.obj->color, 1.0);
+		ray.dir = get_bounce(ray, normal, nearest.obj->color, get_current_refraction(world->objs, world->obj_count, collision_point));
 	else
 		ray.dir = get_bounce(ray, normal, nearest.obj->color, nearest.obj->u_data.sphere.refraction);
 	ray.origin = collision_point;
 	if (direction)
-		ray.origin_refraction = 1.0;
+		ray.origin_refraction = get_current_refraction(world->objs, world->obj_count, collision_point);
 	else
 		ray.origin_refraction = nearest.obj->u_data.sphere.refraction;
-	// return (color_gradient(nearest.obj->color, get_pixel_color(ray, world,
-	// 	bounce + 1), 1 - parse_color(nearest.obj->color).alpha / 255.0));
 	return (color_gradient(nearest.obj->color, get_pixel_color(ray, world,
 				bounce + 1), nearest.obj->u_data.sphere.reflectance));
 }
@@ -97,6 +93,8 @@ void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 	t_vect2	pointer;
 	t_ray	ray;
 
+	ray.origin = world->cam.pos;
+	ray.origin_refraction = get_current_refraction(world->objs, world->obj_count, world->cam.pos);
 	pointer.y = start.y;
 	while (pointer.y <= end.y)
 	{
@@ -105,8 +103,6 @@ void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 		{
 			ray.dir = get_ray_dir(pointer, &world->viewport,
 					&world->cam, world->moving || world->rotating);
-			ray.origin = world->cam.pos;
-			ray.origin_refraction = 1;
 			if (!world->moving && !world->rotating)
 				my_mlx_pixel_put(mlx, pointer, get_color_summed(pointer,
 						world->color_tab, get_pixel_color(ray, world, 0),
