@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/02 11:30:19 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/02 18:31:44 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ int							update_display(t_global_data *data);
 int							get_color(t_color p_color);
 int							get_color_chars(unsigned char a, unsigned char r,
 								unsigned char g, unsigned char b);
-t_vect3						shading(t_vect3 ray, t_nearest_object nearest, t_world_data *world);
+t_vect3 compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal, t_object object ,t_world_data *world);
 // int							color_sup(int color_a, int color_b);
 t_vect3						project(t_vect3 pos, t_cam_data *cam_data);
 // void						my_mlx_pixel_put(t_mlx_data *mlx, t_vect3 pos,
