@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/02/27 23:09:05 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/02 11:29:45 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void compute_direct_specular(t_shader_compute *shader, t_world_data *world, int 
 }
 
 
-int compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal, t_object object ,t_world_data *world)
+t_vect3 compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal, t_object object ,t_world_data *world)
 {
     t_shader_compute shader;
     int i = 0;
@@ -111,11 +111,11 @@ int compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal, t_object objec
         }
         i++;
     }
-    return (vec3_to_color(shader.final_pixel_color));
+    return (shader.final_pixel_color);
 }
 
 /// @brief calc P space pos, calc P normal, calc direct light intensity, return adjusted color
-int shading(t_vect3 ray, t_nearest_object nearest, t_world_data *world)
+t_vect3 shading(t_vect3 ray, t_nearest_object nearest, t_world_data *world)
 {
 	t_vect3 point_ray_colision;
 	t_vect3 point_normal;
