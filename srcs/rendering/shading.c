@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/02 11:29:45 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:33:21 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,29 @@ void compute_direct_specular(t_shader_compute *shader, t_world_data *world, int 
 	shader->specular = vector_mult(vector_mult(shader->light_rgb, world->lights[i].ratio), shader->spec_power);
 }
 
+/* float shadow_factor()
+{
+	float light_intensity_sum = 0;
+	t_vect3 rand_p_light;
+	t_vect3 rand_light_dir;
+	float rand_light_dist;
+	t_ray shadow_ray;
+	t_nearest_object hit;
+	int s = 0;
+
+	while (s < SAMPLES)
+	{
+		rand_p_light = get_rand_p_light();
+		rand_light_dir = vectors_sub(rand_p_light, shadow_origin);
+		rand_light_dist = vector_mag(rand_light_dir);
+		shadow_ray.origin = shadow_origin;
+		shadow_ray.dir = vector_norm(rand_light_dir);
+		hit = get_nearest_object(shadow_ray, world);
+		if (hit.t < 0 || hit.t > rand_light_dist)
+			light_intensity_sum += 1.0f;
+	}
+	return(light_intensity_sum / (float)SAMPLES);
+} */
 
 t_vect3 compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal, t_object object ,t_world_data *world)
 {

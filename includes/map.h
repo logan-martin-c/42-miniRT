@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:51 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/26 12:19:52 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:14:02 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_light
 {
 	t_vect3			pos;
 	float			ratio;
+	float			radius;
 	int				color;
 }					t_light;
 

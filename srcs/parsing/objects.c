@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:51:26 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/26 14:44:50 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:42:19 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	new_light(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	params = ft_split_charset(obj_line, " \t\v\f\r");
 	if (!params)
 		return (ft_perror(NULL, g_data->prog_name));
-	if (check_args_count(params, 4, 4) == -1)
+	if (check_args_count(params, 4, 5) == -1)
 		return (ft_free_strs(params), ft_maperror("light : invalid parameters",
 				p_data->line_nb, g_data->prog_name));
 	if (parse_pos(params[1], &node->u_data.light.pos, 0)
@@ -111,6 +111,7 @@ int	new_light(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	if (node->u_data.light.ratio > 1 || node->u_data.light.ratio < 0)
 		return (ft_free_strs(params), ft_maperror("light : invalid ratio",
 				p_data->line_nb, g_data->prog_name));
+	node->u_data.light.radius = ft_atof(params[4]);
 	node->e_type = _light;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
 	p_data->light_count++;

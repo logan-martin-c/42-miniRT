@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:36:21 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/02 11:48:36 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:40:48 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,11 @@ void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 			ray.dir = get_ray_dir(pointer.x, pointer.y, &world->viewport,
 					&world->cam);
 			ray.origin = world->cam.pos;
-			// if (!world->moving && !world->rotating)
-			// 	my_mlx_pixel_put(mlx, pointer, get_color_summed(pointer,
-			// 			world->color_tab, get_pixel_color(ray, world, 0),
-			// 			world->static_frames));
-			// else
+			if (!world->moving && !world->rotating)
+				my_mlx_pixel_put(mlx, pointer, get_color_summed(pointer,
+						world->color_tab, get_pixel_color(ray, world),
+						world->static_frames));
+			else
 				my_mlx_pixel_put(mlx, pointer, get_pixel_color(ray, world));
 			pointer.x++;
 		}

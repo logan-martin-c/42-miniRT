@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   settings.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 17:59:52 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/15 11:54:11 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:20:06 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define WIN_WIDTH 1280
 
 # define BOUNCES 10
-
+# define SAMPLES 8
 //Normalized vectors settings
 # define NORM_TOLERANCE 1e-2
 
