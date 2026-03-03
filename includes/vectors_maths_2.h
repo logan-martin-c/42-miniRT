@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 09:43:55 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/26 12:21:31 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/03 14:06:48 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static inline t_vect3	vector_norm(t_vect3 a)
 	double	mag;
 
 	mag = vector_mag(a);
+	if (mag < 1e-6)
+		return ((t_vect3){0, 0, 0});
 	a.x = a.x / mag;
 	a.y = a.y / mag;
 	a.z = a.z / mag;
@@ -49,12 +51,14 @@ static inline t_vect3	vector_max_mag(t_vect3 a, float max_mag)
 	return (a);
 }
 
-static inline t_vect3 vector_reflect(t_vect3 i, t_vect3 n)
+static inline t_vect3	vector_reflect(t_vect3 i, t_vect3 n)
 {
-    // R = I - 2 * dot(I, N) * N
-    double dot = dot_product(i, n);
-    t_vect3 scaled_n = vector_mult(n, 2.0 * dot);
-    return (vectors_sub(i, scaled_n));
+	double	dot;
+	t_vect3	scaled_n;
+
+	dot = dot_product(i, n);
+	scaled_n = vector_mult(n, 2.0 * dot);
+	return (vectors_sub(i, scaled_n));
 }
 static inline float	vectors_angle(t_vect3 a, t_vect3 b)
 {

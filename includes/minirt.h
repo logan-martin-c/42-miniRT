@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/02 18:31:44 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/03 14:19:22 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,22 @@ typedef struct s_parsing_data
 	int						line_nb;
 }							t_parsing_data;
 
+typedef enum e_obj_type
+{
+	_obj_object,
+	_obj_param,
+	_obj_light,
+	_obj_none,
+}							t_obj_type;
+
 typedef struct s_nearest_object
 {
-	t_object				*obj;
+	t_obj_type				type;
+	union
+	{
+		t_object			*obj;
+		t_light				*light;
+	} u_data;
 	float					t;
 }							t_nearest_object;
 
@@ -148,13 +161,13 @@ typedef struct s_exec_data
 {
 	pthread_t				*threads;
 	unsigned int			nb_threads;
-	_Atomic bool stop;
+	_Atomic bool			stop;
 	pthread_mutex_t			mutex;
 	t_tasks					*tasks;
-	_Atomic int current_task;
-	_Atomic int tasks_done;
-	_Atomic int to_do;
-	_Atomic bool rendering;
+	_Atomic int				current_task;
+	_Atomic int				tasks_done;
+	_Atomic int				to_do;
+	_Atomic bool			rendering;
 }							t_exec_data;
 
 typedef struct s_global_data
@@ -166,13 +179,32 @@ typedef struct s_global_data
 	t_exec_data				*e_data;
 }							t_global_data;
 
-typedef enum e_obj_type
+typedef struct s_shader_compute
 {
-	_obj_object,
-	_obj_param,
-	_obj_light,
-	_obj_none,
-}							t_obj_type;
+	t_vect3					amb_rgb;
+	t_vect3					obj_rgb;
+	t_vect3					light_rgb;
+	t_vect3					light_ray_dir;
+	double					light_ray_dist;
+	t_vect3					n_light_normal;
+	t_vect3					n_point_normal;
+	t_vect3					n_point_normal_diffused;
+	t_vect3					n_view_normal;
+	t_vect3					reflection_direction;
+	t_vect3					neg_light_normal;
+	t_vect3					shadow_origin;
+	float					dot_nl;
+	float					dot_rv;
+	float					intensity;
+	t_vect3					diffuse;
+	float					spec_power;
+	t_vect3					specular;
+	t_vect3					final_pixel_color;
+	t_nearest_object		shadow_t;
+	t_ray					light_ray;
+	float					light_intensity_sum;
+	t_ray					shadow_ray;
+}							t_shader_compute;
 
 // INIT
 int							init_mlx(t_mlx_data *mlx);
@@ -205,7 +237,9 @@ int							update_display(t_global_data *data);
 int							get_color(t_color p_color);
 int							get_color_chars(unsigned char a, unsigned char r,
 								unsigned char g, unsigned char b);
-t_vect3 compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal, t_object object ,t_world_data *world);
+t_vect3						compute_direct_light(t_vect3 point_r_c,
+								t_vect3 point_normal, t_object object,
+								t_world_data *world);
 // int							color_sup(int color_a, int color_b);
 t_vect3						project(t_vect3 pos, t_cam_data *cam_data);
 // void						my_mlx_pixel_put(t_mlx_data *mlx, t_vect3 pos,
@@ -227,6 +261,8 @@ int							init_exec(t_exec_data *e_data,
 void						create_tasks(t_exec_data *e_data);
 int							get_sky_color(int ambient_color, t_vect3 ray);
 t_nearest_object			get_nearest_object(t_ray ray, t_world_data *world);
+t_nearest_object			get_nearest_obj_or_light(t_ray ray,
+								t_world_data *world);
 
 // INTERFACE
 void						set_hooks(t_global_data *g_data);

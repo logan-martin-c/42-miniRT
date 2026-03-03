@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:36:21 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/02 18:31:27 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/03 14:20:57 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,50 +61,35 @@ int	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 	if (bounce > BOUNCES)
 		return (get_sky_color(color_intensity(world->ambient_light.color,
 					world->ambient_light.ratio), ray.dir));
-	nearest = get_nearest_object(ray, world);
+	nearest = get_nearest_obj_or_light(ray, world);
 	if (nearest.t == -1)
 		return (get_sky_color(color_intensity(world->ambient_light.color,
 					world->ambient_light.ratio), ray.dir));
+	if (nearest.type == _obj_light)
+				return (vec3_to_color(vector_mult(color_to_vec3( nearest.u_data.light->color), 10.0f)));
 	if (bounce + 1 > BOUNCES)
-		return (color_gradient(nearest.obj->color,
+		return (color_gradient(nearest.u_data.obj->color,
 				get_sky_color(color_intensity(world->ambient_light.color,
 						world->ambient_light.ratio), ray.dir),
-				nearest.obj->u_data.sphere.reflectance));
+				nearest.u_data.obj->u_data.sphere.reflectance));
 	collision_point = get_collision_point(ray, nearest.t - nearest.t * 1e-3);
-	normal = sphere_normal(nearest.obj, collision_point, ray.dir);
-	normal_diffused = get_diffuse_vector(normal, nearest.obj->u_data.sphere.reflectance);
+	normal = sphere_normal(nearest.u_data.obj, collision_point, ray.dir);
+	normal_diffused = get_diffuse_vector(normal, nearest.u_data.obj->u_data.sphere.reflectance);
 	t_vect3	direct_rgb;
 	t_vect3	indirect_rgb;
 	t_vect3	final_rgb;
-	direct_rgb = compute_direct_light(collision_point, normal, *nearest.obj, world);
-	if (bounce < BOUNCES && nearest.obj->u_data.sphere.reflectance > 0)
+	direct_rgb = compute_direct_light(collision_point, normal, *nearest.u_data.obj, world);
+	if (bounce < BOUNCES && nearest.u_data.obj->u_data.sphere.reflectance > 0)
 	{
 		ray.dir = vector_norm(reflect(ray.dir, normal_diffused));
 		ray.origin = collision_point;
-		indirect_rgb = color_to_vec3(color_gradient(nearest.obj->color, get_pixel_color(ray, world,
-					bounce + 1), nearest.obj->u_data.sphere.reflectance));
+		indirect_rgb = color_to_vec3(color_gradient(nearest.u_data.obj->color, get_pixel_color(ray, world,
+					bounce + 1), nearest.u_data.obj->u_data.sphere.reflectance));
 	}
-	final_rgb = vectors_add(direct_rgb, vector_mult (indirect_rgb, nearest.obj->u_data.sphere.reflectance));
+	float diffuse_weight = 1.0f - nearest.u_data.obj->u_data.sphere.reflectance;
+	final_rgb = vectors_add(vector_mult (direct_rgb, diffuse_weight), vector_mult (indirect_rgb, nearest.u_data.obj->u_data.sphere.reflectance));
 	return (vec3_to_color(final_rgb));
 }
-
-// int	get_pixel_color(t_ray ray, t_world_data *world)
-// {
-// 	t_nearest_object	nearest;
-
-
-// 	nearest = get_nearest_object(ray, world);
-// 	if (nearest.t == -1)
-// 		return (get_sky_color(color_intensity(world->ambient_light.color,
-// 					world->ambient_light.ratio), ray.dir));
-// 	direct_rgb = shading(ray.dir, nearest, world );
-
-// 	indirect_rgb = color_to_vec3(indirect_lighting(ray, world, 0));
-
-// 	final_rgb = vectors_add(direct_rgb, vector_mult (indirect_rgb, nearest.obj->u_data.sphere.reflectance));
-// 	return (vec3_to_color(final_rgb));
-
-// }
 
 void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 		t_mlx_data *mlx)
@@ -132,3 +117,21 @@ void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 		pointer.y++;
 	}
 }
+
+// int	get_pixel_color(t_ray ray, t_world_data *world)
+// {
+// 	t_nearest_object	nearest;
+
+
+// 	nearest = get_nearest_object(ray, world);
+// 	if (nearest.t == -1)
+// 		return (get_sky_color(color_intensity(world->ambient_light.color,
+// 					world->ambient_light.ratio), ray.dir));
+// 	direct_rgb = shading(ray.dir, nearest, world );
+
+// 	indirect_rgb = color_to_vec3(indirect_lighting(ray, world, 0));
+
+// 	final_rgb = vectors_add(direct_rgb, vector_mult (indirect_rgb, nearest.obj->u_data.sphere.reflectance));
+// 	return (vec3_to_color(final_rgb));
+
+// }

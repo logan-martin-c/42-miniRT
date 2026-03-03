@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vectors_rotations.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:20:04 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/17 14:48:47 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/03 14:14:42 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 # define VECTORS_ROTATIONS_H
 # include "minirt.h"
 
-static inline t_vect3	vector_rot(t_vect3 prev_pos, float pitch, float yaw, float roll)
+static inline t_vect3	vector_rot(t_vect3 prev_pos, float pitch, float yaw,
+		float roll)
 {
 	t_vect3	new_pos;
-	float		s;
-	float		c;
-	float		temp;
+	float	s;
+	float	c;
+	float	temp;
 
 	s = sin(pitch);
 	c = cos(pitch);
@@ -31,12 +32,12 @@ static inline t_vect3	vector_rot(t_vect3 prev_pos, float pitch, float yaw, float
 	c = cos(yaw);
 	temp = new_pos.x;
 	new_pos.x = temp * c + new_pos.z * s;
-	new_pos.z = - temp * s + new_pos.z * c;
+	new_pos.z = -temp * s + new_pos.z * c;
 	s = sin(roll);
 	c = cos(roll);
 	temp = new_pos.x;
-	new_pos.x = temp* c - new_pos.y * s;
-	new_pos.y =	temp * s + new_pos.y * c;
+	new_pos.x = temp * c - new_pos.y * s;
+	new_pos.y = temp * s + new_pos.y * c;
 	return (new_pos);
 }
 
