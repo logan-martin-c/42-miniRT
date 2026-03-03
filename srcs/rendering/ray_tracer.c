@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:36:21 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/03 14:20:57 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/03 15:29:28 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
 #endif
+
 void	init_viewport(t_viewport *viewport, int fov)
 {
 	viewport->aspect_ratio = (double)WIN_WIDTH * (double)INV_WIN_HEIGHT;

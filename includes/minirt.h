@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/03 14:19:22 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:57:12 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,7 @@ typedef struct s_shader_compute
 }							t_shader_compute;
 
 // INIT
+void						init_texture(t_global_data *g_data);
 int							init_mlx(t_mlx_data *mlx);
 void						init(t_global_data *g_data, t_parsing_data *p_data,
 								t_exec_data *e_data, char *av_zero);
@@ -263,6 +264,7 @@ int							get_sky_color(int ambient_color, t_vect3 ray);
 t_nearest_object			get_nearest_object(t_ray ray, t_world_data *world);
 t_nearest_object			get_nearest_obj_or_light(t_ray ray,
 								t_world_data *world);
+t_vect3						get_texture_color(t_vect3 point_r_c, t_object object);
 
 // INTERFACE
 void						set_hooks(t_global_data *g_data);

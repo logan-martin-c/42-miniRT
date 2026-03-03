@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/03 14:19:48 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/03 15:33:31 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@
 void	ini_compute_dl(t_shader_compute *shader, t_vect3 point_r_c,
 		t_object object, t_world_data *world)
 {
+	(void)object;
 	shader->amb_rgb = color_to_vec3(world->ambient_light.color);
-	shader->obj_rgb = color_to_vec3(object.color);
+	//shader->obj_rgb = color_to_vec3(object.color);
 	shader->n_view_normal = vector_norm(vectors_sub(world->cam.pos, point_r_c));
 	shader->final_pixel_color = (t_vect3){0, 0, 0};
 	shader->final_pixel_color = vectors_mult(vector_mult(shader->amb_rgb,
@@ -76,6 +77,7 @@ t_vect3	compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal,
 
 	i = 0;
 	shader.n_point_normal = vector_norm(point_normal);
+	shader.obj_rgb = get_texture_color(point_r_c, object);
 	ini_compute_dl(&shader, point_r_c, object, world);
 	while (i < world->light_count)
 	{

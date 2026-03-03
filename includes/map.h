@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:51 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/02 15:14:02 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:15:18 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,13 @@ typedef struct s_light
 	int				color;
 }					t_light;
 
+typedef struct s_texture {
+    void    *img;
+    int     *pixels;
+    int     width;
+    int     height;
+} t_texture;
+
 typedef struct s_object
 {
 	enum
@@ -113,6 +120,8 @@ typedef struct s_object
 	int				color;
 	t_vect3		pos;
 	t_vect3		rot;
+	t_texture	tex;
+	char *tex_name;
 	union
 	{
 		t_sphere	sphere;

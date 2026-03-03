@@ -16,6 +16,7 @@ SRCS = main.c\
 		parsing/params.c\
 		parsing/parser.c\
 		parsing/sub_parameters.c\
+		parsing/texture.c\
 		rendering/collisions.c\
 		rendering/colors.c\
 		rendering/loop.c\
@@ -23,6 +24,7 @@ SRCS = main.c\
 		rendering/multithreading.c\
 		rendering/ray_tracer.c\
 		rendering/shading.c\
+		rendering/texturing.c\
 		utils/clean_exit.c\
 		utils/debug_obj_print.c\
 		utils/debug_params_print.c\
