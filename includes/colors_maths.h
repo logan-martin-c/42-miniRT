@@ -6,93 +6,91 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 11:22:24 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/24 16:48:06 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/04 15:47:06 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static inline t_vect3 color_to_vec3(int argb)
+static inline t_float_color color_to_vec4(int argb)
 {
-	t_vect3 color;
+	t_float_color color;
 
-        color.x = ((argb >> 16) & 0xFF) / 255.0f;
-		color.y = ((argb >> 8) & 0xFF) / 255.0f;
-   		color.z = (argb & 0xFF) / 255.0f;
+		color.a = ((argb >> 24) & 0xFF) / 255.0f;
+   		color.r = ((argb >> 16) & 0xFF) / 255.0f;
+		color.g = ((argb >> 8) & 0xFF) / 255.0f;
+        color.b = (argb & 0xFF) / 255.0f;
+	
 	return (color);
 }
 
-static inline int vec3_to_color(t_vect3 color)
+static inline int vec4_to_color(t_float_color color)
 {
-    if (color.x > 1.0f) color.x = 1.0f;
-    if (color.y > 1.0f) color.y = 1.0f;
-    if (color.z > 1.0f) color.z = 1.0f;
+	if (color.a > 1.0f) color.r = 1.0f;
+    if (color.r > 1.0f) color.r = 1.0f;
+    if (color.g > 1.0f) color.g = 1.0f;
+    if (color.b > 1.0f) color.b = 1.0f;
 
-    int r = (int)(color.x * 255.0f);
-    int g = (int)(color.y * 255.0f);
-    int b = (int)(color.z * 255.0f);
+	int a = (int)(color.a * 255.0f);
+    int r = (int)(color.r * 255.0f);
+    int g = (int)(color.g * 255.0f);
+    int b = (int)(color.b * 255.0f);
 
-    return (255 << 24) | (r << 16) | (g << 8) | b;
+    return (a << 24) | (r << 16) | (g << 8) | b;
 }
 
 static inline int	color_sup(int front, int back)
 {
-	t_color	ret;
-	t_color	c_f;
-	t_color	c_b;
+	t_float_color	ret;
+	t_float_color	c_f;
+	t_float_color	c_b;
 	float	a;
 
 	c_f = parse_color(front);
 	c_b = parse_color(back);
-	if (c_f.alpha == 0)
+	if (c_f.a == 0)
 		return (back);
-	if (c_f.alpha == 255)
+	if (c_f.a == 255)
 		return (front);
-	a = (float)c_f.alpha / 255.0;
-	ret.alpha = 255;
-	ret.red = c_f.red * a + c_b.red * (1 - a);
-	ret.green = c_f.green * a + c_b.green * (1 - a);
-	ret.blue = c_f.blue * a + c_b.blue * (1 - a);
+	a = (float)c_f.a / 255.0;
+	ret.a = 255;
+	ret.r = c_f.r * a + c_b.r * (1 - a);
+	ret.g = c_f.g * a + c_b.g * (1 - a);
+	ret.b = c_f.b * a + c_b.b * (1 - a);
 	return (get_color(ret));
 }
 
-static inline int	color_gradient(int start, int end, float progress)
+static inline t_float_color	color_gradient(t_float_color p_color_start, t_float_color p_color_end, float progress)
 {
-	t_color	p_color_start;
-	t_color	p_color_end;
-	t_color	p_color_progress;
+	t_float_color	p_color_progress;
 
-	p_color_start = parse_color(start);
-	p_color_end = parse_color(end);
-	p_color_progress.alpha = p_color_start.alpha + (p_color_end.alpha
-			- p_color_start.alpha) * progress;
-	p_color_progress.red = p_color_start.red + (p_color_end.red
-			- p_color_start.red) * progress;
-	p_color_progress.green = p_color_start.green + (p_color_end.green
-			- p_color_start.green) * progress;
-	p_color_progress.blue = p_color_start.blue + (p_color_end.blue
-			- p_color_start.blue) * progress;
-	return (get_color(p_color_progress));
+	p_color_progress.a = p_color_start.a + (p_color_end.a
+			- p_color_start.a) * progress;
+	p_color_progress.r = p_color_start.r + (p_color_end.r
+			- p_color_start.r) * progress;
+	p_color_progress.g = p_color_start.g + (p_color_end.g
+			- p_color_start.g) * progress;
+	p_color_progress.b = p_color_start.b + (p_color_end.b
+			- p_color_start.b) * progress;
+	return (p_color_progress);
 }
 
-static inline int	color_intensity(int color, float intensity)
+static inline t_float_color	color_intensity(t_float_color color, float intensity)
 {
-	t_color	p_color;
-
-	p_color = parse_color(color);
-	p_color.red *= intensity;
-	p_color.green *= intensity;
-	p_color.blue *= intensity;
-	return (get_color(p_color));
+	color.a *= intensity;
+	color.r *= intensity;
+	color.g *= intensity;
+	color.b *= intensity;
+	return (color);
 }
 
 static inline int	light_filter(int light, int filter)
 {
-	t_color	p_light;
-	t_color	p_filter;
+	t_float_color	p_light;
+	t_float_color	p_filter;
 
 	p_light = parse_color(light);
 	p_filter = parse_color(filter);
-	p_light.red = ft_min(p_light.red, p_filter.red);
-	p_light.green = ft_min(p_light.green, p_filter.green);
-	p_light.blue = ft_min(p_light.blue, p_filter.blue);
+	p_light.r = ft_min(p_light.r, p_filter.r);
+	p_light.g = ft_min(p_light.g, p_filter.g);
+	p_light.b = ft_min(p_light.b, p_filter.b);
 	return (get_color(p_light));
 }

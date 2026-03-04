@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_mover.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 14:48:04 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/27 15:15:52 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/04 13:49:47 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	object_picker(int button, int x, int y, void *data)
 	if (nearest.t == -1)
 		g_data->world.selected_obj = NULL;
 	else
-		g_data->world.selected_obj = nearest.obj;
+		g_data->world.selected_obj = nearest.u_data.obj;
 	return (0);
 }
 

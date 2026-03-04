@@ -6,13 +6,14 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/03 15:33:31 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/04 16:39:51 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 //
 #include "colors_maths.h"
+#include "colors_maths_2.h"
 #include "mlx_utils.h"
 #include "vectors_maths_1.h"
 #include "vectors_maths_2.h"
@@ -23,11 +24,11 @@ void	ini_compute_dl(t_shader_compute *shader, t_vect3 point_r_c,
 		t_object object, t_world_data *world)
 {
 	(void)object;
-	shader->amb_rgb = color_to_vec3(world->ambient_light.color);
+	shader->amb_rgb = world->ambient_light.color;
 	//shader->obj_rgb = color_to_vec3(object.color);
 	shader->n_view_normal = vector_norm(vectors_sub(world->cam.pos, point_r_c));
-	shader->final_pixel_color = (t_vect3){0, 0, 0};
-	shader->final_pixel_color = vectors_mult(vector_mult(shader->amb_rgb,
+	shader->final_pixel_color = (t_float_color){1, 0, 0, 0};
+	shader->final_pixel_color = colors_mult(colors_scal(shader->amb_rgb,
 				world->ambient_light.ratio), shader->obj_rgb);
 	shader->shadow_origin = vectors_add(point_r_c,
 			vector_mult(shader->n_point_normal, 0.001f));
@@ -69,7 +70,7 @@ void	shadow_factor(t_shader_compute *shader, t_world_data *world,
 	shader->light_intensity_sum = shader->light_intensity_sum / (float)SAMPLES;
 }
 
-t_vect3	compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal,
+t_float_color	compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal,
 		t_object object, t_world_data *world)
 {
 	t_shader_compute	shader;
@@ -84,14 +85,14 @@ t_vect3	compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal,
 		prep_compute_dl(&shader, point_r_c, world, i);
 		if (shader.dot_nl > 0)
 		{
-			shadow_factor(&shader, world, world->lights[i]);
-			shader.light_rgb = color_to_vec3(world->lights[i].color);
+			//shadow_factor(&shader, world, world->lights[i]);
+			shader.light_rgb = world->lights[i].color;
 			shader.intensity = world->lights[i].ratio * shader.dot_nl;
-			shader.diffuse = vector_mult(vectors_mult(shader.light_rgb,
+			shader.diffuse = colors_scal(colors_mult(shader.light_rgb,
 						shader.obj_rgb), shader.intensity);
-			shader.diffuse = vector_mult(shader.diffuse,
-					shader.light_intensity_sum);
-			shader.final_pixel_color = vectors_add(shader.final_pixel_color,
+			// shader.diffuse = colors_scal(shader.diffuse,
+			// 		shader.light_intensity_sum);
+			shader.final_pixel_color = colors_add(shader.final_pixel_color,
 					shader.diffuse);
 		}
 		i++;
@@ -104,7 +105,7 @@ t_vect3	compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal,
 {
 	t_vect3	point_ray_colision;
 	t_vect3	point_normal;
-	t_color	obj_splt_colors;
+	t_float_color	obj_splt_colors;
 	t_vect3	n;
 
 	shader->neg_light_normal = vector_norm(vector_mult(shader->light_ray_dir,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_params_print.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:41:08 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/15 23:43:22 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/04 15:43:24 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	print_cam(t_cam_data *cam)
 
 void	print_ambient_light(t_ambient_light_data *ambient_light)
 {
-	t_color	color;
+	t_float_color	color;
 
-	color = parse_color(ambient_light->color);
+	color = (ambient_light->color);
 	printf("Ambient light :\n");
 	printf("\tratio : %f\n", (float)ambient_light->ratio);
 	printf("\tcolor:\n");
-	printf("\t\ta : %u\n", color.alpha);
-	printf("\t\tr : %u\n", color.red);
-	printf("\t\tg : %u\n", color.green);
-	printf("\t\tb : %u\n", color.blue);
+	printf("\t\ta : %f\n", color.a);
+	printf("\t\tr : %f\n", color.r);
+	printf("\t\tg : %f\n", color.g);
+	printf("\t\tb : %f\n", color.b);
 }

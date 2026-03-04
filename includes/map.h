@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:51 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/04 13:36:27 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/04 14:38:38 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,21 @@ typedef struct s_ray
 	}				blend_mode;
 }					t_ray;
 
-typedef struct s_color
+// typedef struct s_color
+// {
+// 	unsigned char	alpha;
+// 	unsigned char	red;
+// 	unsigned char	green;
+// 	unsigned char	blue;
+// }					t_float_color;
+
+typedef struct s_float_color
 {
-	unsigned char	alpha;
-	unsigned char	red;
-	unsigned char	green;
-	unsigned char	blue;
-}					t_color;
+	float	a;
+	float	r;
+	float	g;
+	float	b;
+}					t_float_color;
 
 typedef struct s_key_status
 {
@@ -77,7 +85,7 @@ typedef struct s_cam_data
 typedef struct s_ambient_light_data
 {
 	float			ratio;
-	int				color;
+	t_float_color	color;
 }					t_ambient_light_data;
 
 typedef struct s_map_data
@@ -105,7 +113,7 @@ typedef struct s_light
 	t_vect3			pos;
 	float			ratio;
 	float			radius;
-	int				color;
+	t_float_color	color;
 }					t_light;
 
 typedef struct s_texture {
@@ -124,10 +132,10 @@ typedef struct s_object
 		_cylinder,
 		_light
 	} e_type;
-	int				color;
-	t_vect3		pos;
-	t_vect3		rot;
-	t_texture	tex;
+	t_float_color	color;
+	t_vect3			pos;
+	t_vect3			rot;
+	t_texture		tex;
 	char *tex_name;
 	union
 	{

@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 09:43:55 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/04 13:35:42 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/04 15:19:24 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,9 @@ static inline t_vect3	get_rand_p_light(t_vect3 light_pos, float radius)
 	return (vectors_add(light_pos, offset));
 }
 
-static inline t_vect3   get_bounce(t_ray ray, t_vect3 n, int color, float refraction)
+static inline t_vect3   get_bounce(t_ray ray, t_vect3 n, t_float_color color, float refraction)
 {
-    t_color p_color;
-
-    p_color = parse_color(color);
-    if (p_color.alpha == 255)
+    if (color.a == 1) // 1 ?
         return (reflect(ray.dir, n));
     return (refract(ray, n, refraction));
 }

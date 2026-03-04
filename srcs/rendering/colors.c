@@ -3,55 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 19:37:29 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/16 11:17:40 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/04 15:51:15 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 //
-#include "vectors_maths_1.h"
 #include "colors_maths.h"
+#include "vectors_maths_1.h"
 
-t_color	parse_color(int color)
+t_float_color	parse_color(int color)
 {
-	t_color	p_color;
+	t_float_color	p_color;
 
-	p_color.alpha = color >> 8 * 3;
-	p_color.red = color >> (8 * 2) & 255;
-	p_color.green = color >> 8 & 255;
-	p_color.blue = color & 255;
+	p_color.a = color >> 8 * 3;
+	p_color.r = color >> (8 * 2) & 255;
+	p_color.g = color >> 8 & 255;
+	p_color.b = color & 255;
 	return (p_color);
 }
 
-int	get_color(t_color p_color)
+int	get_color(t_float_color p_color)
 {
-	int	color;
+	int	r;
+	int	g;
+	int	b;
+	int	a;
 
-	color = 0;
-	color += p_color.alpha << 8 * 3;
-	color += p_color.red << 8 * 2;
-	color += p_color.green << 8;
-	color += p_color.blue;
+	r = (int)(p_color.r * 255.0f);
+	g = (int)(p_color.g * 255.0f);
+	b = (int)(p_color.b * 255.0f);
+	a = (int)(p_color.a * 255.0f);
+	return (a << 24 | r << 16 | g << 8 | b);
+}
+
+t_float_color	get_color_chars(unsigned char a, unsigned char r,
+		unsigned char g, unsigned char b)
+{
+	t_float_color	color;
+
+	color.a = (float)a / 255;
+	color.r = (float)r / 255;
+	color.g = (float)g / 255;
+	color.b = (float)b / 255;
 	return (color);
 }
 
-int	get_color_chars(unsigned char a, unsigned char r, unsigned char g,
-		unsigned char b)
-{
-	int	color;
-
-	color = 0;
-	color += (a << 24);
-	color += (r << 16) & 16777215;
-	color += (g << 8) & 65535;
-	color += b & 255;
-	return (color);
-}
-
-int	get_sky_color(int ambient_color, t_vect3 ray)
+t_float_color	get_sky_color(t_float_color ambient_color, t_vect3 ray)
 {
 	float	upness;
 

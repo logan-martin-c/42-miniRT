@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:51:26 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/04 13:37:57 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/04 13:53:26 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	new_sphere(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 		node->u_data.sphere.refraction = ft_atof(params[5]);
 	else
 		node->u_data.sphere.refraction = 1;
-	if (params[6])
-		node->tex_name = ft_strdup (params[6]);
+	if (params[5] && params[6])
+		node->tex_name = ft_strdup(params[6]);
 	node->rot = (t_vect3){0, 0, -1};
 	node->e_type = _sphere;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));

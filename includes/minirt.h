@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/04 13:36:18 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/04 15:37:41 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "mlx.h"
 # include "settings.h"
 # include <fcntl.h>
+# include <float.h>
 # include <math.h>
 # include <pthread.h>
 # include <stdatomic.h>
@@ -25,7 +26,6 @@
 # include <stdio.h>
 # include <string.h>
 # include <unistd.h>
-# include <float.h>
 
 // KEYCODES
 # define ESC 65307
@@ -164,13 +164,13 @@ typedef struct s_exec_data
 {
 	pthread_t				*threads;
 	unsigned int			nb_threads;
-	_Atomic bool			stop;
+	_Atomic bool stop;
 	pthread_mutex_t			mutex;
 	t_tasks					*tasks;
-	_Atomic int				current_task;
-	_Atomic int				tasks_done;
-	_Atomic int				to_do;
-	_Atomic bool			rendering;
+	_Atomic int current_task;
+	_Atomic int tasks_done;
+	_Atomic int to_do;
+	_Atomic bool rendering;
 }							t_exec_data;
 
 typedef struct s_global_data
@@ -184,9 +184,9 @@ typedef struct s_global_data
 
 typedef struct s_shader_compute
 {
-	t_vect3					amb_rgb;
-	t_vect3					obj_rgb;
-	t_vect3					light_rgb;
+	t_float_color			amb_rgb;
+	t_float_color			obj_rgb;
+	t_float_color			light_rgb;
 	t_vect3					light_ray_dir;
 	double					light_ray_dist;
 	t_vect3					n_light_normal;
@@ -199,10 +199,10 @@ typedef struct s_shader_compute
 	float					dot_nl;
 	float					dot_rv;
 	float					intensity;
-	t_vect3					diffuse;
+	t_float_color			diffuse;
 	float					spec_power;
 	t_vect3					specular;
-	t_vect3					final_pixel_color;
+	t_float_color			final_pixel_color;
 	t_nearest_object		shadow_t;
 	t_ray					light_ray;
 	float					light_intensity_sum;
@@ -222,9 +222,9 @@ void						parser(int ac, char *av[], t_global_data *g_data,
 void						check_args(int ac, char **av, char *prog_name);
 int							open_map(char *filename, char *progname);
 int							parse_pos(char *str, t_vect3 *pos, char normalized);
-int							parse_raw_color(char *str, int *color);
+int							parse_raw_color(char *str, t_float_color *color);
 int							parse_float(char *str, float *value);
-t_color						parse_color(int color);
+t_float_color				parse_color(int color);
 void						parse_object(t_parsing_data *p_data, char *obj_line,
 								t_global_data *g_data);
 void						parse_params(t_parsing_data *p_data, char *obj_line,
@@ -238,10 +238,10 @@ int							lst_lights_to_array(t_light **lights,
 
 // RENDER
 int							update_display(t_global_data *data);
-int							get_color(t_color p_color);
-int							get_color_chars(unsigned char a, unsigned char r,
+int							get_color(t_float_color p_color);
+t_float_color				get_color_chars(unsigned char a, unsigned char r,
 								unsigned char g, unsigned char b);
-t_vect3						compute_direct_light(t_vect3 point_r_c,
+t_float_color				compute_direct_light(t_vect3 point_r_c,
 								t_vect3 point_normal, t_object object,
 								t_world_data *world);
 // int							color_sup(int color_a, int color_b);
@@ -259,11 +259,13 @@ int							init_threads(t_exec_data *e_data,
 int							init_exec(t_exec_data *e_data,
 								t_global_data *g_data);
 void						create_tasks(t_exec_data *e_data);
-int							get_sky_color(int ambient_color, t_vect3 ray);
+t_float_color				get_sky_color(t_float_color ambient_color,
+								t_vect3 ray);
 t_nearest_object			get_nearest_object(t_ray ray, t_world_data *world);
 t_nearest_object			get_nearest_obj_or_light(t_ray ray,
 								t_world_data *world);
-t_vect3						get_texture_color(t_vect3 point_r_c, t_object object);
+t_float_color				get_texture_color(t_vect3 point_r_c,
+								t_object object);
 
 // INTERFACE
 void						set_hooks(t_global_data *g_data);
