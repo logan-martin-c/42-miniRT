@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/03 16:57:12 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/04 13:36:18 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stdio.h>
 # include <string.h>
 # include <unistd.h>
+# include <float.h>
 
 // KEYCODES
 # define ESC 65307
@@ -37,11 +38,12 @@
 # define A_KEY 97
 # define S_KEY 115
 # define D_KEY 100
+# define I_KEY 105
 # define SPACE_KEY 32
 # define CTRL_KEY 65507
 # define P_KEY 112
-# define PLUS_KEY 65451
-# define MINUS_KEY 65453
+# define PLUS_KEY 61
+# define MINUS_KEY 45
 
 # define LINE_SIZE WIN_WIDTH * 4
 # define BPP 4
@@ -116,6 +118,7 @@ typedef struct s_world_data
 	t_ambient_light_data	ambient_light;
 	t_viewport				viewport;
 	t_long_color			*color_tab;
+	t_object				*selected_obj;
 }							t_world_data;
 
 typedef struct s_parsing_data
@@ -245,10 +248,6 @@ t_vect3						compute_direct_light(t_vect3 point_r_c,
 t_vect3						project(t_vect3 pos, t_cam_data *cam_data);
 // void						my_mlx_pixel_put(t_mlx_data *mlx, t_vect3 pos,
 // 								int color);
-void						update_cam_pos(t_interface *input, t_cam_data *cam,
-								int elapsed, bool *moving);
-void						rotate_cam(t_cam_data *cam, t_mlx_data *mlx,
-								bool *moving);
 void						trace_rays(t_world_data *world, t_mlx_data *mlx);
 // t_vect3					vector_norm(t_vect3 a);
 // t_vect3					vector_cross(t_vect3 a, t_vect3 b);
@@ -270,11 +269,19 @@ t_vect3						get_texture_color(t_vect3 point_r_c, t_object object);
 void						set_hooks(t_global_data *g_data);
 void						move_cam(t_world_data *world, t_mlx_data *mlx,
 								t_interface *key, int elapsed);
+void						update_cam_pos(t_interface *input, t_cam_data *cam,
+								int elapsed, bool *moving);
+void						rotate_cam(t_cam_data *cam, t_mlx_data *mlx,
+								bool *moving, t_object *obj);
 void						set_moving_vector(bool moving, t_vect3 move,
 								int elapsed);
 t_vect3						get_lasting(void);
 void						display_gui(t_world_data *world, t_mlx_data *mlx,
 								int elapsed);
+int							object_picker(int buttom, int x, int y, void *data);
+int							move_object(t_object *obj, t_world_data *world,
+								t_interface *input, int elapsed);
+void						rotate_object(t_object *obj, t_vect2 move);
 
 // UTILS
 int							ft_puterr(char *error);

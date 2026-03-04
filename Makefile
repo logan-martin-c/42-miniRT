@@ -9,6 +9,7 @@ SRCS = main.c\
 		init.c\
 		interface/gui.c\
 		interface/inputs.c\
+		interface/object_mover.c\
 		interface/velocity.c\
 		parsing/map_to_array.c\
 		parsing/objects.c\

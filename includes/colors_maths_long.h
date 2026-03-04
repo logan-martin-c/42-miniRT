@@ -59,7 +59,7 @@ static inline int	get_color_summed(t_vect2 pointer, t_long_color *color_tab, int
 	t_long_color	*color;
 
 	color = &color_tab[pointer.y * WIN_WIDTH + pointer.x];
-	if (!frame_nb)
+	if (frame_nb <= 0)
 		*color = set_long_color(new_color);
 	else if (frame_nb == __LONG_MAX__)
 		return (get_long_color(divide_long_color(*color, frame_nb + 1)));

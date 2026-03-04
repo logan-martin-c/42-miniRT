@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:36:21 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/03 15:29:28 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/04 13:38:37 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "vectors_maths_1.h"
 #include "vectors_maths_2.h"
 #include "vectors_maths_3.h"
+#include "refraction.h"
 #define _USE_MATH_DEFINES
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
@@ -37,15 +38,24 @@ void	init_viewport(t_viewport *viewport, int fov)
 	viewport->step_h = viewport->vp_h * INV_WIN_HEIGHT;
 }
 
-static inline t_vect3	get_ray_dir(int x, int y, t_viewport *viewport,
-		t_cam_data *cam)
+static inline t_vect3	get_ray_dir(t_vect2 pos, t_viewport *viewport,
+		t_cam_data *cam, bool moving)
 {
 	double	u;
 	double	v;
+	float	rx;
+	float	ry;
 
-	u = (2.0 * (x + 0.5) * INV_WIN_WIDTH - 1.0) * viewport->aspect_ratio
+	rx = 0.5;
+	ry = 0.5;
+	if (!moving)
+	{
+		rx = fast_rand();
+		ry = fast_rand();
+	}
+	u = (2.0 * (pos.x + rx) * INV_WIN_WIDTH - 1.0) * viewport->aspect_ratio
 		* viewport->tan_theta;
-	v = (1.0 - 2.0 * (y + 0.5) * INV_WIN_HEIGHT) * viewport->tan_theta;
+	v = (1.0 - 2.0 * (pos.y + ry) * INV_WIN_HEIGHT) * viewport->tan_theta;
 	return (vector_norm(vectors_add(cam->forward,
 				vectors_add(vector_mult(cam->right, u), vector_mult(cam->up,
 						v)))));
@@ -57,8 +67,8 @@ int	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 	t_vect3				normal;
 	t_vect3				normal_diffused;
 	t_vect3				collision_point;
+	bool				direction;
 
-	nearest.t = -1;
 	if (bounce > BOUNCES)
 		return (get_sky_color(color_intensity(world->ambient_light.color,
 					world->ambient_light.ratio), ray.dir));
@@ -90,6 +100,25 @@ int	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 	float diffuse_weight = 1.0f - nearest.u_data.obj->u_data.sphere.reflectance;
 	final_rgb = vectors_add(vector_mult (direct_rgb, diffuse_weight), vector_mult (indirect_rgb, nearest.u_data.obj->u_data.sphere.reflectance));
 	return (vec3_to_color(final_rgb));
+		return (BLACK);
+	nearest = get_nearest_object(ray, world);
+	if (nearest.t == -1)
+		return (get_sky_color(color_intensity(world->ambient_light.color,
+				world->ambient_light.ratio), ray.dir));
+	collision_point = get_collision_point(ray, nearest.t);
+	normal = sphere_normal(nearest.obj, collision_point, ray.dir, &direction);
+	normal = get_diffuse_vector(normal, nearest.obj->u_data.sphere.reflectance);
+	if (direction)
+		ray.dir = get_bounce(ray, normal, nearest.obj->color, get_current_refraction(world->objs, world->obj_count, collision_point));
+	else
+		ray.dir = get_bounce(ray, normal, nearest.obj->color, nearest.obj->u_data.sphere.refraction);
+	ray.origin = collision_point;
+	if (direction)
+		ray.origin_refraction = get_current_refraction(world->objs, world->obj_count, collision_point);
+	else
+		ray.origin_refraction = nearest.obj->u_data.sphere.refraction;
+	return (color_gradient(nearest.obj->color, get_pixel_color(ray, world,
+				bounce + 1), nearest.obj->u_data.sphere.reflectance));
 }
 
 void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
@@ -98,15 +127,16 @@ void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 	t_vect2	pointer;
 	t_ray	ray;
 
+	ray.origin = world->cam.pos;
+	ray.origin_refraction = get_current_refraction(world->objs, world->obj_count, world->cam.pos);
 	pointer.y = start.y;
 	while (pointer.y <= end.y)
 	{
 		pointer.x = start.x;
 		while (pointer.x <= end.x)
 		{
-			ray.dir = get_ray_dir(pointer.x, pointer.y, &world->viewport,
-					&world->cam);
-			ray.origin = world->cam.pos;
+			ray.dir = get_ray_dir(pointer, &world->viewport,
+					&world->cam, world->moving || world->rotating);
 			if (!world->moving && !world->rotating)
 				my_mlx_pixel_put(mlx, pointer, get_color_summed(pointer,
 						world->color_tab, get_pixel_color(ray, world, 0),

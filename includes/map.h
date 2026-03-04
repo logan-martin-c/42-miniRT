@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:51 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/03 16:15:18 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/04 13:36:27 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ typedef struct s_ray
 {
 	t_vect3			origin;
 	t_vect3			dir;
+	float			origin_refraction;
+	enum
+	{
+		_reflected,
+		_refracted
+	}				blend_mode;
 }					t_ray;
 
 typedef struct s_color
@@ -85,6 +91,7 @@ typedef struct s_sphere
 	float			diameter;
 	float			radius;
 	float			reflectance;
+	float			refraction;
 }					t_sphere;
 
 typedef struct s_cylinder

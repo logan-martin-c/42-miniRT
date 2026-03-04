@@ -29,6 +29,7 @@ void	print_sphere(t_object *object)
 	printf("\t\tg : %u\n", color.green);
 	printf("\t\tb : %u\n", color.blue);
 	printf("\treflectance: %f\n", object->u_data.sphere.reflectance);
+	printf("\trefraction: %f\n", object->u_data.sphere.refraction);
 }
 
 void	print_plane(t_object *object)
