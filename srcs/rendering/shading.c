@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/04 16:39:51 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/05 14:27:15 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,26 @@ void	shadow_factor(t_shader_compute *shader, t_world_data *world,
 	t_vect3				rand_light_dir;
 	float				rand_light_dist;
 	t_nearest_object	hit;
-	int					s;
+	// int					s;
 
-	s = 0;
-	shader->light_intensity_sum = 0;
-	while (s < SAMPLES)
-	{
-		rand_p_light = get_rand_p_light(light.pos, light.u_data.light.radius);
-		rand_light_dir = vectors_sub(rand_p_light, shader->shadow_origin);
-		rand_light_dist = vector_mag(rand_light_dir);
-		shader->shadow_ray.origin = shader->shadow_origin;
-		shader->shadow_ray.dir = vector_norm(rand_light_dir);
-		hit = get_nearest_object(shader->shadow_ray, world);
-		if (hit.t < 0 || hit.t > rand_light_dist)
-			shader->light_intensity_sum += 1.0f;
-		s++;
-	}
-	shader->light_intensity_sum = shader->light_intensity_sum / (float)SAMPLES;
+	// s = 0;
+	shader->light_intensity_sum = 0.0f;
+	/* while (s < SAMPLES)
+	{ */
+	/* if (world->static_frames == -1)
+		rand_p_light = light.pos;
+	else */
+	rand_p_light = get_rand_p_light(light.pos, light.u_data.light.radius);
+	rand_light_dir = vectors_sub(rand_p_light, shader->shadow_origin);
+	rand_light_dist = vector_mag(rand_light_dir);
+	shader->shadow_ray.origin = shader->shadow_origin;
+	shader->shadow_ray.dir = vector_norm(rand_light_dir);
+	hit = get_nearest_object(shader->shadow_ray, world);
+	if (hit.t < 0 || hit.t > rand_light_dist)
+		shader->light_intensity_sum = 1.0f;
+		// s++;
+	/* }
+	shader->light_intensity_sum = shader->light_intensity_sum / (float)SAMPLES; */
 }
 
 t_float_color	compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal,
