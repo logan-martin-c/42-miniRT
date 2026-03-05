@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:36:21 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/05 14:04:50 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/05 17:49:12 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,10 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 					world->ambient_light.ratio), ray.dir));
 	if (nearest.obj->e_type == _light)
 		return (colors_scal(nearest.obj->color, 1.0f));
+	//to skip, we get normals in get_nearest .. (more than 50% of the heavy calc is to be redone to calc the normal after collision check. So we get the normal when checking for closest)
 	collision_point = get_collision_point(ray, nearest.t);
 	normal = sphere_normal(nearest.obj, collision_point, ray.dir, &direction);
+	//endtoskip
 	normal_diffused = get_diffuse_vector(normal, nearest.obj->u_data.sphere.reflectance);
 	
 	t_float_color	direct_rgb;
@@ -86,17 +88,17 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 	direct_rgb = compute_direct_light(collision_point, normal, *nearest.obj, world);
 	if (nearest.obj->u_data.sphere.reflectance > 0)
 	{
-		if (direction)
-			ray.dir = get_bounce(ray, normal_diffused, nearest.obj->color, get_current_refraction(world->objs, world->obj_count, collision_point));
-		else
-			ray.dir = get_bounce(ray, normal_diffused, nearest.obj->color, nearest.obj->u_data.sphere.refraction);
-		ray.origin = collision_point;
-		if (direction)
-			ray.origin_refraction = get_current_refraction(world->objs, world->obj_count, collision_point);
-		else
-			ray.origin_refraction = nearest.obj->u_data.sphere.refraction;
-		indirect_rgb = color_gradient(nearest.obj->color, get_pixel_color(ray, world,
-					bounce + 1), nearest.obj->u_data.sphere.reflectance);
+	if (direction)
+		ray.dir = get_bounce(ray, normal_diffused, nearest.obj->color, get_current_refraction(world->objs, world->obj_count, collision_point));
+	else
+		ray.dir = get_bounce(ray, normal_diffused, nearest.obj->color, nearest.obj->u_data.sphere.refraction);
+	ray.origin = collision_point;
+	if (direction)
+		ray.origin_refraction = get_current_refraction(world->objs, world->obj_count, collision_point);
+	else
+		ray.origin_refraction = nearest.obj->u_data.sphere.refraction;
+	indirect_rgb = color_gradient(nearest.obj->color, get_pixel_color(ray, world,
+				bounce + 1), nearest.obj->u_data.sphere.reflectance);
 	}
 
 	float diffuse_weight = (1.0f - nearest.obj->u_data.sphere.reflectance) * nearest.obj->color.a;
