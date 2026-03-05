@@ -57,7 +57,7 @@ int	object_picker(int button, int x, int y, void *data)
 	if (nearest.t == -1)
 		g_data->world.selected_obj = NULL;
 	else
-		g_data->world.selected_obj = nearest.u_data.obj;
+		g_data->world.selected_obj = nearest.obj;
 	return (0);
 }
 

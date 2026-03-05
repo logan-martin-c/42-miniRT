@@ -47,7 +47,7 @@
 
 # define LINE_SIZE WIN_WIDTH * 4
 # define BPP 4
-# define BLACK 0xFF000000
+# define BLACK (t_float_color){1, 0, 0, 0}
 # define INV_WIN_HEIGHT 1 / WIN_HEIGHT
 # define INV_WIN_WIDTH 1 / WIN_WIDTH
 
@@ -109,7 +109,7 @@ typedef struct s_world_data
 {
 	long					static_frames;
 	t_object				*objs;
-	t_light					*lights;
+	t_object				*lights;
 	int						obj_count;
 	int						light_count;
 	bool					moving;
@@ -141,12 +141,7 @@ typedef enum e_obj_type
 
 typedef struct s_nearest_object
 {
-	t_obj_type				type;
-	union
-	{
-		t_object			*obj;
-		t_light				*light;
-	} u_data;
+	t_object			*obj;
 	float					t;
 }							t_nearest_object;
 
@@ -233,7 +228,7 @@ int							lst_map_to_array(t_parsing_data *p_data,
 								t_world_data *world);
 int							lst_objs_to_array(t_object **objs, t_list *obj_lst,
 								int obj_count);
-int							lst_lights_to_array(t_light **lights,
+int							lst_lights_to_array(t_object **lights,
 								t_list *obj_lst, int light_count);
 
 // RENDER
@@ -262,7 +257,7 @@ void						create_tasks(t_exec_data *e_data);
 t_float_color				get_sky_color(t_float_color ambient_color,
 								t_vect3 ray);
 t_nearest_object			get_nearest_object(t_ray ray, t_world_data *world);
-t_nearest_object			get_nearest_obj_or_light(t_ray ray,
+t_nearest_object			get_nearest(t_ray ray,
 								t_world_data *world);
 t_float_color				get_texture_color(t_vect3 point_r_c,
 								t_object object);

@@ -110,9 +110,9 @@ int	new_light(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	if (check_args_count(params, 4, 5) == -1)
 		return (ft_free_strs(params), ft_maperror("light : invalid parameters",
 				p_data->line_nb, g_data->prog_name));
-	if (parse_pos(params[1], &node->u_data.light.pos, 0)
+	if (parse_pos(params[1], &node->pos, 0)
 		|| !ft_isfloat_str(params[2]) || parse_raw_color(params[3],
-			&node->u_data.light.color))
+			&node->color))
 		return (ft_free_strs(params), ft_maperror("light : invalid parameters",
 				p_data->line_nb, g_data->prog_name));
 	node->u_data.light.ratio = ft_atof(params[2]);

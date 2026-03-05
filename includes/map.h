@@ -110,10 +110,8 @@ typedef struct s_cylinder
 
 typedef struct s_light
 {
-	t_vect3			pos;
 	float			ratio;
 	float			radius;
-	t_float_color	color;
 }					t_light;
 
 typedef struct s_texture {

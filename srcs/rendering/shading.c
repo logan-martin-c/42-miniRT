@@ -45,7 +45,7 @@ void	prep_compute_dl(t_shader_compute *shader, t_vect3 point_r_c,
 }
 
 void	shadow_factor(t_shader_compute *shader, t_world_data *world,
-		t_light light)
+		t_object light)
 {
 	t_vect3				rand_p_light;
 	t_vect3				rand_light_dir;
@@ -57,7 +57,7 @@ void	shadow_factor(t_shader_compute *shader, t_world_data *world,
 	shader->light_intensity_sum = 0;
 	while (s < SAMPLES)
 	{
-		rand_p_light = get_rand_p_light(light.pos, light.radius);
+		rand_p_light = get_rand_p_light(light.pos, light.u_data.light.radius);
 		rand_light_dir = vectors_sub(rand_p_light, shader->shadow_origin);
 		rand_light_dist = vector_mag(rand_light_dir);
 		shader->shadow_ray.origin = shader->shadow_origin;
@@ -82,16 +82,17 @@ t_float_color	compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal,
 	ini_compute_dl(&shader, point_r_c, object, world);
 	while (i < world->light_count)
 	{
+		//printf("a: %f, r: %f, g: %f, b: %f, x: %f, y: %f, z: %f, ratio: %f\n", world->lights[i].color.a, world->lights[i].color.r, world->lights[i].color.g, world->lights[i].color.b, world->lights[i].pos.x, world->lights[i].pos.y, world->lights[i].pos.z, world->lights[i].u_data.light.ratio);
 		prep_compute_dl(&shader, point_r_c, world, i);
 		if (shader.dot_nl > 0)
 		{
-			//shadow_factor(&shader, world, world->lights[i]);
+			shadow_factor(&shader, world, world->lights[i]);
 			shader.light_rgb = world->lights[i].color;
-			shader.intensity = world->lights[i].ratio * shader.dot_nl;
+			shader.intensity = world->lights[i].u_data.light.ratio * shader.dot_nl;
 			shader.diffuse = colors_scal(colors_mult(shader.light_rgb,
 						shader.obj_rgb), shader.intensity);
-			// shader.diffuse = colors_scal(shader.diffuse,
-			// 		shader.light_intensity_sum);
+			shader.diffuse = colors_scal(shader.diffuse,
+					shader.light_intensity_sum);
 			shader.final_pixel_color = colors_add(shader.final_pixel_color,
 					shader.diffuse);
 		}

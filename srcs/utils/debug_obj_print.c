@@ -80,12 +80,12 @@ void	print_light(t_object *object)
 {
 	t_float_color	color;
 
-	color = object->u_data.light.color;
+	color = object->color;
 	printf("Light :\n");
 	printf("\tpos :\n");
-	printf("\t\tx : %lf\n", (double)object->u_data.light.pos.x);
-	printf("\t\ty : %lf\n", (double)object->u_data.light.pos.y);
-	printf("\t\tz : %lf\n", (double)object->u_data.light.pos.z);
+	printf("\t\tx : %lf\n", (double)object->pos.x);
+	printf("\t\ty : %lf\n", (double)object->pos.y);
+	printf("\t\tz : %lf\n", (double)object->pos.z);
 	printf("\tratio : %f\n", (float)object->u_data.light.ratio);
 	printf("\tcolor:\n");
 	printf("\t\ta : %f\n", color.a);

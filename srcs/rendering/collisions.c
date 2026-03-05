@@ -25,7 +25,7 @@ t_nearest_object	get_nearest_object(t_ray ray, t_world_data *world)
 	i = -1;
 	nearest_i = -1;
 	nearest.t = -1;
-	nearest.u_data.obj = NULL;
+	nearest.obj = NULL;
 	while (++i < world->obj_count)
 	{
 		new_t = check_object_collision(&world->objs[i], ray);
@@ -37,7 +37,7 @@ t_nearest_object	get_nearest_object(t_ray ray, t_world_data *world)
 	}
 	if (nearest_i == -1)
 		return (nearest);
-	nearest.u_data.obj = world->objs + nearest_i;
+	nearest.obj = world->objs + nearest_i;
 	nearest.t = t;
 	return (nearest);
 }
@@ -54,7 +54,7 @@ t_nearest_object	get_nearest_light(t_ray ray, t_world_data *world)
 	i = -1;
 	nearest_i = -1;
 	nearest.t = -1;
-	nearest.u_data.light = NULL;
+	nearest.obj = NULL;
 	while (++i < world->light_count)
 	{
 		new_t = light_collision(ray, &world->lights[i]);
@@ -66,23 +66,20 @@ t_nearest_object	get_nearest_light(t_ray ray, t_world_data *world)
 	}
 	if (nearest_i == -1)
 		return (nearest);
-	nearest.u_data.light = world->lights + nearest_i;
+	nearest.obj = world->lights + nearest_i;
 	nearest.t = t;
 	return (nearest);
 }
 
-t_nearest_object	get_nearest_obj_or_light(t_ray ray, t_world_data *world)
+t_nearest_object	get_nearest(t_ray ray, t_world_data *world)
 {
 	t_nearest_object	nearest_obj;
 	t_nearest_object	nearest_light;
 
-	nearest_obj.t = -1;
-	nearest_light.t = -1;
 	nearest_obj = get_nearest_object(ray, world);
 	nearest_light = get_nearest_light(ray, world);
-	if ((nearest_light.t < nearest_obj.t && nearest_light.t != -1)
-		|| nearest_obj.t == -1)
-		return (nearest_light.type = _obj_light, nearest_light);
+	if (nearest_light.t != -1 && (nearest_light.t < nearest_obj.t || nearest_obj.t == -1))
+		return (nearest_light);
 	else
-		return (nearest_light.type = _obj_object, nearest_obj);
+		return (nearest_obj);
 }

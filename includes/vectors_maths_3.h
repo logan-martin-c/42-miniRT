@@ -60,8 +60,8 @@ static inline   t_vect3 refract(t_ray ray, t_vect3 n, float refraction)
     t_vect3 r_out_perp;
     t_vect3 r_out_parralel;
 
-    if (refraction == ray.origin_refraction)
-        return (ray.dir);
+	 if (refraction == ray.origin_refraction)
+	     return (ray.dir);
     cos_theta = ft_min_float(dot_product(vectors_sub((t_vect3){0, 0, 0}, ray.dir), n), 1.0);
     r_out_perp = vector_mult(vectors_add(ray.dir, vector_mult(n, cos_theta)), ray.origin_refraction / refraction);
     r_out_parralel = vector_mult(n, - sqrt(ft_abs_float(1.0 - (vector_mag(r_out_perp) * vector_mag(r_out_perp)))));
@@ -91,7 +91,7 @@ static inline t_vect3	get_rand_p_light(t_vect3 light_pos, float radius)
 
 static inline t_vect3   get_bounce(t_ray ray, t_vect3 n, t_float_color color, float refraction)
 {
-    if (color.a == 1) // 1 ?
+    if (color.a == 1)
         return (reflect(ray.dir, n));
     return (refract(ray, n, refraction));
 }

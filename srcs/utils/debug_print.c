@@ -52,6 +52,10 @@ void	print_array(t_world_data *world)
 		else if (array[obj_count].e_type == _cylinder)
 			print_cylinder(&array[obj_count]);
 	}
+	array = world->lights;
+	obj_count = -1;
+	while (++obj_count < world->light_count)
+			print_light(&array[obj_count]);
 	print_cam(&world->cam);
 	print_ambient_light(&world->ambient_light);
 }
