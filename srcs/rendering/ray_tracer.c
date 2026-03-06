@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:36:21 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/04 17:07:33 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/05 17:49:12 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 	
 	t_float_color	direct_rgb;
 	t_float_color	indirect_rgb = BLACK;
-	// t_float_color	final_rgb;
+	t_float_color	final_rgb;
 
 	float diffuse_weight = (1.0 - nearest.obj->material.reflectance) * nearest.obj->material.color.a;
 	//final_rgb = colors_add(colors_scal(direct_rgb, diffuse_weight), indirect_rgb);

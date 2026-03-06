@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/04 15:37:41 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/05 17:23:04 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ typedef enum e_obj_type
 typedef struct s_nearest_object
 {
 	t_object			*obj;
+	t_vect3					normal;
 	float					t;
 	float					current_refraction;
 }							t_nearest_object;
