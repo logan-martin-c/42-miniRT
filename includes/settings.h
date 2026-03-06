@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 17:59:52 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/04 16:43:40 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/06 17:28:50 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define WIN_HEIGHT 720
 # define WIN_WIDTH 1280
 
-# define BOUNCES 10
+# define BOUNCES 4
 # define SAMPLES 8
 //Normalized vectors settings
 # define NORM_TOLERANCE 1e-2

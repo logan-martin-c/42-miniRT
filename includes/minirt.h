@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/05 17:23:04 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/06 15:49:22 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ typedef struct s_world_data
 	t_cam_data				cam;
 	t_ambient_light_data	ambient_light;
 	t_viewport				viewport;
-	t_long_color			*color_tab;
+	t_float_color			*color_tab;
 	t_object				*selected_obj;
 }							t_world_data;
 
@@ -143,6 +143,7 @@ typedef struct s_nearest_object
 {
 	t_object			*obj;
 	t_vect3					normal;
+	bool					is_inside;
 	float					t;
 }							t_nearest_object;
 
@@ -201,7 +202,7 @@ typedef struct s_shader_compute
 	t_float_color			final_pixel_color;
 	t_nearest_object		shadow_t;
 	t_ray					light_ray;
-	float					light_intensity_sum;
+	t_float_color			light_intensity_sum;
 	t_ray					shadow_ray;
 }							t_shader_compute;
 
@@ -258,8 +259,7 @@ void						create_tasks(t_exec_data *e_data);
 t_float_color				get_sky_color(t_float_color ambient_color,
 								t_vect3 ray);
 t_nearest_object			get_nearest_object(t_ray ray, t_world_data *world);
-t_nearest_object			get_nearest(t_ray ray,
-								t_world_data *world);
+t_nearest_object			get_nearest(t_ray ray, t_world_data *world);
 t_float_color				get_texture_color(t_vect3 point_r_c,
 								t_object object);
 

@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:36:21 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/05 17:49:12 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/06 16:14:42 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "vectors_maths_1.h"
 #include "vectors_maths_2.h"
 #include "vectors_maths_3.h"
+#include "vectors_maths_4.h"
 #include "refraction.h"
 #define _USE_MATH_DEFINES
 
@@ -63,9 +64,9 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 {
 	t_nearest_object	nearest;
 	t_vect3				normal;
-	t_vect3				normal_diffused;
+	//t_vect3				normal_diffused;
 	t_vect3				collision_point;
-	bool				direction;
+	//bool				direction;
 
 	if (bounce > BOUNCES)
 		return (BLACK);
@@ -74,36 +75,71 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 		return (get_sky_color(color_intensity(world->ambient_light.color,
 					world->ambient_light.ratio), ray.dir));
 	if (nearest.obj->e_type == _light)
-		return (colors_scal(nearest.obj->color, 1.0f));
-	//to skip, we get normals in get_nearest .. (more than 50% of the heavy calc is to be redone to calc the normal after collision check. So we get the normal when checking for closest)
+		return (colors_scal(nearest.obj->color, 2.0f));
+
 	collision_point = get_collision_point(ray, nearest.t);
-	normal = sphere_normal(nearest.obj, collision_point, ray.dir, &direction);
-	//endtoskip
-	normal_diffused = get_diffuse_vector(normal, nearest.obj->u_data.sphere.reflectance);
+	normal = nearest.normal;
+	//normal_diffused = get_diffuse_vector(normal, nearest.obj->reflectance);
+
+	// // might no need this because its better calc at collision and stored in nearest/hit
+	// if (dot_product(normal, ray.dir) < 0)
+    //     direction = false;
+	// else
+   	// 	direction = true;
+
+	float n1 = ray.origin_refraction;
+	float n2;
+
+	if (nearest.is_inside)
+			n2 = 1.0f;
+	else
+			n2 = nearest.obj->refraction;
 	
+	ray.dir = get_bounce_2(ray, nearest, n1, n2);
+	ray.origin_refraction = n2;
+
+	if (dot_product(ray.dir, nearest.normal) > 0)
+			ray.origin = vectors_add(collision_point, vector_mult(nearest.normal, 0.001f));
+	else
+			ray.origin = vectors_sub(collision_point, vector_mult(nearest.normal, 0.001f));
+
 	t_float_color	direct_rgb;
 	t_float_color	indirect_rgb = BLACK;
 	t_float_color	final_rgb;
+	t_float_color	obj_rgb = get_texture_color(collision_point, *nearest.obj);
 
-	direct_rgb = compute_direct_light(collision_point, normal, *nearest.obj, world);
-	if (nearest.obj->u_data.sphere.reflectance > 0)
-	{
-	if (direction)
-		ray.dir = get_bounce(ray, normal_diffused, nearest.obj->color, get_current_refraction(world->objs, world->obj_count, collision_point));
+	
+
+	/* if (direction)
+		ray.dir = get_bounce(ray, normal_diffused, obj_rgb, get_current_refraction(world->objs, world->obj_count, collision_point));
 	else
-		ray.dir = get_bounce(ray, normal_diffused, nearest.obj->color, nearest.obj->u_data.sphere.refraction);
+		ray.dir = get_bounce(ray, normal_diffused, obj_rgb, nearest.obj->u_data.sphere.refraction);
 	ray.origin = collision_point;
 	if (direction)
 		ray.origin_refraction = get_current_refraction(world->objs, world->obj_count, collision_point);
 	else
-		ray.origin_refraction = nearest.obj->u_data.sphere.refraction;
-	indirect_rgb = color_gradient(nearest.obj->color, get_pixel_color(ray, world,
-				bounce + 1), nearest.obj->u_data.sphere.reflectance);
-	}
-
-	float diffuse_weight = (1.0f - nearest.obj->u_data.sphere.reflectance) * nearest.obj->color.a;
-	final_rgb = colors_add(colors_scal(direct_rgb, diffuse_weight), indirect_rgb);
+		ray.origin_refraction = nearest.obj->u_data.sphere.refraction; */
+		
 	
+	if (nearest.obj->color.a < 1.0f)
+    {
+        // Get light from through/off the glass
+        t_float_color indirect = get_pixel_color(ray, world, bounce + 1);
+        // Get the "surface" lighting (highlights and shadows on the glass)
+        t_float_color direct = compute_direct_light(collision_point, normal, *nearest.obj, world);
+
+        // Mix: Alpha=0.9 is almost opaque (milky), Alpha=0.1 is almost clear.
+        return colors_add(
+            colors_scal(direct, nearest.obj->color.a),
+            colors_scal(colors_mult(obj_rgb, indirect), 1.0f - nearest.obj->color.a)
+        );
+    }
+	indirect_rgb = get_pixel_color(ray, world, bounce + 1);
+	t_float_color indirect_part = colors_mult(obj_rgb, indirect_rgb);
+	
+	direct_rgb = compute_direct_light(collision_point, normal, *nearest.obj, world);
+	float diffuse_weight = (1.0f - nearest.obj->reflectance) * nearest.obj->color.a;
+	final_rgb = colors_add(colors_scal(direct_rgb, diffuse_weight), indirect_part);
 	
 	return (final_rgb);
 }
@@ -125,8 +161,8 @@ void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 			ray.dir = get_ray_dir(pointer, &world->viewport,
 					&world->cam, world->moving || world->rotating);
 			if (!world->moving && !world->rotating)
-				my_mlx_pixel_put(mlx, pointer, get_color_summed(pointer,
-						world->color_tab, vec4_to_color(get_pixel_color(ray, world, 0)),
+				my_mlx_pixel_put(mlx, pointer, get_color_summed_2(pointer,
+						world->color_tab, (get_pixel_color(ray, world, 0)),
 						world->static_frames));
 			else
 				my_mlx_pixel_put(mlx, pointer, vec4_to_color(get_pixel_color(ray, world, 0)));

@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:51 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/04 14:38:38 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/06 12:00:24 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ typedef struct s_sphere
 {
 	float			diameter;
 	float			radius;
-	float			reflectance;
-	float			refraction;
 }					t_sphere;
 
 typedef struct s_cylinder
@@ -133,6 +131,8 @@ typedef struct s_object
 	t_float_color	color;
 	t_vect3			pos;
 	t_vect3			rot;
+	float			refraction;
+	float			reflectance;
 	t_texture		tex;
 	char *tex_name;
 	union

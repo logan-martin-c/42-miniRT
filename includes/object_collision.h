@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 09:33:59 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/03 14:06:34 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/06 18:30:29 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 //
 # include "vectors_maths_1.h"
 # include "vectors_maths_2.h"
+# include "object_collision_2.h"
 # include <stdio.h>
 
 static inline double	sphere_collision(t_ray ray, t_object *object)
@@ -51,17 +52,19 @@ static inline t_vect3	get_collision_point(t_ray ray, float t)
 	return (point);
 }
 
-static inline float	check_object_collision(t_object *object, t_ray ray)
+static inline t_nearest_object	check_object_collision(t_object *object, t_ray ray)
 {
+	t_nearest_object hit;
+	
 	if (object->e_type == _sphere)
-		return (sphere_collision(ray, object));
+		return (new_sphere_collision(ray, object));
 	else if (object->e_type == _cylinder)
-		return (-1);
+		return (cylinder_collision(ray, object));
 	else if (object->e_type == _plane)
-		return (-1);
+		return (plane_collision(ray,  object));
 	else if (object->e_type == _light)
-		return (-1);
-	return (-1);
+		return (hit.t = -1, hit);
+	return (hit.t = -1, hit);
 }
 
 static inline double	light_collision(t_ray ray, t_object *light)

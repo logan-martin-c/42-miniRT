@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 12:27:34 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/27 15:18:05 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/06 14:34:57 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	rotate_cam(t_cam_data *cam, t_mlx_data *mlx, bool *rotating,
 	if (init_pos(&mouse_p, &last_mouse_p))
 		return ;
 	//center_mouse(&mouse_p, &last_mouse_p, mlx);
+	*rotating = true;
 	if (!obj)
 	{
-		*rotating = true;
 		cam->forward = vector_rot(cam->forward, (float)(mouse_p.y
 					- last_mouse_p.y) * 1e-3, (float)(mouse_p.x
 					- last_mouse_p.x) * 1e-3, 0);
@@ -104,10 +104,10 @@ void	move_cam(t_world_data *world, t_mlx_data *mlx, t_interface *key,
 		update_cam_pos(key, &world->cam, elapsed, &world->moving);
 	if (!world->moving && !world->rotating)
 	{
-		if (world->static_frames < 1000)
+		if (world->static_frames < 2000)
 			world->static_frames++;
 		else
-			world->static_frames = 2000;
+			world->static_frames = 4000;
 	}
 	else
 		world->static_frames = -1;

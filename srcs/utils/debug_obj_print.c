@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:40:19 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/04 15:42:54 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/06 12:04:33 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	print_sphere(t_object *object)
 	printf("\t\tr : %f\n", color.r);
 	printf("\t\tg : %f\n", color.g);
 	printf("\t\tb : %f\n", color.b);
-	printf("\treflectance: %f\n", object->u_data.sphere.reflectance);
-	printf("\trefraction: %f\n", object->u_data.sphere.refraction);
+	printf("\treflectance: %f\n", object->reflectance);
+	printf("\trefraction: %f\n", object->refraction);
 }
 
 void	print_plane(t_object *object)

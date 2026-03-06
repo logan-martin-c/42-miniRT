@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colors_maths.c                                     :+:      :+:    :+:   */
+/*   colors_maths_long.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 11:22:24 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/16 11:10:13 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/06 14:50:11 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_long_color	divide_long_color(t_long_color color, long div)
 	return (color);
 }
 
-static inline int	get_color_summed(t_vect2 pointer, t_long_color *color_tab, int new_color, long frame_nb)
+/* static inline int	get_color_summed(t_vect2 pointer, t_long_color *color_tab, int new_color, long frame_nb)
 {
 	t_long_color	*color;
 
@@ -69,4 +69,43 @@ static inline int	get_color_summed(t_vect2 pointer, t_long_color *color_tab, int
 		return (get_long_color(divide_long_color(*color, frame_nb + 1)));
 	}
 	return (get_long_color(*color));
+} */
+static inline int float_to_int_color_gamma(t_float_color f)
+{
+    // 1. Clamp values to [0.0, 1.0] to prevent overflow artifacts
+    f.r = fminf(1.0f, fmaxf(0.0f, f.r));
+    f.g = fminf(1.0f, fmaxf(0.0f, f.g));
+    f.b = fminf(1.0f, fmaxf(0.0f, f.b));
+
+    // 2. Apply Gamma Correction (Power of 1/2.2)
+    // This makes the dark indirect light "pop" on your screen
+    f.r = powf(f.r, 1.0f / 2.2f);
+    f.g = powf(f.g, 1.0f / 2.2f);
+    f.b = powf(f.b, 1.0f / 2.2f);
+
+    // 3. Scale to 0-255
+    int r = (int)(f.r * 255.999f);
+    int g = (int)(f.g * 255.999f);
+    int b = (int)(f.b * 255.999f);
+
+    return (r << 16 | g << 8 | b);
+}
+
+static inline int get_color_summed_2(t_vect2 p, t_float_color *color_tab, t_float_color new_ray_color, long frame)
+{
+    int i = p.y * WIN_WIDTH + p.x;
+
+    if (frame <= 1) {
+        color_tab[i] = new_ray_color;
+    } else {
+        // This is the "Magic" formula for progressive rendering:
+        // It blends the new ray into the average perfectly.
+        float a = 1.0f / (float)frame;
+        color_tab[i].r = color_tab[i].r * (1.0f - a) + (new_ray_color.r * a);
+        color_tab[i].g = color_tab[i].g * (1.0f - a) + (new_ray_color.g * a);
+        color_tab[i].b = color_tab[i].b * (1.0f - a) + (new_ray_color.b * a);
+    }
+
+    // Now convert that high-precision float to a 0xFFFFFF hex for MLX
+    return (vec4_to_color(color_tab[i]));
 }

@@ -31,7 +31,7 @@ static inline float	get_current_refraction(t_object *objs, int obj_count, t_vect
         if (new_distance != -1 && new_distance < distance)
         {
             distance = new_distance;
-            current_refraction = objs[i].u_data.sphere.refraction;
+            current_refraction = objs[i].refraction;
         }
     }
     return (current_refraction);

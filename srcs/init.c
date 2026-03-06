@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 12:58:52 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/04 14:32:34 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/06 14:47:48 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	init(t_global_data *g_data, t_parsing_data *p_data, t_exec_data *e_data,
 
 int	init_exec(t_exec_data *e_data, t_global_data *g_data)
 {
-	g_data->world.color_tab = malloc(sizeof(t_long_color) * WIN_HEIGHT
+	g_data->world.color_tab = malloc(sizeof(t_float_color) * WIN_HEIGHT
 			* WIN_WIDTH * 100);
 	if (!g_data->world.color_tab)
 		return (1);

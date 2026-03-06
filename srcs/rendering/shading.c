@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/05 14:27:15 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/06 15:55:29 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,22 @@ void	shadow_factor(t_shader_compute *shader, t_world_data *world,
 	t_vect3				rand_light_dir;
 	float				rand_light_dist;
 	t_nearest_object	hit;
-	// int					s;
 
-	// s = 0;
-	shader->light_intensity_sum = 0.0f;
-	/* while (s < SAMPLES)
-	{ */
-	/* if (world->static_frames == -1)
-		rand_p_light = light.pos;
-	else */
+	shader->light_intensity_sum = (t_float_color){1.0f, 1.0f, 1.0f, 1.0f};;
 	rand_p_light = get_rand_p_light(light.pos, light.u_data.light.radius);
 	rand_light_dir = vectors_sub(rand_p_light, shader->shadow_origin);
 	rand_light_dist = vector_mag(rand_light_dir);
 	shader->shadow_ray.origin = shader->shadow_origin;
 	shader->shadow_ray.dir = vector_norm(rand_light_dir);
+
 	hit = get_nearest_object(shader->shadow_ray, world);
-	if (hit.t < 0 || hit.t > rand_light_dist)
-		shader->light_intensity_sum = 1.0f;
-		// s++;
-	/* }
-	shader->light_intensity_sum = shader->light_intensity_sum / (float)SAMPLES; */
+	if (hit.t > 0 && hit.t < rand_light_dist)
+	{
+		if (hit.obj->color.a < 1.0f)
+			shader->light_intensity_sum = colors_scal(hit.obj->color, 1.0f - hit.obj->color.a);
+		else
+			shader->light_intensity_sum = (t_float_color){0, 0, 0, 0};
+	}
 }
 
 t_float_color	compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal,
@@ -80,7 +76,7 @@ t_float_color	compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal,
 	int					i;
 
 	i = 0;
-	shader.n_point_normal = vector_norm(point_normal);
+	shader.n_point_normal = point_normal;
 	shader.obj_rgb = get_texture_color(point_r_c, object);
 	ini_compute_dl(&shader, point_r_c, object, world);
 	while (i < world->light_count)
@@ -94,7 +90,7 @@ t_float_color	compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal,
 			shader.intensity = world->lights[i].u_data.light.ratio * shader.dot_nl;
 			shader.diffuse = colors_scal(colors_mult(shader.light_rgb,
 						shader.obj_rgb), shader.intensity);
-			shader.diffuse = colors_scal(shader.diffuse,
+			shader.diffuse = colors_mult(shader.diffuse,
 					shader.light_intensity_sum);
 			shader.final_pixel_color = colors_add(shader.final_pixel_color,
 					shader.diffuse);

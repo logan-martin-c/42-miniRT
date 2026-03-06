@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 11:47:12 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/03 14:05:53 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/05 20:57:28 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,18 @@
 t_nearest_object	get_nearest_object(t_ray ray, t_world_data *world)
 {
 	int					i;
-	int					nearest_i;
-	float				t;
-	float				new_t;
+	t_nearest_object	nearest_tmp;
 	t_nearest_object	nearest;
 
-	t = -1;
 	i = -1;
-	nearest_i = -1;
 	nearest.t = -1;
 	nearest.obj = NULL;
 	while (++i < world->obj_count)
 	{
-		new_t = check_object_collision(&world->objs[i], ray);
-		if (new_t != -1 && (t == -1 || new_t < t))
-		{
-			nearest_i = i;
-			t = new_t;
-		}
+		nearest_tmp = check_object_collision(&world->objs[i], ray);
+		if (nearest_tmp.t != -1 && (nearest.t == -1 || nearest_tmp.t < nearest.t))
+			nearest = nearest_tmp;
 	}
-	if (nearest_i == -1)
-		return (nearest);
-	nearest.obj = world->objs + nearest_i;
-	nearest.t = t;
 	return (nearest);
 }
 
