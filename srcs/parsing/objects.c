@@ -35,16 +35,12 @@ int	new_sphere(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	node->u_data.sphere.radius = node->u_data.sphere.diameter / 2;
 	if (params[4])
 		node->material.smoothness = ft_atof(params[4]);
-	else
-		node->material.smoothness = 0;
 	if (params[4] && params[5])
 		node->material.refraction = ft_atof(params[5]);
 	else
 		node->material.refraction = 1;
 	if (params[4] && params[5] && params[6])
 		node->material.reflectance = ft_atof(params[6]);
-	else
-		node->material.reflectance = 0;
 	if (params[4] && params[5] && params[6] && params[7])
 		node->tex_name = ft_strdup(params[7]);
 	node->rot = (t_vect3){0, 0, -1};
@@ -71,6 +67,8 @@ int	new_plane(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 			1) || parse_raw_color(params[3], &node->material.color))
 		return (ft_free_strs(params), ft_maperror("plane : invalid parameters",
 				p_data->line_nb, g_data->prog_name));
+	node->material.smoothness = 1;
+	node->material.refraction = 1;
 	node->e_type = _plane;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
 	return (ft_free_strs(params), 0);
@@ -97,17 +95,17 @@ int	new_cylinder(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 		|| parse_raw_color(params[5], &node->material.color))
 		return (ft_free_strs(params),
 			ft_maperror("cylinder : invalid parameters", p_data->line_nb,
-				g_data->prog_name));
+			g_data->prog_name));
 	if (params[6])
-		node->reflectance = ft_atof(params[6]);
-	else
-		node->reflectance = 0;
+		node->material.smoothness = ft_atof(params[6]);
 	if (params[6] && params[7])
-		node->refraction = ft_atof(params[7]);
+		node->material.refraction = ft_atof(params[7]);
 	else
-		node->refraction = 1;
+		node->material.refraction = 1;
 	if (params[6] && params[7] && params[8])
-		node->tex_name = ft_strdup(params[8]);
+		node->material.reflectance = ft_atof(params[8]);
+	if (params[6] && params[7] && params[8] && params[9])
+		node->tex_name = ft_strdup(params[9]);
 	node->e_type = _cylinder;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
 	return (ft_free_strs(params), 0);
@@ -150,6 +148,7 @@ void	parse_object(t_parsing_data *p_data, char *obj_line,
 	node = malloc(sizeof(t_object));
 	if (!node)
 		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data, NULL);
+	ft_bzero(node, sizeof(t_object));
 	if (!ft_strncmp(obj_line, "sp", 2) && ft_isspace(obj_line[2]))
 		ret = new_sphere(p_data, obj_line, g_data, node);
 	else if (!ft_strncmp(obj_line, "pl", 2) && ft_isspace(obj_line[2]))

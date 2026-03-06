@@ -57,7 +57,7 @@ int	lst_map_to_array(t_parsing_data *p_data, t_world_data *world)
 	if (lst_objs_to_array(&world->objs, p_data->obj_lst,
 			p_data->obj_count - p_data->light_count))
 		return (1);
-	world->obj_count = p_data->obj_count;
+	world->obj_count = p_data->obj_count - p_data->light_count;
 	if (lst_lights_to_array(&world->lights, p_data->obj_lst,
 			p_data->light_count))
 		return (1);

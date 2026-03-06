@@ -18,9 +18,6 @@
 #include "vectors_maths_2.h"
 #include "vectors_maths_3.h"
 #define _USE_MATH_DEFINES
-#ifndef M_PI
-# define M_PI 3.14159265358979323846
-#endif
 
 t_float_color	get_checkerboard_color(float u, float v)
 {
@@ -63,14 +60,13 @@ t_float_color	get_texel_color(t_texture tex, float u, float v)
 
 t_float_color	get_texture_color(t_vect3 point_r_c, t_object object)
 {
-	t_float_color	tex_color;
+	float			u;
+	float			v;
 
-	float u, v;
 	get_sphere_uv(point_r_c, object, &u, &v);
 	if (object.tex_name && ft_strncmp(object.tex_name, "UV", 2))
 		return (get_texel_color(object.tex, u, v));
-	else if (object.tex_name && !ft_strncmp(object.tex_name, "UV", 2))
-		return (tex_color = get_checkerboard_color(u, v));
-	else
-		return ((object.material.color));
+	if (object.tex_name && !ft_strncmp(object.tex_name, "UV", 2))
+		return (get_checkerboard_color(u, v));
+	return ((object.material.color));
 }

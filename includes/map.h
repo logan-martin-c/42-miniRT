@@ -132,8 +132,6 @@ typedef struct s_object
 	t_material		material;
 	t_vect3			pos;
 	t_vect3			rot;
-	float			refraction;
-	float			reflectance;
 	t_texture		tex;
 	char *tex_name;
 	union

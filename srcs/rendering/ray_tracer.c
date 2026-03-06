@@ -67,7 +67,6 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 	t_vect3				normal;
 	t_vect3				normal_diffused;
 	t_vect3				collision_point;
-	bool				direction;
 
 	if (bounce > BOUNCES)
 		return (BLACK);
@@ -78,20 +77,19 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 	if (nearest.obj->e_type == _light)
 		return (colors_scal(nearest.obj->material.color, 1.0f));
 	collision_point = get_collision_point(ray, nearest.t);
-	normal = sphere_normal(nearest.obj, collision_point, ray.dir, &direction);
+	// normal = nearest.normal;
+	normal = sphere_normal(nearest.obj, collision_point, ray.dir, &nearest.is_inside);
 	normal_diffused = get_diffuse_vector(normal, nearest.obj->material.smoothness);
 	
 	t_float_color	direct_rgb;
 	t_float_color	indirect_rgb = BLACK;
-	t_float_color	final_rgb;
 
 	float diffuse_weight = (1.0 - nearest.obj->material.reflectance) * nearest.obj->material.color.a;
-	//final_rgb = colors_add(colors_scal(direct_rgb, diffuse_weight), indirect_rgb);
 
 	direct_rgb = colors_scal(compute_direct_light(collision_point, normal, *nearest.obj, world), diffuse_weight);
-	ray.dir = get_bounce(&ray, normal_diffused, nearest.obj->material, direction, world, collision_point);
+	ray.dir = get_bounce(&ray, normal_diffused, nearest.obj->material, nearest.is_inside, world, collision_point);
 	ray.origin = collision_point;
-	if (direction)
+	if (nearest.is_inside)
 		ray.origin_refraction = get_current_refraction(world->objs, world->obj_count, collision_point);
 	else
 		ray.origin_refraction = nearest.obj->material.refraction;
@@ -125,7 +123,7 @@ void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 			ray.dir = get_ray_dir(pointer, &world->viewport,
 					&world->cam, world->moving || world->rotating);
 			if (!world->moving && !world->rotating)
-				my_mlx_pixel_put(mlx, pointer, get_color_summed_2(pointer,
+				my_mlx_pixel_put(mlx, pointer, get_color_summed(pointer,
 						world->color_tab, (get_pixel_color(ray, world, 0)),
 						world->static_frames));
 			else

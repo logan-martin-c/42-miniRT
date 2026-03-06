@@ -62,8 +62,8 @@ void	shadow_factor(t_shader_compute *shader, t_world_data *world,
 	hit = get_nearest_object(shader->shadow_ray, world);
 	if (hit.t > 0 && hit.t < rand_light_dist)
 	{
-		if (hit.obj->color.a < 1.0f)
-			shader->light_intensity_sum = colors_scal(hit.obj->color, 1.0f - hit.obj->color.a);
+		if (hit.obj->material.color.a < 1.0f)
+			shader->light_intensity_sum = colors_scal(hit.obj->material.color, 1.0f - hit.obj->material.color.a);
 		else
 			shader->light_intensity_sum = (t_float_color){0, 0, 0, 0};
 	}

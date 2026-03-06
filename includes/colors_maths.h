@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef COLORS_MATHS_H
+# define COLORS_MATHS_H
+
 static inline t_float_color color_to_vec4(int argb)
 {
 	t_float_color color;
@@ -94,3 +97,5 @@ static inline int	light_filter(int light, int filter)
 	p_light.b = ft_min(p_light.b, p_filter.b);
 	return (get_color(p_light));
 }
+
+#endif

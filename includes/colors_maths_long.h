@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef COLORS_MATHS_LONG_H
+# define COLORS_MATHS_LONG_H
+
 t_long_color	set_long_color(int color)
 {
 	t_long_color	p_color;
@@ -54,22 +57,23 @@ t_long_color	divide_long_color(t_long_color color, long div)
 	return (color);
 }
 
-/* static inline int	get_color_summed(t_vect2 pointer, t_long_color *color_tab, int new_color, long frame_nb)
+static inline int	get_color_summed(t_vect2 pointer, t_float_color *color_tab, t_float_color new_color, long frame_nb)
 {
-	t_long_color	*color;
+	t_float_color	*color;
 
 	color = &color_tab[pointer.y * WIN_WIDTH + pointer.x];
 	if (frame_nb <= 0)
-		*color = set_long_color(new_color);
+		*color = new_color;
 	else if (frame_nb == __LONG_MAX__)
-		return (get_long_color(divide_long_color(*color, frame_nb + 1)));
+		return (vec4_to_color(colors_divide(*color, frame_nb + 1)));
 	else
 	{
-		*color = add_long_color(*color, new_color);
-		return (get_long_color(divide_long_color(*color, frame_nb + 1)));
+		*color = colors_add(*color, new_color);
+		return (vec4_to_color(colors_divide(*color, frame_nb + 1)));
 	}
-	return (get_long_color(*color));
-} */
+	return (vec4_to_color(*color));
+}
+
 static inline int float_to_int_color_gamma(t_float_color f)
 {
     // 1. Clamp values to [0.0, 1.0] to prevent overflow artifacts
@@ -109,3 +113,5 @@ static inline int get_color_summed_2(t_vect2 p, t_float_color *color_tab, t_floa
     // Now convert that high-precision float to a 0xFFFFFF hex for MLX
     return (vec4_to_color(color_tab[i]));
 }
+
+#endif
