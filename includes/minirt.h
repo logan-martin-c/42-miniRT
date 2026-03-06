@@ -143,6 +143,7 @@ typedef struct s_nearest_object
 {
 	t_object			*obj;
 	float					t;
+	float					current_refraction;
 }							t_nearest_object;
 
 typedef struct s_interface

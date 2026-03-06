@@ -23,26 +23,30 @@ int	new_sphere(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 		free(node);
 		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data, NULL);
 	}
-	if (check_args_count(params, 4, 7) == -1)
+	if (check_args_count(params, 4, 8) == -1)
 		return (ft_free_strs(params), ft_maperror("sphere : invalid parameters",
 				p_data->line_nb, g_data->prog_name));
 	if (parse_pos(params[1], &node->pos, 0) || parse_float(params[2],
 			&node->u_data.sphere.diameter) || parse_raw_color(params[3],
-			&node->color))
+			&node->material.color))
 		return (ft_free_strs(params),
 			ft_maperror("u_data.sphere : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
 	node->u_data.sphere.radius = node->u_data.sphere.diameter / 2;
 	if (params[4])
-		node->u_data.sphere.reflectance = ft_atof(params[4]);
+		node->material.smoothness = ft_atof(params[4]);
 	else
-		node->u_data.sphere.reflectance = 0;
-	if (params[5])
-		node->u_data.sphere.refraction = ft_atof(params[5]);
+		node->material.smoothness = 0;
+	if (params[4] && params[5])
+		node->material.refraction = ft_atof(params[5]);
 	else
-		node->u_data.sphere.refraction = 1;
-	if (params[5] && params[6])
-		node->tex_name = ft_strdup(params[6]);
+		node->material.refraction = 1;
+	if (params[4] && params[5] && params[6])
+		node->material.reflectance = ft_atof(params[6]);
+	else
+		node->material.reflectance = 0;
+	if (params[4] && params[5] && params[6] && params[7])
+		node->tex_name = ft_strdup(params[7]);
 	node->rot = (t_vect3){0, 0, -1};
 	node->e_type = _sphere;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
@@ -64,7 +68,7 @@ int	new_plane(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 		return (ft_free_strs(params), ft_maperror("plane : invalid parameters",
 				p_data->line_nb, g_data->prog_name));
 	if (parse_pos(params[1], &node->pos, 0) || parse_pos(params[2], &node->rot,
-			1) || parse_raw_color(params[3], &node->color))
+			1) || parse_raw_color(params[3], &node->material.color))
 		return (ft_free_strs(params), ft_maperror("plane : invalid parameters",
 				p_data->line_nb, g_data->prog_name));
 	node->e_type = _plane;
@@ -90,7 +94,7 @@ int	new_cylinder(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	if (parse_pos(params[1], &node->pos, 0) || parse_pos(params[2], &node->rot,
 			1) || parse_float(params[3], &node->u_data.cylinder.diameter)
 		|| parse_float(params[4], &node->u_data.cylinder.height)
-		|| parse_raw_color(params[5], &node->color))
+		|| parse_raw_color(params[5], &node->material.color))
 		return (ft_free_strs(params),
 			ft_maperror("cylinder : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
@@ -112,7 +116,7 @@ int	new_light(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 				p_data->line_nb, g_data->prog_name));
 	if (parse_pos(params[1], &node->pos, 0)
 		|| !ft_isfloat_str(params[2]) || parse_raw_color(params[3],
-			&node->color))
+			&node->material.color))
 		return (ft_free_strs(params), ft_maperror("light : invalid parameters",
 				p_data->line_nb, g_data->prog_name));
 	node->u_data.light.ratio = ft_atof(params[2]);

@@ -87,7 +87,7 @@ t_float_color	compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal,
 		if (shader.dot_nl > 0)
 		{
 			shadow_factor(&shader, world, world->lights[i]);
-			shader.light_rgb = world->lights[i].color;
+			shader.light_rgb = world->lights[i].material.color;
 			shader.intensity = world->lights[i].u_data.light.ratio * shader.dot_nl;
 			shader.diffuse = colors_scal(colors_mult(shader.light_rgb,
 						shader.obj_rgb), shader.intensity);

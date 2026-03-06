@@ -72,5 +72,5 @@ t_float_color	get_texture_color(t_vect3 point_r_c, t_object object)
 	else if (object.tex_name && !ft_strncmp(object.tex_name, "UV", 2))
 		return (tex_color = get_checkerboard_color(u, v));
 	else
-		return ((object.color));
+		return ((object.material.color));
 }

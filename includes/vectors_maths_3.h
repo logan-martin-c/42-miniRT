@@ -14,6 +14,7 @@
 # define VECTORS_MATHS_3_H
 
 # include "minirt.h"
+# include "refraction.h"
 
 static inline float	fast_rand(void)
 {
@@ -54,20 +55,6 @@ static inline t_vect3	get_diffuse_vector(t_vect3 normal, float reflectance)
     }
 }
 
-static inline   t_vect3 refract(t_ray ray, t_vect3 n, float refraction)
-{
-    float cos_theta;
-    t_vect3 r_out_perp;
-    t_vect3 r_out_parralel;
-
-	 if (refraction == ray.origin_refraction)
-	     return (ray.dir);
-    cos_theta = ft_min_float(dot_product(vectors_sub((t_vect3){0, 0, 0}, ray.dir), n), 1.0);
-    r_out_perp = vector_mult(vectors_add(ray.dir, vector_mult(n, cos_theta)), ray.origin_refraction / refraction);
-    r_out_parralel = vector_mult(n, - sqrt(ft_abs_float(1.0 - (vector_mag(r_out_perp) * vector_mag(r_out_perp)))));
-    return (vectors_add(r_out_perp, r_out_parralel));
-}
-
 static inline t_vect3	reflect(t_vect3 v, t_vect3 n)
 {
 	 // t_vect3 ret;
@@ -77,6 +64,22 @@ static inline t_vect3	reflect(t_vect3 v, t_vect3 n)
     //     return (n);
     // return (ret);
     return (vector_norm(vectors_sub(v, vector_mult(n, dot_product(v, n) * 2))));
+}
+
+static inline   t_vect3 refract(t_ray *ray, t_vect3 n, float refraction)
+{
+	t_vect3 r_out_perp;
+	t_vect3 r_out_parralel;
+	float	cos_theta;
+
+	if (refraction == ray->origin_refraction)
+		return (ray->dir);
+	cos_theta = -dot_product(ray->dir, n);
+	// if (refraction * sqrt(1.0 - cos_theta * cos_theta) > 1.0)
+	// 	return (ray->blend_mode = _reflected, reflect(ray->dir, n));
+	r_out_perp = vector_mult(vectors_add(ray->dir, vector_mult(n, cos_theta)), ray->origin_refraction / refraction);
+	r_out_parralel = vector_mult(n, - sqrt(ft_abs_float(1.0 - (vector_mag(r_out_perp) * vector_mag(r_out_perp)))));
+	return (vectors_add(r_out_perp, r_out_parralel));
 }
 
 static inline t_vect3	get_rand_p_light(t_vect3 light_pos, float radius)
@@ -89,11 +92,36 @@ static inline t_vect3	get_rand_p_light(t_vect3 light_pos, float radius)
 	return (vectors_add(light_pos, offset));
 }
 
-static inline t_vect3   get_bounce(t_ray ray, t_vect3 n, t_float_color color, float refraction)
+static inline bool random_cond(float chances)
 {
-    if (color.a == 1)
-        return (reflect(ray.dir, n));
-    return (refract(ray, n, refraction));
+	if (fast_rand() < chances)
+		return (true);
+	return (false);
+}
+
+static inline float	get_reflectance(float cos_theta, float reflectance)
+{
+	return (1 / (reflectance + (1.0 - reflectance) * pow(1.0 - cos_theta, 5.0)));
+}
+
+static inline t_vect3   get_bounce(t_ray *ray, t_vect3 n, t_material material, bool direction, t_world_data *world, t_vect3 collision_point)
+{
+	float	refraction;
+	float	reflectance;
+
+	if (direction)
+	{
+		refraction = get_current_refraction(world->objs, world->obj_count, collision_point);
+		reflectance = 0;
+	}
+	else
+	{
+		refraction = material.refraction;
+		reflectance = material.color.a;
+	}
+	if (random_cond(/*get_reflectance(dot_product(vector_norm(ray->dir), vector_norm(n)), */reflectance))/*)*/
+		return (ray->blend_mode = _reflected, reflect(ray->dir, n));
+    return (ray->blend_mode = _refracted, refract(ray, n, refraction));
 }
 
 #endif

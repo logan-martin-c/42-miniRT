@@ -27,9 +27,9 @@ void	rotate_cam(t_cam_data *cam, t_mlx_data *mlx, bool *rotating,
 	if (init_pos(&mouse_p, &last_mouse_p))
 		return ;
 	//center_mouse(&mouse_p, &last_mouse_p, mlx);
+		*rotating = true;
 	if (!obj)
 	{
-		*rotating = true;
 		cam->forward = vector_rot(cam->forward, (float)(mouse_p.y
 					- last_mouse_p.y) * 1e-3, (float)(mouse_p.x
 					- last_mouse_p.x) * 1e-3, 0);

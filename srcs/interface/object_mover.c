@@ -75,7 +75,7 @@ int	move_object(t_object *obj, t_world_data *world, t_interface *input,
 	move.z = input->w - input->s;
 	if (!move.x && !move.y && !move.z)
 		return (0);
-	factor = ((float)elapsed / 1000000.0) * (float)world->cam.speed * 5;
+	factor = ((double)elapsed / 1000000.0) * (double)world->cam.speed * 5.0;
 	if (move.x)
 		moving_vector = vectors_add(moving_vector, vector_mult(world->cam.right,
 					move.x * factor));

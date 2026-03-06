@@ -19,9 +19,9 @@
 #include "object_collision.h"
 #include "object_normal.h"
 #include "vectors_maths_1.h"
+#include "refraction.h"
 #include "vectors_maths_2.h"
 #include "vectors_maths_3.h"
-#include "refraction.h"
 #define _USE_MATH_DEFINES
 
 void	init_viewport(t_viewport *viewport, int fov)
@@ -74,36 +74,36 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 		return (get_sky_color(color_intensity(world->ambient_light.color,
 					world->ambient_light.ratio), ray.dir));
 	if (nearest.obj->e_type == _light)
-		return (colors_scal(nearest.obj->color, 1.0f));
+		return (colors_scal(nearest.obj->material.color, 1.0f));
 	collision_point = get_collision_point(ray, nearest.t);
 	normal = sphere_normal(nearest.obj, collision_point, ray.dir, &direction);
-	normal_diffused = get_diffuse_vector(normal, nearest.obj->u_data.sphere.reflectance);
+	normal_diffused = get_diffuse_vector(normal, nearest.obj->material.smoothness);
 	
 	t_float_color	direct_rgb;
 	t_float_color	indirect_rgb = BLACK;
-	t_float_color	final_rgb;
+	// t_float_color	final_rgb;
 
-	direct_rgb = compute_direct_light(collision_point, normal, *nearest.obj, world);
-	if (nearest.obj->u_data.sphere.reflectance > 0)
+	float diffuse_weight = (1.0 - nearest.obj->material.reflectance) * nearest.obj->material.color.a;
+	//final_rgb = colors_add(colors_scal(direct_rgb, diffuse_weight), indirect_rgb);
+
+	direct_rgb = colors_scal(compute_direct_light(collision_point, normal, *nearest.obj, world), diffuse_weight);
+	ray.dir = get_bounce(&ray, normal_diffused, nearest.obj->material, direction, world, collision_point);
+	ray.origin = collision_point;
+	if (direction)
+		ray.origin_refraction = get_current_refraction(world->objs, world->obj_count, collision_point);
+	else
+		ray.origin_refraction = nearest.obj->material.refraction;
+	if (ray.blend_mode == _reflected)
+		indirect_rgb = color_gradient(direct_rgb, get_pixel_color(ray, world,
+				bounce + 1), nearest.obj->material.reflectance);
+	else
 	{
-		if (direction)
-			ray.dir = get_bounce(ray, normal_diffused, nearest.obj->color, get_current_refraction(world->objs, world->obj_count, collision_point));
-		else
-			ray.dir = get_bounce(ray, normal_diffused, nearest.obj->color, nearest.obj->u_data.sphere.refraction);
-		ray.origin = collision_point;
-		if (direction)
-			ray.origin_refraction = get_current_refraction(world->objs, world->obj_count, collision_point);
-		else
-			ray.origin_refraction = nearest.obj->u_data.sphere.refraction;
-		indirect_rgb = color_gradient(nearest.obj->color, get_pixel_color(ray, world,
-					bounce + 1), nearest.obj->u_data.sphere.reflectance);
+		// indirect_rgb = color_gradient(get_pixel_color(ray, world,
+		// 			bounce + 1), nearest.obj->material.color, nearest.obj->material.color.a);
+		indirect_rgb = colors_mult(nearest.obj->material.color, get_pixel_color(ray, world,bounce + 1));
 	}
-
-	float diffuse_weight = (1.0f - nearest.obj->u_data.sphere.reflectance) * nearest.obj->color.a;
-	final_rgb = colors_add(colors_scal(direct_rgb, diffuse_weight), indirect_rgb);
 	
-	
-	return (final_rgb);
+	return (indirect_rgb);
 }
 
 void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,

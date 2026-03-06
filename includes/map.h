@@ -41,14 +41,6 @@ typedef struct s_ray
 	}				blend_mode;
 }					t_ray;
 
-// typedef struct s_color
-// {
-// 	unsigned char	alpha;
-// 	unsigned char	red;
-// 	unsigned char	green;
-// 	unsigned char	blue;
-// }					t_float_color;
-
 typedef struct s_float_color
 {
 	float	a;
@@ -98,8 +90,6 @@ typedef struct s_sphere
 {
 	float			diameter;
 	float			radius;
-	float			reflectance;
-	float			refraction;
 }					t_sphere;
 
 typedef struct s_cylinder
@@ -114,12 +104,21 @@ typedef struct s_light
 	float			radius;
 }					t_light;
 
-typedef struct s_texture {
-    void    *img;
-    int     *pixels;
-    int     width;
-    int     height;
+typedef struct s_texture
+{
+    void			*img;
+    int				*pixels;
+    int				width;
+    int				height;
 } t_texture;
+
+typedef struct s_material
+{
+	t_float_color	color;
+	float			reflectance;
+	float			smoothness;
+	float			refraction;
+}					t_material;
 
 typedef struct s_object
 {
@@ -130,7 +129,7 @@ typedef struct s_object
 		_cylinder,
 		_light
 	} e_type;
-	t_float_color	color;
+	t_material		material;
 	t_vect3			pos;
 	t_vect3			rot;
 	t_texture		tex;
