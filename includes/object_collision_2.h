@@ -198,15 +198,19 @@ static inline t_nearest_object new_sphere_collision(t_ray ray, t_object *obj)
 
 static inline t_nearest_object plane_collision(t_ray ray, t_object *obj)
 {
-    t_nearest_object hit;
+    t_nearest_object    hit;
+    float               dot_on_rd;
+    float               t;
+    t_vect3             oc;
+
     hit.t = -1.0f;
     hit.obj = obj;
-
-    float dot_on_rd = dot_product(obj->rot, ray.dir);
+	hit.is_inside = false;
+    dot_on_rd = dot_product(obj->rot, ray.dir);
     if (ft_abs_float(dot_on_rd) < 0.00001f)
         return (hit);
-    t_vect3 oc = vectors_sub(obj->pos, ray.origin);
-    float t = dot_product(oc, obj->rot) / dot_on_rd;
+    oc = vectors_sub(obj->pos, ray.origin);
+    t = dot_product(oc, obj->rot) / dot_on_rd;
     if (t < 0.001f)
         return (hit);
     hit.t = t;

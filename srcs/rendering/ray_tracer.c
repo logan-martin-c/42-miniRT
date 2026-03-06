@@ -77,12 +77,11 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 	if (nearest.obj->e_type == _light)
 		return (colors_scal(nearest.obj->material.color, 1.0f));
 	collision_point = get_collision_point(ray, nearest.t);
-	// normal = nearest.normal;
-	normal = sphere_normal(nearest.obj, collision_point, ray.dir, &nearest.is_inside);
+	normal = nearest.normal;
 	normal_diffused = get_diffuse_vector(normal, nearest.obj->material.smoothness);
 	
 	t_float_color	direct_rgb;
-	t_float_color	indirect_rgb = BLACK;
+	t_float_color	indirect_rgb;
 
 	float diffuse_weight = (1.0 - nearest.obj->material.reflectance) * nearest.obj->material.color.a;
 
@@ -97,12 +96,7 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 		indirect_rgb = color_gradient(direct_rgb, get_pixel_color(ray, world,
 				bounce + 1), nearest.obj->material.reflectance);
 	else
-	{
-		// indirect_rgb = color_gradient(get_pixel_color(ray, world,
-		// 			bounce + 1), nearest.obj->material.color, nearest.obj->material.color.a);
 		indirect_rgb = colors_mult(nearest.obj->material.color, get_pixel_color(ray, world,bounce + 1));
-	}
-	
 	return (indirect_rgb);
 }
 
