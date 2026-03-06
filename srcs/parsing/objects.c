@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:51:26 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/04 13:53:26 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/06 12:05:24 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	new_cylinder(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 		free(node);
 		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data, NULL);
 	}
-	if (check_args_count(params, 6, 6) == -1)
+	if (check_args_count(params, 6, 9) == -1)
 		return (ft_free_strs(params),
 			ft_maperror("cylinder : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
@@ -98,6 +98,16 @@ int	new_cylinder(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 		return (ft_free_strs(params),
 			ft_maperror("cylinder : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
+	if (params[6])
+		node->reflectance = ft_atof(params[6]);
+	else
+		node->reflectance = 0;
+	if (params[6] && params[7])
+		node->refraction = ft_atof(params[7]);
+	else
+		node->refraction = 1;
+	if (params[6] && params[7] && params[8])
+		node->tex_name = ft_strdup(params[8]);
 	node->e_type = _cylinder;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
 	return (ft_free_strs(params), 0);
