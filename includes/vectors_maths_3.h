@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 09:43:55 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/06 14:56:04 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/07 16:00:27 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,26 @@ static inline t_vect3	get_random_vector(float min, float max)
 	v.x = fast_rand() * (max - min) + min;
 	v.y = fast_rand() * (max - min) + min;
 	v.z = fast_rand() * (max - min) + min;
-	vector_norm(v);
 	return (v);
 }
 
 static inline t_vect3	get_diffuse_vector(t_vect3 normal, float reflectance)
 {
 	t_vect3	v;
+    float   dot;
 
     if (reflectance == 1)
         return (normal);
     while (1)
     {
-        v = get_random_vector(- (1 - reflectance), (1 - reflectance));
+        v = get_random_vector(- (1 - reflectance), 1 - reflectance);
         if (v.x * v.y * v.z > 1.0f)
             continue ;
         v = vectors_add(v, normal);
-        if (dot_product(vector_norm(normal), vector_norm(v)) >= 0)
+        dot = dot_product(vector_norm(normal), vector_norm(v));
+        if (dot >= 0.5)
             return (v);
-        else
+        else if (dot <= -0.5)
             return (vectors_sub((t_vect3){0, 0, 0}, v));
     }
 }
@@ -112,13 +113,13 @@ static inline t_vect3   get_bounce(t_ray *ray, t_vect3 n, t_material material, b
 	if (direction)
 	{
 		refraction = get_current_refraction(world->objs, world->obj_count, collision_point);
-		reflectance = 0;
+		//reflectance = 0;
 	}
 	else
 	{
 		refraction = material.refraction;
-		reflectance = material.color.a;
 	}
+    reflectance = material.color.a;
 	if (random_cond(/*get_reflectance(dot_product(vector_norm(ray->dir), vector_norm(n)), */reflectance))/*)*/
 		return (ray->blend_mode = _reflected, reflect(ray->dir, n));
     return (ray->blend_mode = _refracted, refract(ray, n, refraction));

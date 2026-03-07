@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/06 15:55:29 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/07 18:10:19 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,24 +85,27 @@ void	shadow_factor(t_shader_compute *shader, t_world_data *world,
 	}
 }
 
-t_float_color	compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal,
-		t_object object, t_world_data *world)
+t_float_color	compute_direct_light(t_nearest_object hit, t_world_data *world)
 {
 	t_shader_compute	shader;
 	int					i;
 
 	i = 0;
-	shader.n_point_normal = point_normal;
-	shader.obj_rgb = get_texture_color(point_r_c, object);
-	ini_compute_dl(&shader, point_r_c, object, world);
+	shader.obj_rgb = get_texture_color(hit);
+	shader.n_point_normal = hit.normal;
+	ini_compute_dl(&shader, hit.collision_point, *hit.obj, world);
 	while (i < world->light_count)
 	{
-		prep_compute_dl(&shader, point_r_c, world, i);
+		prep_compute_dl(&shader, hit.collision_point, world, i);
+		float dist = shader.light_ray_dist;
 		if (shader.dot_nl > 0)
 		{
+			float r = world->lights[i].u_data.light.radius;
+			float attenuation = 1.0f / (dist * dist + (r * r) + 1.0f); //squared light (closer to real physics) but need tone mapping
+			//float attenuation = 1.0f / (1.0f + 0.1f * dist + 0.01f * (dist * dist)); // linear lights
 			shadow_factor(&shader, world, world->lights[i]);
 			shader.light_rgb = world->lights[i].material.color;
-			shader.intensity = world->lights[i].u_data.light.ratio * shader.dot_nl;
+			shader.intensity = world->lights[i].u_data.light.ratio * 4500 *shader.dot_nl * attenuation; //*5000 if we do squared // *20 if we do linear
 			shader.diffuse = colors_scal(colors_mult(shader.light_rgb,
 						shader.obj_rgb), shader.intensity);
 			shader.diffuse = colors_mult(shader.diffuse,

@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 15:45:10 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/06 18:57:49 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/07 16:40:42 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,12 +134,14 @@ static inline t_nearest_object  cylinder_collision(t_ray ray, t_object *object)
 
     // --- DECIDE WINNER (Body vs Cap) ---
     float final_t = -1.0f;
+	hit.hit_type = _none;
     if (t_body > 0.001f && (t_cap < 0.001f || t_body < t_cap))
     {
         final_t = t_body;
         float y = baoc + final_t * bard;
         t_vect3 p_rel = vectors_add(oc, vector_mult(ray.dir, final_t));
         hit.normal = vector_norm(vectors_sub(p_rel, vector_mult(ba, y / baba)));
+		hit.hit_type = _body;
     }
     else if (t_cap > 0.001f)
     {
@@ -147,6 +149,7 @@ static inline t_nearest_object  cylinder_collision(t_ray ray, t_object *object)
         float y = baoc + final_t * bard;
         t_vect3 n = vector_norm(ba);
         hit.normal = (y < baba / 2.0f) ? vectors_sub((t_vect3){0.0, 0.0, 0.0}, hit.normal) : n;
+		hit.hit_type = _caps;
     }
 
     if (final_t > 0.001f)
@@ -161,6 +164,89 @@ static inline t_nearest_object  cylinder_collision(t_ray ray, t_object *object)
         return (hit);
     }
 
+    return (hit);
+}
+
+static inline t_nearest_object cone_collision(t_ray ray, t_object *obj)
+{
+    t_nearest_object hit = {.t = -1.0f, .is_inside = false, .obj = obj};
+    
+    t_vect3  axis = obj->rot;
+    float    h = obj->u_data.cone.height;
+    float    r = obj->u_data.cone.radius;
+    float    m = (r * r) / (h * h);
+    
+    t_vect3  oc = vectors_sub(ray.origin, obj->pos);
+    float    dot_rd_axis = dot_product(ray.dir, axis);
+    float    dot_oc_axis = dot_product(oc, axis);
+    
+    float    a = dot_product(ray.dir, ray.dir) - (1.0f + m) * (dot_rd_axis * dot_rd_axis);
+    float    b = 2.0f * (dot_product(ray.dir, oc) - (1.0f + m) * dot_rd_axis * dot_oc_axis);
+    float    c = dot_product(oc, oc) - (1.0f + m) * (dot_oc_axis * dot_oc_axis);
+    
+    float    delta = b * b - 4.0f * a * c;
+    if (delta < 0.0f) return (hit);
+    
+    float    sqrt_delta = sqrt(delta);
+    float    t1 = (-b - sqrt_delta) / (2.0f * a);
+    float    t2 = (-b + sqrt_delta) / (2.0f * a);
+    
+    float t_body = -1.0f;
+    float selected_t = (t1 > 0.001f) ? t1 : t2;
+    if (selected_t > 0.001f)
+    {
+        float cp_v = dot_product(vectors_add(oc, vector_mult(ray.dir, selected_t)), axis);
+        if (cp_v > 0.0f && cp_v < h)
+            t_body = selected_t;
+    }
+
+    float t_cap = -1.0f;
+    t_vect3 base_center = vectors_add(obj->pos, vector_mult(axis, h));
+    float denom = dot_product(ray.dir, axis);
+    if (fabs(denom) > 0.0001f)
+    {
+        float t = dot_product(vectors_sub(base_center, ray.origin), axis) / denom;
+        if (t > 0.001f)
+        {
+            t_vect3 p = vectors_add(ray.origin, vector_mult(ray.dir, t));
+            t_vect3 v = vectors_sub(p, base_center);
+            if (dot_product(v, v) <= r * r)
+                t_cap = t;
+        }
+    }
+
+    float final_t = -1.0f;
+    hit.hit_type = _none; // 1 for body, 2 for cap
+    if (t_body > 0.001f && (t_cap < 0.001f || t_body < t_cap)) {
+        final_t = t_body;
+        hit.hit_type = _body;
+    } else if (t_cap > 0.001f) {
+        final_t = t_cap;
+        hit.hit_type = _caps;
+    }
+
+    if (final_t > 0.001f)
+    {
+        hit.t = final_t;
+        t_vect3 outward_n;
+        if (hit.hit_type == _body) {
+            t_vect3 p = vectors_add(ray.origin, vector_mult(ray.dir, final_t));
+            t_vect3 cp = vectors_sub(p, obj->pos);
+            float dist_on_axis = dot_product(cp, axis);
+            t_vect3 orthogonal = vectors_sub(cp, vector_mult(axis, dist_on_axis));
+            outward_n = vector_norm(vectors_sub(orthogonal, vector_mult(axis, m * dist_on_axis)));
+        } else {
+            outward_n = axis;
+        }
+
+        if (dot_product(ray.dir, outward_n) > 0.0f) {
+            hit.is_inside = true;
+            hit.normal = vector_mult(outward_n, -1.0f);
+        } else {
+            hit.is_inside = false;
+            hit.normal = outward_n;
+        }
+    }
     return (hit);
 }
 

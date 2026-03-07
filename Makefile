@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS += -Wall -Wextra -Werror -Wpedantic -Ofast
-DFLAGS += -g3 -D DEBUG=1 -Ofast
+DFLAGS += -g3 -D DEBUG=1 #-Ofast
 
 LIBS += -lpthread -latomic
 
@@ -13,6 +13,7 @@ SRCS = main.c\
 		interface/velocity.c\
 		parsing/map_to_array.c\
 		parsing/objects.c\
+		parsing/objects_2.c\
 		parsing/open_map.c\
 		parsing/params.c\
 		parsing/parser.c\
@@ -26,6 +27,9 @@ SRCS = main.c\
 		rendering/ray_tracer.c\
 		rendering/shading.c\
 		rendering/texturing.c\
+		rendering/uv.c\
+		rendering/uv_2.c\
+		rendering/normal.c\
 		utils/clean_exit.c\
 		utils/debug_obj_print.c\
 		utils/debug_params_print.c\

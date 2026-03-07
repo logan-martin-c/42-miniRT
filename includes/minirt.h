@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/06 15:49:22 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/07 16:38:55 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,16 @@
 
 # define LINE_SIZE WIN_WIDTH * 4
 # define BPP 4
-# define BLACK (t_float_color){1, 0, 0, 0}
-# define WHITE (t_float_color){1, 1, 1, 1}
+# define BLACK       \
+	(t_float_color) \
+	{               \
+		1, 0, 0, 0  \
+	}
+# define WHITE       \
+	(t_float_color) \
+	{               \
+		1, 1, 1, 1  \
+	}
 # define INV_WIN_HEIGHT 1 / WIN_HEIGHT
 # define INV_WIN_WIDTH 1 / WIN_WIDTH
 
@@ -142,11 +150,19 @@ typedef enum e_obj_type
 
 typedef struct s_nearest_object
 {
-	t_object			*obj;
+	t_object				*obj;
 	t_vect3					normal;
 	bool					is_inside;
 	float					t;
+	t_uv					uv;
+	t_vect3					collision_point;
 	float					current_refraction;
+	enum e_hit_type
+	{
+		_none,
+		_body,
+		_caps
+	} hit_type;
 }							t_nearest_object;
 
 typedef struct s_interface
@@ -210,6 +226,7 @@ typedef struct s_shader_compute
 
 // INIT
 void						init_texture(t_global_data *g_data);
+void						init_normal(t_global_data *g_data);
 int							init_mlx(t_mlx_data *mlx);
 void						init(t_global_data *g_data, t_parsing_data *p_data,
 								t_exec_data *e_data, char *av_zero);
@@ -226,6 +243,8 @@ int							parse_float(char *str, float *value);
 t_float_color				parse_color(int color);
 void						parse_object(t_parsing_data *p_data, char *obj_line,
 								t_global_data *g_data);
+int							new_cone(t_parsing_data *p_data, char *obj_line,
+								t_global_data *g_data, t_object *node);
 void						parse_params(t_parsing_data *p_data, char *obj_line,
 								t_global_data *g_data);
 int							lst_map_to_array(t_parsing_data *p_data,
@@ -240,8 +259,7 @@ int							update_display(t_global_data *data);
 int							get_color(t_float_color p_color);
 t_float_color				get_color_chars(unsigned char a, unsigned char r,
 								unsigned char g, unsigned char b);
-t_float_color				compute_direct_light(t_vect3 point_r_c,
-								t_vect3 point_normal, t_object object,
+t_float_color				compute_direct_light(t_nearest_object hit,
 								t_world_data *world);
 // int							color_sup(int color_a, int color_b);
 t_vect3						project(t_vect3 pos, t_cam_data *cam_data);
@@ -262,8 +280,11 @@ t_float_color				get_sky_color(t_float_color ambient_color,
 								t_vect3 ray);
 t_nearest_object			get_nearest_object(t_ray ray, t_world_data *world);
 t_nearest_object			get_nearest(t_ray ray, t_world_data *world);
-t_float_color				get_texture_color(t_vect3 point_r_c,
-								t_object object);
+t_float_color				get_texture_color(t_nearest_object hit);
+t_float_color				get_texel_color(t_texture tex, t_uv uv);
+t_vect3						apply_normal_map(t_nearest_object hit);
+t_uv						get_sphere_uv(t_nearest_object hit);
+t_uv						get_uv_coords(t_nearest_object hit);
 
 // INTERFACE
 void						set_hooks(t_global_data *g_data);

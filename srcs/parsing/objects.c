@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:51:26 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/06 12:05:24 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/07 17:12:01 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	new_sphere(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 		free(node);
 		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data, NULL);
 	}
-	if (check_args_count(params, 4, 8) == -1)
+	if (check_args_count(params, 4, 9) == -1)
 		return (ft_free_strs(params), ft_maperror("sphere : invalid parameters",
 				p_data->line_nb, g_data->prog_name));
 	if (parse_pos(params[1], &node->pos, 0) || parse_float(params[2],
@@ -43,6 +43,8 @@ int	new_sphere(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 		node->material.reflectance = ft_atof(params[6]);
 	if (params[4] && params[5] && params[6] && params[7])
 		node->tex_name = ft_strdup(params[7]);
+	if (params[4] && params[5] && params[6] && params[7] && params[8])
+		node->normal_name = ft_strdup(params[8]);
 	node->rot = (t_vect3){0, 0, -1};
 	node->e_type = _sphere;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
@@ -60,8 +62,8 @@ int	new_plane(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 		free(node);
 		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data, NULL);
 	}
-	if (!params[1] || !params[2] || !params[3] || params[4])
-		return (ft_free_strs(params), ft_maperror("plane : invalid parameters",
+	if (check_args_count(params, 3, 6) == -1)
+		return (ft_free_strs(params), ft_maperror("sphere : invalid parameters",
 				p_data->line_nb, g_data->prog_name));
 	if (parse_pos(params[1], &node->pos, 0) || parse_pos(params[2], &node->rot,
 			1) || parse_raw_color(params[3], &node->material.color))
@@ -70,8 +72,12 @@ int	new_plane(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	node->material.smoothness = 0.3;
 	// node->material.smoothness = 1;
 	node->material.refraction = 1;
-	node->material.reflectance = 0.5;
+	node->material.reflectance = 0;
 	node->e_type = _plane;
+	if (params[4])
+		node->tex_name = ft_strdup(params[4]);
+	if (params[4] && params[5])
+		node->normal_name = ft_strdup(params[5]);
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
 	return (ft_free_strs(params), 0);
 }
@@ -87,7 +93,7 @@ int	new_cylinder(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 		free(node);
 		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data, NULL);
 	}
-	if (check_args_count(params, 6, 9) == -1)
+	if (check_args_count(params, 6, 11) == -1)
 		return (ft_free_strs(params),
 			ft_maperror("cylinder : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
@@ -108,6 +114,8 @@ int	new_cylinder(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 		node->material.reflectance = ft_atof(params[8]);
 	if (params[6] && params[7] && params[8] && params[9])
 		node->tex_name = ft_strdup(params[9]);
+	if (params[6] && params[7] && params[8] && params[9] && params[10])
+		node->normal_name = ft_strdup(params[10]);
 	node->e_type = _cylinder;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
 	return (ft_free_strs(params), 0);
@@ -157,6 +165,8 @@ void	parse_object(t_parsing_data *p_data, char *obj_line,
 		ret = new_plane(p_data, obj_line, g_data, node);
 	else if (!ft_strncmp(obj_line, "cy", 2) && ft_isspace(obj_line[2]))
 		ret = new_cylinder(p_data, obj_line, g_data, node);
+	else if (!ft_strncmp(obj_line, "co", 2) && ft_isspace(obj_line[2]))
+		ret = new_cone(p_data, obj_line, g_data, node);
 	else if (!ft_strncmp(obj_line, "L", 1) && ft_isspace(obj_line[1]))
 		ret = new_light(p_data, obj_line, g_data, node);
 	if (ret)

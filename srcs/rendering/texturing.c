@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:16:39 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/04 15:28:25 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:22:37 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,33 +19,24 @@
 #include "vectors_maths_3.h"
 #define _USE_MATH_DEFINES
 
-t_float_color	get_checkerboard_color(float u, float v)
+t_float_color	get_checkerboard_color(t_uv uv)
 {
 	int	check;
 
-	check = (int)(u * 10) + (int)(v * 10);
+	check = (int)(uv.u * 10) + (int)(uv.v * 10);
 	if (check % 2 == 0)
 		return ((t_float_color){1, 1, 1, 1});
 	return ((t_float_color){1, 0, 0, 0});
 }
 
-void	get_sphere_uv(t_vect3 point_r_c, t_object object, float *u, float *v)
-{
-	t_vect3	d;
-
-	d = vector_norm(vectors_sub(point_r_c, object.pos));
-	*u = 0.5 + (atan2(d.z, d.x) / (2 * M_PI));
-	*v = 0.5 - (asin(d.y) / M_PI);
-}
-
-t_float_color	get_texel_color(t_texture tex, float u, float v)
+t_float_color	get_texel_color(t_texture tex, t_uv uv)
 {
 	int	x;
 	int	y;
 	int color;
 
-	x = (int)(u * tex.width);
-	y = (int)(v * tex.height);
+	x = (int)(uv.u * tex.width);
+	y = (int)(uv.v * tex.height);
 	if (x >= tex.width)
 		x = tex.width - 1;
 	if (y >= tex.height)
@@ -58,15 +49,11 @@ t_float_color	get_texel_color(t_texture tex, float u, float v)
 	return (color_to_vec4(color));
 }
 
-t_float_color	get_texture_color(t_vect3 point_r_c, t_object object)
+t_float_color	get_texture_color(t_nearest_object hit)
 {
-	float			u;
-	float			v;
-
-	get_sphere_uv(point_r_c, object, &u, &v);
-	if (object.tex_name && ft_strncmp(object.tex_name, "UV", 2))
-		return (get_texel_color(object.tex, u, v));
-	if (object.tex_name && !ft_strncmp(object.tex_name, "UV", 2))
-		return (get_checkerboard_color(u, v));
-	return ((object.material.color));
+	if (hit.obj->tex_name && ft_strncmp(hit.obj->tex_name, "UV", 2))
+		return (get_texel_color(hit.obj->tex, hit.uv));
+	if (hit.obj->tex_name && !ft_strncmp(hit.obj->tex_name, "UV", 2))
+		return (get_checkerboard_color(hit.uv));
+	return ((hit.obj->material.color));
 }

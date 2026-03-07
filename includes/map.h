@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:51 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/06 12:00:24 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:21:20 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ typedef struct s_vect2
 	int				x;
 	int				y;
 }					t_vect2;
+
+typedef struct s_uv
+{
+	float				u;
+	float				v;
+}					t_uv;
 
 typedef struct s_ray
 {
@@ -98,6 +104,12 @@ typedef struct s_cylinder
 	float			height;
 }					t_cylinder;
 
+typedef struct s_cone
+{
+	float			radius;
+	float			height;
+}					t_cone;
+
 typedef struct s_light
 {
 	float			ratio;
@@ -127,17 +139,21 @@ typedef struct s_object
 		_sphere,
 		_plane,
 		_cylinder,
+		_cone,
 		_light
 	} e_type;
 	t_material		material;
 	t_vect3			pos;
 	t_vect3			rot;
 	t_texture		tex;
+	t_texture		normal;
 	char *tex_name;
+	char *normal_name;
 	union
 	{
 		t_sphere	sphere;
 		t_cylinder	cylinder;
+		t_cone		cone;
 		t_light		light;
 	}				u_data;
 }					t_object;

@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:24:04 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/03 16:57:31 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:04:12 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int ac, char *av[])
 		clean_exit(EXIT_FAILURE, &g_data, &p_data, NULL);
 	}
 	init_texture(&g_data);
+	init_normal(&g_data);
 	init_viewport(&g_data.world.viewport, g_data.world.cam.fov);
 	if (init_exec(&e_data, &g_data))
 	{

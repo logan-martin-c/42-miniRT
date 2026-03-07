@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 09:33:59 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/06 18:30:29 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/07 12:05:56 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ static inline t_nearest_object	check_object_collision(t_object *object, t_ray ra
 		return (new_sphere_collision(ray, object));
 	else if (object->e_type == _cylinder)
 		return (cylinder_collision(ray, object));
+	else if (object->e_type == _cone)
+		return (cone_collision(ray, object));
 	else if (object->e_type == _plane)
 		return (plane_collision(ray,  object));
 	else if (object->e_type == _light)
