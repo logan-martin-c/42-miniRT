@@ -31,9 +31,10 @@ int	update_display(t_global_data *g_data)
 	time = get_utime(0);
 	elapsed = time - last_time;
 	last_time = time;
-	move_cam(&g_data->world, &g_data->mlx, &g_data->key, elapsed);
+	move_cam(&g_data->world, &g_data->mlx, &g_data->key,
+		ft_min(elapsed, 500000));
 	move_object(g_data->world.selected_obj, &g_data->world, &g_data->key,
-		elapsed);
+		ft_min(elapsed, 500000));
 	if (g_data->world.static_frames != -5)
 		render_image(g_data);
 	mlx_put_image_to_window(g_data->mlx.mlx, g_data->mlx.win,

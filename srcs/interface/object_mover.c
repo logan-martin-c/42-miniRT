@@ -70,21 +70,21 @@ int	move_object(t_object *obj, t_world_data *world, t_interface *input,
 
 	if (!obj)
 		return (-1);
-	move.x = input->d - input->a;
-	move.y = input->space - input->ctrl;
-	move.z = input->w - input->s;
+	factor = ((double)elapsed / 1000000.0) * (double)world->cam.speed * 5.0;
+	move.x = (input->d - input->a) * factor;
+	move.y = (input->space - input->ctrl) * factor;
+	move.z = (input->w - input->s) * factor;
 	if (!move.x && !move.y && !move.z)
 		return (0);
-	factor = ((double)elapsed / 1000000.0) * (double)world->cam.speed * 5.0;
 	if (move.x)
 		moving_vector = vectors_add(moving_vector, vector_mult(world->cam.right,
-					move.x * factor));
+					move.x));
 	if (move.y)
 		moving_vector = vectors_add(moving_vector, vector_mult((t_vect3){0, 1,
-					0}, move.y * factor));
+					0}, move.y));
 	if (move.z)
 		moving_vector = vectors_add(moving_vector,
-				vector_mult(world->cam.forward, move.z * factor));
+				vector_mult(world->cam.forward, move.z));
 	obj->pos = vectors_add(obj->pos, vector_mult(moving_vector, world->cam.speed
 				* elapsed / 1000000.0));
 	world->static_frames = -1;
