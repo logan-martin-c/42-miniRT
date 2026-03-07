@@ -18,6 +18,7 @@
 #include "vectors_maths_1.h"
 #include "vectors_maths_2.h"
 #include "vectors_maths_3.h"
+#include "object_collision.h"
 #define _USE_MATH_DEFINES
 
 void	ini_compute_dl(t_shader_compute *shader, t_vect3 point_r_c,
@@ -51,21 +52,36 @@ void	shadow_factor(t_shader_compute *shader, t_world_data *world,
 	t_vect3				rand_light_dir;
 	float				rand_light_dist;
 	t_nearest_object	hit;
+	int					i;
 
-	shader->light_intensity_sum = (t_float_color){1.0f, 1.0f, 1.0f, 1.0f};;
+	shader->light_intensity_sum = WHITE;
 	rand_p_light = get_rand_p_light(light.pos, light.u_data.light.radius);
 	rand_light_dir = vectors_sub(rand_p_light, shader->shadow_origin);
 	rand_light_dist = vector_mag(rand_light_dir);
 	shader->shadow_ray.origin = shader->shadow_origin;
 	shader->shadow_ray.dir = vector_norm(rand_light_dir);
 
-	hit = get_nearest_object(shader->shadow_ray, world);
-	if (hit.t > 0 && hit.t < rand_light_dist)
+	// hit = get_nearest_object(shader->shadow_ray, world);
+	// if (hit.t > 0 && hit.t < rand_light_dist)
+	// {
+	// 	if (hit.obj->material.color.a < 1.0f)
+	// 		shader->light_intensity_sum = colors_scal(hit.obj->material.color,
+	// 				1.0f - hit.obj->material.color.a);
+	// 	else
+	// 		shader->light_intensity_sum = (t_float_color){0, 0, 0, 0};
+	// }
+
+	i = -1;
+	while (++i < world->obj_count)
 	{
-		if (hit.obj->material.color.a < 1.0f)
-			shader->light_intensity_sum = colors_scal(hit.obj->material.color, 1.0f - hit.obj->material.color.a);
-		else
-			shader->light_intensity_sum = (t_float_color){0, 0, 0, 0};
+		hit = check_object_collision(&world->objs[i], shader->shadow_ray);
+		if (hit.t > 0 && hit.t < rand_light_dist)
+		{
+			shader->light_intensity_sum = colors_mult(
+					colors_scal(hit.obj->material.color,
+						1.0f - hit.obj->material.color.a),
+					shader->light_intensity_sum);
+		}
 	}
 }
 
@@ -81,7 +97,6 @@ t_float_color	compute_direct_light(t_vect3 point_r_c, t_vect3 point_normal,
 	ini_compute_dl(&shader, point_r_c, object, world);
 	while (i < world->light_count)
 	{
-		//printf("a: %f, r: %f, g: %f, b: %f, x: %f, y: %f, z: %f, ratio: %f\n", world->lights[i].color.a, world->lights[i].color.r, world->lights[i].color.g, world->lights[i].color.b, world->lights[i].pos.x, world->lights[i].pos.y, world->lights[i].pos.z, world->lights[i].u_data.light.ratio);
 		prep_compute_dl(&shader, point_r_c, world, i);
 		if (shader.dot_nl > 0)
 		{

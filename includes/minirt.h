@@ -48,6 +48,7 @@
 # define LINE_SIZE WIN_WIDTH * 4
 # define BPP 4
 # define BLACK (t_float_color){1, 0, 0, 0}
+# define WHITE (t_float_color){1, 1, 1, 1}
 # define INV_WIN_HEIGHT 1 / WIN_HEIGHT
 # define INV_WIN_WIDTH 1 / WIN_WIDTH
 

@@ -67,8 +67,10 @@ int	new_plane(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 			1) || parse_raw_color(params[3], &node->material.color))
 		return (ft_free_strs(params), ft_maperror("plane : invalid parameters",
 				p_data->line_nb, g_data->prog_name));
+	// node->material.smoothness = 0.3;
 	node->material.smoothness = 1;
 	node->material.refraction = 1;
+	// node->material.reflectance = 0.5;
 	node->e_type = _plane;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
 	return (ft_free_strs(params), 0);

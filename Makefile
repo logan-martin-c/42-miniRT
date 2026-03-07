@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS += -Wall -Wextra -Werror -Wpedantic -Ofast -O3
+CFLAGS += -Wall -Wextra -Werror -Wpedantic -Ofast
 DFLAGS += -g3 -D DEBUG=1 -Ofast
 
 LIBS += -lpthread -latomic

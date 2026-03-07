@@ -104,10 +104,10 @@ void	move_cam(t_world_data *world, t_mlx_data *mlx, t_interface *key,
 		update_cam_pos(key, &world->cam, elapsed, &world->moving);
 	if (!world->moving && !world->rotating)
 	{
-		if (world->static_frames < 1000)
+		if (world->static_frames < 10000)
 			world->static_frames++;
 		else
-			world->static_frames = 2000;
+			world->static_frames = -2;
 	}
 	else
 		world->static_frames = -1;

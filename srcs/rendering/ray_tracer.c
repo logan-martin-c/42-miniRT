@@ -75,7 +75,7 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 		return (get_sky_color(color_intensity(world->ambient_light.color,
 					world->ambient_light.ratio), ray.dir));
 	if (nearest.obj->e_type == _light)
-		return (colors_scal(nearest.obj->material.color, 1.0f));
+		return (colors_scal(nearest.obj->material.color, 50.0f));
 	collision_point = get_collision_point(ray, nearest.t);
 	normal = nearest.normal;
 	normal_diffused = get_diffuse_vector(normal, nearest.obj->material.smoothness);
