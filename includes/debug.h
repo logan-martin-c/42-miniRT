@@ -21,5 +21,6 @@ void	print_cylinder(t_object *object);
 void	print_cam(t_cam_data *cam);
 void	print_light(t_object *object);
 void	print_ambient_light(t_ambient_light_data *ambient_light);
+void	print_json(t_json json_tokens, unsigned int indent);
 
 #endif

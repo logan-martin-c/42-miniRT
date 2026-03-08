@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/07 16:38:55 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/08 23:15:41 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,8 @@
 
 # define LINE_SIZE WIN_WIDTH * 4
 # define BPP 4
-# define BLACK       \
-	(t_float_color) \
-	{               \
-		1, 0, 0, 0  \
-	}
-# define WHITE       \
-	(t_float_color) \
-	{               \
-		1, 1, 1, 1  \
-	}
+# define BLACK (t_float_color){1, 0, 0, 0}
+# define WHITE (t_float_color){1, 1, 1, 1}
 # define INV_WIN_HEIGHT 1 / WIN_HEIGHT
 # define INV_WIN_WIDTH 1 / WIN_WIDTH
 
@@ -92,18 +84,16 @@ typedef struct s_mlx_data
 	void					*win;
 	struct
 	{
-		void				*img;
 		char				*addr;
 		int					bits_per_pixel;
 		int					line_length;
 		int					endian;
+		void				*img;
 	} s_img_data;
 }							t_mlx_data;
 
 typedef struct s_viewport
 {
-	t_vect3					down;
-	t_vect3					right;
 	double					aspect_ratio;
 	double					theta;
 	double					tan_theta;
@@ -112,32 +102,73 @@ typedef struct s_viewport
 	double					vp_w;
 	double					step_h;
 	double					step_w;
+	t_vect3					down;
+	t_vect3					right;
 }							t_viewport;
 
 typedef struct s_world_data
 {
-	long					static_frames;
-	t_object				*objs;
-	t_object				*lights;
-	int						obj_count;
-	int						light_count;
 	bool					moving;
 	bool					rotating;
+	int						obj_count;
+	int						light_count;
+	long					static_frames;
+	t_object				*objs;
+	t_object				*selected_obj;
+	t_object				*lights;
 	t_cam_data				cam;
 	t_ambient_light_data	ambient_light;
 	t_viewport				viewport;
 	t_float_color			*color_tab;
-	t_object				*selected_obj;
 }							t_world_data;
+
+typedef struct s_json
+{
+	enum
+	{
+		_string,
+		_float,
+		_array,
+		_brace
+	} e_type;
+	union
+	{
+		char				*str;
+		float				num;
+		float				array[4];
+		struct
+		{
+			struct s_pair	*data;
+			size_t			size;
+		} s_brace;
+	} u_data;
+	size_t					size;
+}							t_json;
+
+typedef struct s_pair
+{
+	char					*key;
+	t_json					value;
+}							t_pair;
+
+typedef enum e_file_type
+{
+	_rt,
+	_json
+}							t_file_type;
 
 typedef struct s_parsing_data
 {
 	int						map_fd;
-	t_list					*obj_lst;
 	int						obj_count;
 	int						light_count;
-	t_map_data				map_data;
+	int						node_count;
 	int						line_nb;
+	t_file_type				file_type;
+	FILE					*stream;
+	t_list					*obj_lst;
+	t_map_data				map_data;
+	t_json					json;
 }							t_parsing_data;
 
 typedef enum e_obj_type
@@ -150,13 +181,13 @@ typedef enum e_obj_type
 
 typedef struct s_nearest_object
 {
-	t_object				*obj;
-	t_vect3					normal;
 	bool					is_inside;
 	float					t;
 	t_uv					uv;
 	t_vect3					collision_point;
 	float					current_refraction;
+	t_object				*obj;
+	t_vect3					normal;
 	enum e_hit_type
 	{
 		_none,
@@ -177,15 +208,15 @@ typedef struct s_interface
 
 typedef struct s_exec_data
 {
-	pthread_t				*threads;
+	_Atomic bool			rendering;
+	_Atomic bool			stop;
+	_Atomic int				current_task;
+	_Atomic int				tasks_done;
+	_Atomic int				to_do;
 	unsigned int			nb_threads;
-	_Atomic bool stop;
 	pthread_mutex_t			mutex;
+	pthread_t				*threads;
 	t_tasks					*tasks;
-	_Atomic int current_task;
-	_Atomic int tasks_done;
-	_Atomic int to_do;
-	_Atomic bool rendering;
 }							t_exec_data;
 
 typedef struct s_global_data
@@ -235,12 +266,14 @@ void						init_viewport(t_viewport *viewport, int fov);
 // PARSING
 void						parser(int ac, char *av[], t_global_data *g_data,
 								t_parsing_data *p_data);
-void						check_args(int ac, char **av, char *prog_name);
+void						check_args(int ac, char **av, char *prog_name,
+								t_file_type *file_type);
 int							open_map(char *filename, char *progname);
 int							parse_pos(char *str, t_vect3 *pos, char normalized);
 int							parse_raw_color(char *str, t_float_color *color);
 int							parse_float(char *str, float *value);
 t_float_color				parse_color(int color);
+void						set_default_obj(t_object *obj);
 void						parse_object(t_parsing_data *p_data, char *obj_line,
 								t_global_data *g_data);
 int							new_cone(t_parsing_data *p_data, char *obj_line,
@@ -253,6 +286,8 @@ int							lst_objs_to_array(t_object **objs, t_list *obj_lst,
 								int obj_count);
 int							lst_lights_to_array(t_object **lights,
 								t_list *obj_lst, int light_count);
+void						parse_json(char *av[], t_global_data *g_data,
+								t_parsing_data *p_data);
 
 // RENDER
 int							update_display(t_global_data *data);

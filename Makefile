@@ -11,6 +11,14 @@ SRCS = main.c\
 		interface/inputs.c\
 		interface/object_mover.c\
 		interface/velocity.c\
+		parsing/json_elements.c\
+		parsing/json_parser.c\
+		parsing/json_to_array.c\
+		parsing/json_to_light.c\
+		parsing/json_to_objects_1.c\
+		parsing/json_to_objects_2.c\
+		parsing/json_to_params.c\
+		parsing/json_sub_parameters.c\
 		parsing/map_to_array.c\
 		parsing/objects.c\
 		parsing/objects_2.c\
@@ -35,6 +43,9 @@ SRCS = main.c\
 		utils/debug_params_print.c\
 		utils/debug_print.c\
 		utils/errors.c\
+		utils/file_read.c\
+		utils/file_read_set.c\
+		utils/json.c\
 		utils/parsing.c\
 		utils/tools.c
 
@@ -58,6 +69,8 @@ DNAME = $(NAME)_debug
 .PHONY = $(NAME) all clean fclean re debug
 
 all : $(NAME)
+
+bonus : $(NAME)
 
 debug : $(DNAME)
 

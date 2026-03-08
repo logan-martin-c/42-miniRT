@@ -62,6 +62,7 @@ int					ft_isalnum(int c);
 int					ft_isinset(char c, const char *set);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
+int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 char				*ft_strnstr(const char *haystack, const char *needle,
 						size_t n);
@@ -124,5 +125,6 @@ float				ft_max_float(float a, float b);
 int					ft_printf(const char *str, ...);
 char				*get_next_line(int fd);
 void				*ft_print_memory(void *addr, unsigned int size);
+void				*ft_realloc(void *src, size_t old_size, size_t new_size);
 
 #endif

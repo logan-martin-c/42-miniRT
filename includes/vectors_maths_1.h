@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vectors_maths_1.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 09:43:55 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/24 17:12:25 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/08 23:11:11 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static inline double	dot_product(t_vect3 a, t_vect3 b)
 
 static inline t_vect3	vectors_mult(t_vect3 a, t_vect3 b)
 {
-	t_vect3 new_vec3;
+	t_vect3	new_vec3;
 
 	new_vec3.x = a.x * b.x;
 	new_vec3.y = a.y * b.y;

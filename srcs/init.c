@@ -57,6 +57,7 @@ void	init(t_global_data *g_data, t_parsing_data *p_data, t_exec_data *e_data,
 	ft_bzero(e_data, sizeof(t_exec_data));
 	g_data->prog_name = get_progname(av_zero);
 	g_data->e_data = e_data;
+	p_data->map_fd = -1;
 	init_cam(&g_data->world.cam);
 	init_ambient_light(&g_data->world.ambient_light);
 }

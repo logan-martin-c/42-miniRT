@@ -51,10 +51,8 @@ int	parse_map(t_global_data *g_data, t_parsing_data *p_data)
 	return (0);
 }
 
-void	parser(int ac, char *av[], t_global_data *g_data,
-		t_parsing_data *p_data)
+void	parse_rt(char *av[], t_global_data *g_data, t_parsing_data *p_data)
 {
-	check_args(ac, av, g_data->prog_name);
 	p_data->map_fd = open_map(av[1], g_data->prog_name);
 	parse_map(g_data, p_data);
 	close(p_data->map_fd);
@@ -67,4 +65,14 @@ void	parser(int ac, char *av[], t_global_data *g_data,
 		clean_exit(1, g_data, p_data, NULL);
 	}
 	ft_lstclear(&p_data->obj_lst, free);
+}
+
+void	parser(int ac, char *av[], t_global_data *g_data,
+		t_parsing_data *p_data)
+{
+	check_args(ac, av, g_data->prog_name, &p_data->file_type);
+	if (p_data->file_type == _rt)
+		parse_rt(av, g_data, p_data);
+	else if (p_data->file_type == _json)
+		parse_json(av, g_data, p_data);
 }

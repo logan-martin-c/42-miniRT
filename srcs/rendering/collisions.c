@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   collisions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 11:47:12 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/05 20:57:28 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/08 23:10:34 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ t_nearest_object	get_nearest_object(t_ray ray, t_world_data *world)
 	while (++i < world->obj_count)
 	{
 		nearest_tmp = check_object_collision(&world->objs[i], ray);
-		if (nearest_tmp.t != -1 && (nearest.t == -1 || nearest_tmp.t < nearest.t))
+		if (nearest_tmp.t != -1 && (nearest.t == -1
+				|| nearest_tmp.t < nearest.t))
 			nearest = nearest_tmp;
 	}
 	return (nearest);
@@ -67,7 +68,8 @@ t_nearest_object	get_nearest(t_ray ray, t_world_data *world)
 
 	nearest_obj = get_nearest_object(ray, world);
 	nearest_light = get_nearest_light(ray, world);
-	if (nearest_light.t != -1 && (nearest_light.t < nearest_obj.t || nearest_obj.t == -1))
+	if (nearest_light.t != -1 && (nearest_light.t < nearest_obj.t
+			|| nearest_obj.t == -1))
 		return (nearest_light);
 	else
 		return (nearest_obj);

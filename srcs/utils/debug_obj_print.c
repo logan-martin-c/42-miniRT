@@ -19,6 +19,10 @@ void	print_sphere(t_object *object)
 	printf("\t\tx : %lf\n", (double)object->pos.x);
 	printf("\t\ty : %lf\n", (double)object->pos.y);
 	printf("\t\tz : %lf\n", (double)object->pos.z);
+	printf("\trot :\n");
+	printf("\t\tx : %lf\n", (double)object->rot.x);
+	printf("\t\ty : %lf\n", (double)object->rot.y);
+	printf("\t\tz : %lf\n", (double)object->rot.z);
 	printf("\tdiameter : %f\n", (float)object->u_data.sphere.diameter);
 	printf("\tcolor:\n");
 	printf("\t\ta : %f\n", object->material.color.a);
@@ -36,6 +40,10 @@ void	print_plane(t_object *object)
 	printf("\t\tx : %lf\n", (double)object->pos.x);
 	printf("\t\ty : %lf\n", (double)object->pos.y);
 	printf("\t\tz : %lf\n", (double)object->pos.z);
+	printf("\trot :\n");
+	printf("\t\tx : %lf\n", (double)object->rot.x);
+	printf("\t\ty : %lf\n", (double)object->rot.y);
+	printf("\t\tz : %lf\n", (double)object->rot.z);
 	printf("\tvector :\n");
 	printf("\t\tx : %lf\n", (double)object->rot.x);
 	printf("\t\ty : %lf\n", (double)object->rot.y);
@@ -54,7 +62,7 @@ void	print_cylinder(t_object *object)
 	printf("\t\tx : %lf\n", (double)object->pos.x);
 	printf("\t\ty : %lf\n", (double)object->pos.y);
 	printf("\t\tz : %lf\n", (double)object->pos.z);
-	printf("\tvector :\n");
+	printf("\trot :\n");
 	printf("\t\tx : %lf\n", (double)object->rot.x);
 	printf("\t\ty : %lf\n", (double)object->rot.y);
 	printf("\t\tz : %lf\n", (double)object->rot.z);

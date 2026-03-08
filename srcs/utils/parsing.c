@@ -61,6 +61,6 @@ int	is_normalized(t_vect3 pos)
 		|| pos.z > 1)
 		return (0);
 	magnitude = sqrt(pos.x * pos.x + pos.y * pos.y + pos.z * pos.z);
-	return ((magnitude <= (1 + NORM_TOLERANCE)) || (magnitude >= (1
+	return ((magnitude <= (1 + NORM_TOLERANCE)) && (magnitude >= (1
 				- NORM_TOLERANCE)));
 }

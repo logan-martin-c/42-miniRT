@@ -81,7 +81,7 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 	normal_diffused = get_diffuse_vector(nearest.normal, nearest.obj->material.smoothness);
 	if (nearest.obj->normal_name && ft_strncmp(nearest.obj->normal_name, "error", 6))
 		nearest.normal = apply_normal_map(nearest);
-	
+
 	
 	t_float_color	direct_rgb;
 	t_float_color	indirect_rgb;
