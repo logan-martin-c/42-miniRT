@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:51 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/07 15:21:20 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 11:52:47 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef struct s_vect2
 
 typedef struct s_uv
 {
-	float				u;
-	float				v;
+	float			u;
+	float			v;
 }					t_uv;
 
 typedef struct s_ray
@@ -44,15 +44,15 @@ typedef struct s_ray
 	{
 		_reflected,
 		_refracted
-	}				blend_mode;
+	} blend_mode;
 }					t_ray;
 
 typedef struct s_float_color
 {
-	float	a;
-	float	r;
-	float	g;
-	float	b;
+	float			a;
+	float			r;
+	float			g;
+	float			b;
 }					t_float_color;
 
 typedef struct s_key_status
@@ -67,17 +67,17 @@ typedef struct s_key_status
 
 typedef struct s_cam_data
 {
-	t_vect3		pos;
-	t_vect3		angle;
+	t_vect3			pos;
+	t_vect3			angle;
 	int				fov;
 	double			cos_pitch;
 	double			sin_pitch;
 	double			cos_yaw;
 	double			sin_yaw;
 	int				speed;
-	t_vect3		forward;
-	t_vect3		right;
-	t_vect3		up;
+	t_vect3			forward;
+	t_vect3			right;
+	t_vect3			up;
 }					t_cam_data;
 
 typedef struct s_ambient_light_data
@@ -118,11 +118,11 @@ typedef struct s_light
 
 typedef struct s_texture
 {
-    void			*img;
-    int				*pixels;
-    int				width;
-    int				height;
-} t_texture;
+	void			*img;
+	int				*pixels;
+	int				width;
+	int				height;
+}					t_texture;
 
 typedef struct s_material
 {
@@ -147,15 +147,15 @@ typedef struct s_object
 	t_vect3			rot;
 	t_texture		tex;
 	t_texture		normal;
-	char *tex_name;
-	char *normal_name;
+	char			*tex_name;
+	char			*normal_name;
 	union
 	{
 		t_sphere	sphere;
 		t_cylinder	cylinder;
 		t_cone		cone;
 		t_light		light;
-	}				u_data;
+	} u_data;
 }					t_object;
 
 #endif

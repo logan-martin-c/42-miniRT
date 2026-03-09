@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:36:21 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/07 18:05:55 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 13:20:49 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 		return (get_sky_color(color_intensity(world->ambient_light.color,
 					world->ambient_light.ratio), ray.dir));
 	if (nearest.obj->e_type == _light)
-		return (colors_scal(nearest.obj->material.color, 50.0f));
+		return (colors_scal(nearest.obj->material.color, 10.0f));
 	nearest.collision_point = get_collision_point(ray, nearest.t);
 	nearest.uv = get_uv_coords(nearest);
 	normal_diffused = get_diffuse_vector(nearest.normal, nearest.obj->material.smoothness);
@@ -125,7 +125,7 @@ void	render_canva(t_vect2 start, t_vect2 end, t_world_data *world,
 						world->color_tab, (get_pixel_color(ray, world, 0)),
 						world->static_frames));
 			else
-				my_mlx_pixel_put(mlx, pointer, vec4_to_color(get_pixel_color(ray, world, 0)));
+				my_mlx_pixel_put(mlx, pointer, vec4_to_color((get_pixel_color(ray, world, 0))));
 			pointer.x++;
 		}
 		pointer.y++;

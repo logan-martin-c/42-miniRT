@@ -6,18 +6,18 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 16:08:54 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/07 15:25:34 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 12:03:56 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void init_texture(t_global_data *g_data)
+void	init_texture(t_global_data *g_data)
 {
-	int i;
-	char *data;
-	int bpp, size_line, endian;
+	int		i;
+	char	*data;
 
+	int bpp, size_line, endian;
 	i = 0;
 	while (i < g_data->world.obj_count)
 	{
@@ -41,12 +41,12 @@ void init_texture(t_global_data *g_data)
 	}
 }
 
-void init_normal(t_global_data *g_data)
+void	init_normal(t_global_data *g_data)
 {
-	int i;
-	char *data;
-	int bpp, size_line, endian;
+	int		i;
+	char	*data;
 
+	int bpp, size_line, endian;
 	i = 0;
 	while (i < g_data->world.obj_count)
 	{

@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 09:33:59 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/07 12:05:56 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 11:17:04 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include "vectors_maths_1.h"
 # include "vectors_maths_2.h"
 # include "object_collision_2.h"
+# include "cylinder_collision.h"
+# include "cone_collision.h"
 # include <stdio.h>
 
 static inline double	sphere_collision(t_ray ray, t_object *object)

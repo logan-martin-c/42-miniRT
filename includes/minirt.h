@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/07 16:38:55 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 13:24:06 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,12 +157,12 @@ typedef struct s_nearest_object
 	t_uv					uv;
 	t_vect3					collision_point;
 	float					current_refraction;
-	enum e_hit_type
+	enum
 	{
 		_none,
 		_body,
 		_caps
-	} hit_type;
+	} e_hit_type;
 }							t_nearest_object;
 
 typedef struct s_interface
@@ -179,13 +179,13 @@ typedef struct s_exec_data
 {
 	pthread_t				*threads;
 	unsigned int			nb_threads;
-	_Atomic bool stop;
+	_Atomic bool			stop;
 	pthread_mutex_t			mutex;
 	t_tasks					*tasks;
-	_Atomic int current_task;
-	_Atomic int tasks_done;
-	_Atomic int to_do;
-	_Atomic bool rendering;
+	_Atomic int				current_task;
+	_Atomic int				tasks_done;
+	_Atomic int				to_do;
+	_Atomic bool			rendering;
 }							t_exec_data;
 
 typedef struct s_global_data

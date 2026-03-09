@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:16:39 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/07 15:22:37 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 12:04:06 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_float_color	get_texel_color(t_texture tex, t_uv uv)
 {
 	int	x;
 	int	y;
-	int color;
+	int	color;
 
 	x = (int)(uv.u * tex.width);
 	y = (int)(uv.v * tex.height);

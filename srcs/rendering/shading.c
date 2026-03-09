@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/07 18:10:19 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 12:03:38 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include "colors_maths.h"
 #include "colors_maths_2.h"
 #include "mlx_utils.h"
+#include "object_collision.h"
 #include "vectors_maths_1.h"
 #include "vectors_maths_2.h"
 #include "vectors_maths_3.h"
-#include "object_collision.h"
 #define _USE_MATH_DEFINES
 
 void	ini_compute_dl(t_shader_compute *shader, t_vect3 point_r_c,
@@ -26,7 +26,6 @@ void	ini_compute_dl(t_shader_compute *shader, t_vect3 point_r_c,
 {
 	(void)object;
 	shader->amb_rgb = world->ambient_light.color;
-	//shader->obj_rgb = color_to_vec3(object.color);
 	shader->n_view_normal = vector_norm(vectors_sub(world->cam.pos, point_r_c));
 	shader->final_pixel_color = (t_float_color){1, 0, 0, 0};
 	shader->final_pixel_color = colors_mult(colors_scal(shader->amb_rgb,
@@ -60,25 +59,13 @@ void	shadow_factor(t_shader_compute *shader, t_world_data *world,
 	rand_light_dist = vector_mag(rand_light_dir);
 	shader->shadow_ray.origin = shader->shadow_origin;
 	shader->shadow_ray.dir = vector_norm(rand_light_dir);
-
-	// hit = get_nearest_object(shader->shadow_ray, world);
-	// if (hit.t > 0 && hit.t < rand_light_dist)
-	// {
-	// 	if (hit.obj->material.color.a < 1.0f)
-	// 		shader->light_intensity_sum = colors_scal(hit.obj->material.color,
-	// 				1.0f - hit.obj->material.color.a);
-	// 	else
-	// 		shader->light_intensity_sum = (t_float_color){0, 0, 0, 0};
-	// }
-
 	i = -1;
 	while (++i < world->obj_count)
 	{
 		hit = check_object_collision(&world->objs[i], shader->shadow_ray);
 		if (hit.t > 0 && hit.t < rand_light_dist)
 		{
-			shader->light_intensity_sum = colors_mult(
-					colors_scal(hit.obj->material.color,
+			shader->light_intensity_sum = colors_mult(colors_scal(hit.obj->material.color,
 						1.0f - hit.obj->material.color.a),
 					shader->light_intensity_sum);
 		}
@@ -89,6 +76,9 @@ t_float_color	compute_direct_light(t_nearest_object hit, t_world_data *world)
 {
 	t_shader_compute	shader;
 	int					i;
+	float				dist;
+	float				r;
+	float				attenuation;
 
 	i = 0;
 	shader.obj_rgb = get_texture_color(hit);
@@ -97,15 +87,15 @@ t_float_color	compute_direct_light(t_nearest_object hit, t_world_data *world)
 	while (i < world->light_count)
 	{
 		prep_compute_dl(&shader, hit.collision_point, world, i);
-		float dist = shader.light_ray_dist;
+		dist = shader.light_ray_dist;
 		if (shader.dot_nl > 0)
 		{
-			float r = world->lights[i].u_data.light.radius;
-			float attenuation = 1.0f / (dist * dist + (r * r) + 1.0f); //squared light (closer to real physics) but need tone mapping
-			//float attenuation = 1.0f / (1.0f + 0.1f * dist + 0.01f * (dist * dist)); // linear lights
+			r = world->lights[i].u_data.light.radius;
+			attenuation = 1.0f / (dist * dist + (r * r) + 1.0f);
 			shadow_factor(&shader, world, world->lights[i]);
 			shader.light_rgb = world->lights[i].material.color;
-			shader.intensity = world->lights[i].u_data.light.ratio * 4500 *shader.dot_nl * attenuation; //*5000 if we do squared // *20 if we do linear
+			shader.intensity = world->lights[i].u_data.light.ratio * 4500
+				* shader.dot_nl * attenuation;
 			shader.diffuse = colors_scal(colors_mult(shader.light_rgb,
 						shader.obj_rgb), shader.intensity);
 			shader.diffuse = colors_mult(shader.diffuse,
@@ -118,13 +108,19 @@ t_float_color	compute_direct_light(t_nearest_object hit, t_world_data *world)
 	return (shader.final_pixel_color);
 }
 
+// float attenuation = 1.0f / (dist * dist + (r * r) + 1.0f);
+	//squared light (closer to real physics) but need tone mapping
+// float attenuation = 1.0f / (1.0f + 0.1f * dist + 0.01f * (dist * dist));
+	// linear lights
+//*5000 if we do squared // *20 if we do linear
+
 /* void	compute_direct_specular(t_shader_compute *shader, t_world_data *world,
 		int i)
 {
-	t_vect3	point_ray_colision;
-	t_vect3	point_normal;
+	t_vect3			point_ray_colision;
+	t_vect3			point_normal;
 	t_float_color	obj_splt_colors;
-	t_vect3	n;
+	t_vect3			n;
 
 	shader->neg_light_normal = vector_norm(vector_mult(shader->light_ray_dir,
 				-1.0));
