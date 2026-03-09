@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 22:46:52 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/08 23:08:13 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/09 11:27:26 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	unexpected(FILE *stream, t_parsing_data *p_data, t_global_data *g_data)
 			error = ft_strjoin_mult(3, "unexpected token '", token_name, "'");
 		else
 			error = ft_strjoin_mult(3, "unexpected token '",
-                (char [2]){c, '\0'}, "'");
+					(char [2]){c, '\0'}, "'");
 	}
 	ft_maperror(error, p_data->line_nb, g_data->prog_name);
 	free(error);

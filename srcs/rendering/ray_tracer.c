@@ -79,7 +79,7 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 	nearest.collision_point = get_collision_point(ray, nearest.t);
 	nearest.uv = get_uv_coords(nearest);
 	normal_diffused = get_diffuse_vector(nearest.normal, nearest.obj->material.smoothness);
-	if (nearest.obj->normal_name && ft_strncmp(nearest.obj->normal_name, "error", 6))
+	if (nearest.obj->material.normal_name && ft_strncmp(nearest.obj->material.normal_name, "error", 6))
 		nearest.normal = apply_normal_map(nearest);
 
 	
@@ -100,7 +100,7 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 				bounce + 1), nearest.obj->material.reflectance);
 	else
 		indirect_rgb = colors_mult(nearest.obj->material.color, get_pixel_color(ray, world,bounce + 1));
-	//indirect_rgb = color_correction(indirect_rgb);
+	// indirect_rgb = color_correction(indirect_rgb);
 	return (indirect_rgb);
 }
 

@@ -57,7 +57,7 @@
     "position" : [0, 0, -20],
     "rotation" : [0.0, 1, 0],
     "color" : [255, 150, 150, 225],
-    "smoothness" : 0.3,
+    "smoothness" : 0,
     "reflectance" : 0.5
   },
   "light" :
@@ -71,5 +71,18 @@
   {
     "ratio" : 0.1,
     "color" : [200, 200, 200]
+  },
+  "cone" :
+  {
+    "position" : [80, 5, 0],
+    "rotation" : [0.0, 1, 0],
+    "color" : [54, 123, 242],
+    "smoothness" : 1,
+    "refraction" : 1,
+    "reflectance" : 0,
+    "texture" : "textures/brick.xpm",
+    "bump_map" : "textures/brick_normal.xpm",
+    "diameter" : 14.2,
+    "height" : 21.42
   }
 }

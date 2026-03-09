@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_collision_2.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 15:45:10 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/07 16:40:42 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 11:47:08 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static inline t_nearest_object  cylinder_collision(t_ray ray, t_object *object)
     t_vect3 ba = vector_mult(object->rot, object->u_data.cylinder.height);
     t_vect3 bottom_center = vectors_sub(object->pos, vector_mult(object->rot, object->u_data.cylinder.height / 2.0));
     t_vect3 oc = vectors_sub(ray.origin, bottom_center);
-    float radius = object->u_data.cylinder.diameter / 2.0f;
+    float radius = object->u_data.cylinder.radius;
     
     float baba = dot_product(ba, ba);
     float bard = dot_product(ba, ray.dir);

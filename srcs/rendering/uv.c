@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uv.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:49:24 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/07 17:07:53 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 11:52:12 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_uv get_cylinder_cap_uv(t_nearest_object hit)
     t_vect3 p = hit.collision_point;
     t_vect3 center = hit.obj->pos;
     t_vect3 axis = hit.obj->rot;
-    float radius = hit.obj->u_data.cylinder.diameter / 2.0f;
+    float radius = hit.obj->u_data.cylinder.radius;
     t_vect3 v = vectors_sub(p, center);
     t_vect3 right = (ft_abs_float(axis.y) > 0.999f) ? (t_vect3){1, 0, 0} : (t_vect3){0, 1, 0};
     t_vect3 u_axis = vector_norm(cross_product(right, axis));

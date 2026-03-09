@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:51 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/07 15:21:20 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 11:46:36 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,16 @@ typedef struct s_key_status
 
 typedef struct s_cam_data
 {
-	t_vect3		pos;
-	t_vect3		angle;
+	int				speed;
 	int				fov;
 	double			cos_pitch;
 	double			sin_pitch;
 	double			cos_yaw;
 	double			sin_yaw;
-	int				speed;
-	t_vect3		forward;
-	t_vect3		right;
-	t_vect3		up;
+	t_vect3			pos;
+	t_vect3			forward;
+	t_vect3			right;
+	t_vect3			up;
 }					t_cam_data;
 
 typedef struct s_ambient_light_data
@@ -100,7 +99,7 @@ typedef struct s_sphere
 
 typedef struct s_cylinder
 {
-	float			diameter;
+	float			radius;
 	float			height;
 }					t_cylinder;
 
@@ -126,10 +125,14 @@ typedef struct s_texture
 
 typedef struct s_material
 {
-	t_float_color	color;
+	char *tex_name;
+	char *normal_name;
 	float			reflectance;
 	float			smoothness;
 	float			refraction;
+	t_float_color	color;
+	t_texture		tex;
+	t_texture		normal;
 }					t_material;
 
 typedef struct s_object
@@ -145,10 +148,6 @@ typedef struct s_object
 	t_material		material;
 	t_vect3			pos;
 	t_vect3			rot;
-	t_texture		tex;
-	t_texture		normal;
-	char *tex_name;
-	char *normal_name;
 	union
 	{
 		t_sphere	sphere;

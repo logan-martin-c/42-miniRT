@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 11:06:07 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/07 12:02:38 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 11:24:19 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ t_obj_type	get_obj_type(char *obj_line)
 		&& ft_isspace(obj_line[1]))
 		return (_obj_param);
 	else if (((!ft_strncmp(obj_line, "sp", 2) || !ft_strncmp(obj_line, "pl", 2)
-				|| !ft_strncmp(obj_line, "cy", 2) || !ft_strncmp(obj_line, "co", 2)) && ft_isspace(obj_line[2]))
-		|| (!ft_strncmp(obj_line, "L", 1) && ft_isspace(obj_line[1])))
+				|| !ft_strncmp(obj_line, "cy", 2) || !ft_strncmp(obj_line, "co",
+					2)) && ft_isspace(obj_line[2])) || (!ft_strncmp(obj_line,
+				"L", 1) && ft_isspace(obj_line[1])))
 		return (_obj_object);
 	return (_obj_none);
 }

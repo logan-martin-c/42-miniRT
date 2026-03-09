@@ -18,7 +18,7 @@
 
 t_vect3 get_normal_from_map(t_nearest_object hit)
 {
-    t_float_color color = get_texel_color(hit.obj->normal, hit.uv);
+    t_float_color color = get_texel_color(hit.obj->material.normal, hit.uv);
     t_vect3 map_n;
 
     map_n.x = (color.r * 2.0f) - 1.0f;

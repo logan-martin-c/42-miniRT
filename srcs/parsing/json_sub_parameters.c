@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 19:48:49 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/08 23:09:55 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/09 11:50:42 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,11 @@ int	parse_json_material(t_pair *pair, t_parsing_check *check,
 	if (!ft_strcmp(pair->key, "smoothness") && !check->smo)
 		return (check->smo = 1, parse_json_float(&pair->value,
 				&material->smoothness, _ratio));
+	if (!ft_strcmp(pair->key, "texture") && !check->tex)
+		return (check->tex = 1, parse_json_string(&pair->value,
+				&material->tex_name));
+	if (!ft_strcmp(pair->key, "bump_map") && !check->bump)
+		return (check->bump = 1, parse_json_string(&pair->value,
+				&material->normal_name));
 	return (2);
 }

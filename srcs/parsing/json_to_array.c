@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 14:45:52 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/08 23:06:03 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/09 11:49:00 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	pair_to_array(t_pair *pair, t_parsing_data *p_data, t_global_data *g_data,
 		return (json_to_sphere(pair->value, g_data, world));
 	if (!ft_strcmp("cylinder", pair->key))
 		return (json_to_cylinder(pair->value, g_data, world));
-	// if (!ft_strcmp("cone", pair->key))
-	//     return (json_to_cone(pair->value, g_data, world));
+	if (!ft_strcmp("cone", pair->key))
+		return (json_to_cone(pair->value, g_data, world));
 	if (!ft_strcmp("plane", pair->key))
 		return (json_to_plane(pair->value, g_data, world));
 	if (!ft_strcmp("light", pair->key))

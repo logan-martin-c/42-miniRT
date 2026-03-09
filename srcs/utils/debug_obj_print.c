@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_obj_print.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 18:40:19 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/06 12:04:33 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 11:53:03 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,6 @@ void	print_plane(t_object *object)
 	printf("\t\tx : %lf\n", (double)object->rot.x);
 	printf("\t\ty : %lf\n", (double)object->rot.y);
 	printf("\t\tz : %lf\n", (double)object->rot.z);
-	printf("\tvector :\n");
-	printf("\t\tx : %lf\n", (double)object->rot.x);
-	printf("\t\ty : %lf\n", (double)object->rot.y);
-	printf("\t\tz : %lf\n", (double)object->rot.z);
 	printf("\tcolor:\n");
 	printf("\t\ta : %f\n", object->material.color.a);
 	printf("\t\tr : %f\n", object->material.color.r);
@@ -66,7 +62,7 @@ void	print_cylinder(t_object *object)
 	printf("\t\tx : %lf\n", (double)object->rot.x);
 	printf("\t\ty : %lf\n", (double)object->rot.y);
 	printf("\t\tz : %lf\n", (double)object->rot.z);
-	printf("\tdiameter : %f\n", (float)object->u_data.cylinder.diameter);
+	printf("\tdiameter : %f\n", (float)object->u_data.cylinder.radius * 2.0);
 	printf("\theight : %f\n", (float)object->u_data.cylinder.height);
 	printf("\tcolor:\n");
 	printf("\t\ta : %f\n", object->material.color.a);
