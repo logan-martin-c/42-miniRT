@@ -121,7 +121,7 @@ int	new_light(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 				p_data->line_nb, g_data->prog_name));
 	node->u_data.light.radius = 0;
 	if (params[4])
-		node->u_data.light.radius = ft_atof(params[4]);
+		node->u_data.light.radius = ft_atof(params[4]) * 0.5;
 	node->e_type = _light;
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
 	p_data->light_count++;
