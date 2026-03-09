@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   normal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:27:57 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 14:40:15 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:35:26 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "vectors_maths_1.h"
 #include "vectors_maths_2.h"
+#include "refraction.h"
+#include "vectors_maths_3.h"
 #include "vectors_maths_4.h"
 
 t_vect3	get_normal_from_map(t_nearest_object hit)
@@ -38,12 +40,12 @@ t_vect3	get_object_tangent(t_nearest_object hit)
 	else
 		helper = (t_vect3){0, 1, 0};
 	if (hit.obj->e_type == _plane || hit.e_hit_type == _caps)
-		return (vector_norm(cross_product(helper, n)));
+		return (vector_norm(vector_cross(helper, n)));
 	if (hit.obj->e_type == _sphere)
-		return (vector_norm(cross_product(helper, n)));
+		return (vector_norm(vector_cross(helper, n)));
 	if (hit.obj->e_type == _cylinder || hit.obj->e_type == _cone)
-		return (vector_norm(cross_product(hit.obj->rot, n)));
-	return (vector_norm(cross_product(helper, n)));
+		return (vector_norm(vector_cross(hit.obj->rot, n)));
+	return (vector_norm(vector_cross(helper, n)));
 }
 
 t_vect3	apply_normal_map(t_nearest_object hit)
@@ -57,7 +59,7 @@ t_vect3	apply_normal_map(t_nearest_object hit)
 	map_n = get_normal_from_map(hit);
 	n = hit.normal;
 	t = get_object_tangent(hit);
-	b = cross_product(n, t);
+	b = vector_cross(n, t);
 	final_n.x = t.x * map_n.x + b.x * map_n.y + n.x * map_n.z;
 	final_n.y = t.y * map_n.x + b.y * map_n.y + n.y * map_n.z;
 	final_n.z = t.z * map_n.x + b.z * map_n.y + n.z * map_n.z;

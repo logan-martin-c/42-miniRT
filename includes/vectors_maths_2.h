@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 09:43:55 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/08 23:11:56 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:33:40 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,6 @@ static inline t_vect3	vector_max_mag(t_vect3 a, float max_mag)
 	if (mag > max_mag)
 		a = vector_mult(vector_norm(a), max_mag);
 	return (a);
-}
-
-static inline t_vect3	vector_reflect(t_vect3 i, t_vect3 n)
-{
-	double	dot;
-	t_vect3	scaled_n;
-
-	dot = dot_product(i, n);
-	scaled_n = vector_mult(n, 2.0 * dot);
-	return (vectors_sub(i, scaled_n));
-}
-
-static inline float	vectors_angle(t_vect3 a, t_vect3 b)
-{
-	return (dot_product(vector_norm(a), vector_norm(b)));
 }
 
 #endif

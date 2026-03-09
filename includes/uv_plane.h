@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uv_plane.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 16:47:37 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 14:37:23 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:35:21 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ t_uv	get_plane_uv(t_nearest_object hit)
 		pl_uv.helper = (t_vect3){1, 0, 0};
 	else
 		pl_uv.helper = (t_vect3){0, 1, 0};
-	pl_uv.u_axis = vector_norm(cross_product(pl_uv.helper, hit.normal));
-	pl_uv.v_axis = cross_product(hit.normal, pl_uv.u_axis);
+	pl_uv.u_axis = vector_norm(vector_cross(pl_uv.helper, hit.normal));
+	pl_uv.v_axis = vector_cross(hit.normal, pl_uv.u_axis);
 	pl_uv.p = vectors_sub(hit.collision_point, hit.obj->pos);
 	uv.u = dot_product(pl_uv.p, pl_uv.u_axis) / pl_uv.scale;
 	uv.v = dot_product(pl_uv.p, pl_uv.v_axis) / pl_uv.scale;

@@ -6,7 +6,7 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:36:21 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/09 15:02:34 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:42:03 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 //
 #include "colors_maths.h"
 #include "colors_maths_2.h"
-#include "colors_maths_long.h"
+#include "colors_maths_3.h"
 #include "mlx_utils.h"
 #include "object_collision.h"
-#include "object_normal.h"
 #include "refraction.h"
 #include "tone_mapping.h"
 #include "vectors_maths_1.h"
@@ -78,7 +77,7 @@ static inline t_float_color	color_blend(t_nearest_object *nearest, t_ray ray,
 				world->obj_count, nearest->collision_point);
 	else
 		ray.origin_refraction = nearest->obj->material.refraction;
-	if (ray.blend_mode == _reflected)
+	if (ray.e_blend_mode == _reflected)
 	{
 		if (dot_product(ray.dir, nearest->normal) < 0)
 			return (color);
@@ -96,7 +95,7 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 	t_nearest_object	nearest;
 
 	if (bounce > BOUNCES)
-		return (BLACK);
+		return ((t_float_color){1, 0, 0, 0});
 	nearest = get_nearest(ray, world);
 	if (nearest.t == -1)
 		return (get_sky_color(color_intensity(world->ambient_light.color,

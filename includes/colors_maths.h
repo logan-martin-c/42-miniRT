@@ -93,17 +93,4 @@ static inline t_float_color	color_intensity(t_float_color color,
 	return (color);
 }
 
-static inline int	light_filter(int light, int filter)
-{
-	t_float_color	p_light;
-	t_float_color	p_filter;
-
-	p_light = parse_color(light);
-	p_filter = parse_color(filter);
-	p_light.r = ft_min(p_light.r, p_filter.r);
-	p_light.g = ft_min(p_light.g, p_filter.g);
-	p_light.b = ft_min(p_light.b, p_filter.b);
-	return (get_color(p_light));
-}
-
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uv_sphere.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 14:37:25 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 15:02:07 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:35:23 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ static inline t_uv	get_sphere_uv(t_nearest_object hit)
 		sp_uv.helper = (t_vect3){1, 0, 0};
 	else
 		sp_uv.helper = (t_vect3){0, 1, 0};
-	sp_uv.local_right = vector_norm(cross_product(sp_uv.helper,
+	sp_uv.local_right = vector_norm(vector_cross(sp_uv.helper,
 				sp_uv.local_up));
-	sp_uv.local_forward = cross_product(sp_uv.local_up, sp_uv.local_right);
+	sp_uv.local_forward = vector_cross(sp_uv.local_up, sp_uv.local_right);
 	sp_uv.x = dot_product(sp_uv.d, sp_uv.local_right);
 	sp_uv.y = dot_product(sp_uv.d, sp_uv.local_up);
 	sp_uv.z = dot_product(sp_uv.d, sp_uv.local_forward);

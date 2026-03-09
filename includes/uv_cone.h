@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uv_cone.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 14:02:15 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 14:40:15 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:35:16 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static inline t_uv	get_cone_uv(t_nearest_object hit)
 		co_uv.helper = (t_vect3){1, 0, 0};
 	else
 		co_uv.helper = (t_vect3){0, 1, 0};
-	co_uv.tangent = vector_norm(cross_product(co_uv.helper, hit.obj->rot));
-	co_uv.angle = atan2(dot_product(co_uv.radial, cross_product(hit.obj->rot,
+	co_uv.tangent = vector_norm(vector_cross(co_uv.helper, hit.obj->rot));
+	co_uv.angle = atan2(dot_product(co_uv.radial, vector_cross(hit.obj->rot,
 					co_uv.tangent)), dot_product(co_uv.radial, co_uv.tangent));
 	uv.u = (co_uv.angle + M_PI) / (2.0f * M_PI);
 	return (uv);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_collision.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 09:33:59 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/09 11:17:04 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:32:32 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@
 # include "minirt.h"
 //
 # include "vectors_maths_1.h"
-# include "vectors_maths_2.h"
 # include "object_collision_2.h"
 # include "cylinder_collision.h"
 # include "cone_collision.h"
-# include <stdio.h>
 
 static inline double	sphere_collision(t_ray ray, t_object *object)
 {
@@ -54,10 +52,11 @@ static inline t_vect3	get_collision_point(t_ray ray, float t)
 	return (point);
 }
 
-static inline t_nearest_object	check_object_collision(t_object *object, t_ray ray)
+static inline t_nearest_object	check_object_collision(t_object *object,
+	t_ray ray)
 {
-	t_nearest_object hit;
-	
+	t_nearest_object	hit;
+
 	if (object->e_type == _sphere)
 		return (new_sphere_collision(ray, object));
 	else if (object->e_type == _cylinder)
@@ -65,7 +64,7 @@ static inline t_nearest_object	check_object_collision(t_object *object, t_ray ra
 	else if (object->e_type == _cone)
 		return (cone_collision(ray, object));
 	else if (object->e_type == _plane)
-		return (plane_collision(ray,  object));
+		return (plane_collision(ray, object));
 	else if (object->e_type == _light)
 		return (hit.t = -1, hit);
 	return (hit.t = -1, hit);
@@ -81,7 +80,8 @@ static inline double	light_collision(t_ray ray, t_object *light)
 
 	l = vectors_sub(ray.origin, light->pos);
 	b = 2 * dot_product(ray.dir, l);
-	c = dot_product(l, l) - light->u_data.light.radius * light->u_data.light.radius;
+	c = dot_product(l, l) - light->u_data.light.radius
+		* light->u_data.light.radius;
 	sqrt_delta = sqrt(b * b - 4 * 1.0 * c);
 	t = (-b - sqrt_delta) / 2.0;
 	if (t > 0.01)

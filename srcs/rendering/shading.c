@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 14:25:34 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:42:17 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 #include "colors_maths_2.h"
 #include "mlx_utils.h"
 #include "object_collision.h"
+#include "refraction.h"
 #include "vectors_maths_1.h"
 #include "vectors_maths_2.h"
 #include "vectors_maths_3.h"
+#include "vectors_maths_4.h"
 #define _USE_MATH_DEFINES
 
 void	ini_compute_dl(t_shader_compute *shader, t_vect3 point_r_c,
@@ -53,7 +55,7 @@ void	shadow_factor(t_shader_compute *shader, t_world_data *world,
 	t_nearest_object	hit;
 	int					i;
 
-	shader->light_intensity_sum = WHITE;
+	shader->light_intensity_sum = (t_float_color){1, 1, 1, 1};
 	rand_p_light = get_rand_p_light(light.pos, light.u_data.light.radius);
 	rand_light_dir = vectors_sub(rand_p_light, shader->shadow_origin);
 	rand_light_dist = vector_mag(rand_light_dir);

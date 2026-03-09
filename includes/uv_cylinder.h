@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uv_cylinder.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 13:58:42 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 14:13:16 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:35:20 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static inline t_uv	get_cylinder_cap_uv(t_nearest_object hit)
 		cy_uv.right = (t_vect3){1, 0, 0};
 	else
 		cy_uv.right = (t_vect3){0, 1, 0};
-	cy_uv.u_axis = vector_norm(cross_product(cy_uv.right, cy_uv.axis));
-	cy_uv.v_axis = vector_norm(cross_product(cy_uv.axis, cy_uv.u_axis));
+	cy_uv.u_axis = vector_norm(vector_cross(cy_uv.right, cy_uv.axis));
+	cy_uv.v_axis = vector_norm(vector_cross(cy_uv.axis, cy_uv.u_axis));
 	cy_uv.u_coord = dot_product(cy_uv.v, cy_uv.u_axis);
 	cy_uv.v_coord = dot_product(cy_uv.v, cy_uv.v_axis);
 	return (uv.u = (cy_uv.u_coord / (2.0f * cy_uv.radius)) + 0.5f,
@@ -77,8 +77,8 @@ static inline t_uv	get_cylinder_tube_uv(t_nearest_object hit)
 		cy_uv.helper = (t_vect3){1, 0, 0};
 	else
 		cy_uv.helper = (t_vect3){0, 1, 0};
-	cy_uv.tangent = vector_norm(cross_product(cy_uv.helper, cy_uv.axis));
-	cy_uv.bitangent = cross_product(cy_uv.axis, cy_uv.tangent);
+	cy_uv.tangent = vector_norm(vector_cross(cy_uv.helper, cy_uv.axis));
+	cy_uv.bitangent = vector_cross(cy_uv.axis, cy_uv.tangent);
 	cy_uv.angle = atan2(dot_product(cy_uv.radial, cy_uv.bitangent),
 			dot_product(cy_uv.radial, cy_uv.tangent));
 	uv.u = (cy_uv.angle + M_PI) / (2.0f * M_PI);

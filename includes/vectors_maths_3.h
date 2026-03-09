@@ -6,19 +6,18 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 09:43:55 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/09 14:38:10 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:37:08 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTORS_MATHS_3_H
 # define VECTORS_MATHS_3_H
 
-# include "minirt.h"
-# include "refraction.h"
-
 static inline float	fast_rand(void)
 {
-	static _Thread_local unsigned int xorshift_state = 42;
+	static _Thread_local unsigned int	xorshift_state;
+
+	xorshift_state = 42;
 	xorshift_state ^= xorshift_state << 13;
 	xorshift_state ^= xorshift_state >> 17;
 	xorshift_state ^= xorshift_state << 5;
@@ -76,53 +75,6 @@ static inline t_vect3	refract(t_ray *ray, t_vect3 n, float refraction)
 	r_out_parralel = vector_mult(n, -sqrt(ft_abs_float(1.0
 					- (vector_mag(r_out_perp) * vector_mag(r_out_perp)))));
 	return (vectors_add(r_out_perp, r_out_parralel));
-}
-
-static inline t_vect3	get_rand_p_light(t_vect3 light_pos, float radius)
-{
-	t_vect3	offset;
-
-	offset.x = (fast_rand() * 2.0f - 1.0f) * radius;
-	offset.y = (fast_rand() * 2.0f - 1.0f) * radius;
-	offset.z = (fast_rand() * 2.0f - 1.0f) * radius;
-	return (vectors_add(light_pos, offset));
-}
-
-static inline bool	random_cond(float chances)
-{
-	if (fast_rand() < chances)
-		return (true);
-	return (false);
-}
-
-static inline float	get_reflectance(float cos_theta, float reflectance)
-{
-	return (1 / (reflectance + (1.0 - reflectance) * pow(1.0 - cos_theta,
-				5.0)));
-}
-
-static inline t_vect3	get_bounce(t_ray *ray, t_vect3 n, t_material material,
-		bool direction, t_world_data *world, t_vect3 collision_point)
-{
-	float	refraction;
-	float	reflectance;
-
-	if (direction)
-	{
-		refraction = get_current_refraction(world->objs, world->obj_count,
-				collision_point);
-	}
-	else
-	{
-		refraction = material.refraction;
-	}
-	reflectance = material.color.a;
-	if (random_cond(             
-			get_reflectance(dot_product(vector_norm(ray->dir),
-									vector_norm(n)),
-					reflectance)))
-		return (ray->blend_mode = _reflected, reflect(ray->dir, n));
-	return (ray->blend_mode = _refracted, refract(ray, n, refraction));
 }
 
 #endif

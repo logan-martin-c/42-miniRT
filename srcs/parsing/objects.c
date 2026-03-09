@@ -18,7 +18,7 @@ int	new_sphere(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	char	**params;
 
 	params = ft_split_charset(obj_line, " \t\v\f\r");
-	(node->e_type = _sphere, set_default_obj(node));
+	set_default_obj(node);
 	if (!params)
 	{
 		free(node);
@@ -39,7 +39,7 @@ int	new_sphere(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	if (params[4] && params[5])
 		node->material.normal_name = ft_strdup(params[5]);
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
-	return (ft_free_strs(params), 0);
+	return (node->e_type = _sphere, ft_free_strs(params), 0);
 }
 
 int	new_plane(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
@@ -76,7 +76,7 @@ int	new_cylinder(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	char	**params;
 
 	params = ft_split_charset(obj_line, " \t\v\f\r");
-	(node->e_type = _cylinder, set_default_obj(node));
+	set_default_obj(node);
 	if (!params)
 		(free(node), clean_exit(ft_perror(NULL, g_data->prog_name), g_data,
 				p_data, NULL));
@@ -97,7 +97,7 @@ int	new_cylinder(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	if (params[6] && params[7])
 		node->material.normal_name = ft_strdup(params[7]);
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
-	return (ft_free_strs(params), 0);
+	return (node->e_type = _cylinder, ft_free_strs(params), 0);
 }
 
 int	new_light(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,

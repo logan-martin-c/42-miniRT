@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:51 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/09 13:28:27 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:28:25 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_ray
 	{
 		_reflected,
 		_refracted
-	} blend_mode;
+	} e_blend_mode;
 }					t_ray;
 
 typedef struct s_float_color
@@ -125,8 +125,8 @@ typedef struct s_texture
 
 typedef struct s_material
 {
-	char *tex_name;
-	char *normal_name;
+	char			*tex_name;
+	char			*normal_name;
 	float			reflectance;
 	float			smoothness;
 	float			refraction;
