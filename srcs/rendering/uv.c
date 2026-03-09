@@ -11,13 +11,15 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "vectors_maths_1.h"
+#include "vectors_maths_2.h"
+#include "refraction.h"
+#include "vectors_maths_3.h"
+#include "vectors_maths_4.h"
 #include "uv_cone.h"
 #include "uv_cylinder.h"
 #include "uv_plane.h"
 #include "uv_sphere.h"
-#include "vectors_maths_1.h"
-#include "vectors_maths_2.h"
-#include "vectors_maths_4.h"
 #define _USE_MATH_DEFINES
 
 t_uv	get_uv_coords(t_nearest_object hit)

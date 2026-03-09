@@ -21,7 +21,7 @@ static inline int	get_color_summed(t_vect2 pointer, t_float_color *color_tab,
 	color = &color_tab[pointer.y * WIN_WIDTH + pointer.x];
 	if (frame_nb <= 0)
 		*color = new_color;
-	else if (frame_nb == __LONG_MAX__)
+	else if (frame_nb == -2)
 		return (vec4_to_color((colors_divide(*color, frame_nb + 1))));
 	else
 	{
