@@ -53,7 +53,8 @@ void	parse_json(char *av[], t_global_data *g_data, t_parsing_data *p_data)
 	}
 	fclose(p_data->stream);
 	p_data->stream = NULL;
-	print_json(p_data->json, 0);
+	if (DEBUG)
+		print_json(p_data->json, 0);
 	if (json_to_array(p_data, g_data, &g_data->world))
 		clean_exit(1, g_data, p_data, NULL);
 }

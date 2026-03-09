@@ -88,7 +88,6 @@ static inline t_float_color	color_blend(t_nearest_object *nearest, t_ray ray,
 	else
 		color = colors_mult(nearest->obj->material.color,
 				get_pixel_color(ray, world, bounce + 1));
-	// indirect_rgb = color_correction(indirect_rgb);
 	return (color);
 }
 
