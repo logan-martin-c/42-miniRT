@@ -1,44 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   uv_2.c                                             :+:      :+:    :+:   */
+/*   uv_plane.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 16:47:37 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 11:56:47 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 14:13:18 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
-#include "vectors_maths_1.h"
-#include "vectors_maths_2.h"
-#include "vectors_maths_4.h"
-#define _USE_MATH_DEFINES
-#ifndef M_PI
-# define M_PI 3.14159265358979323846
-#endif
+#ifndef UV_PLANE_H
+# define UV_PLANE_H
 
-t_uv	get_plane_uv(t_nearest_object hit)
+# include "minirt.h"
+# include "vectors_maths_1.h"
+# include "vectors_maths_2.h"
+# include "vectors_maths_4.h"
+# define _USE_MATH_DEFINES
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
+
+typedef struct s_pl_uv
 {
-	t_uv	uv;
 	t_vect3	u_axis;
 	t_vect3	v_axis;
 	float	scale;
 	t_vect3	helper;
 	t_vect3	p;
+}			t_pl_uv;
 
-	scale = 40.0f;
+t_uv	get_plane_uv(t_nearest_object hit)
+{
+	t_uv	uv;
+	t_pl_uv	pl_uv;
+
+	pl_uv.scale = 40.0f;
 	if (ft_abs_float(hit.normal.y) > 0.999f)
-		helper = (t_vect3){1, 0, 0};
+		pl_uv.helper = (t_vect3){1, 0, 0};
 	else
-		helper = (t_vect3){0, 1, 0};
-	u_axis = vector_norm(cross_product(helper, hit.normal));
-	v_axis = cross_product(hit.normal, u_axis);
-	p = vectors_sub(hit.collision_point, hit.obj->pos);
-	uv.u = dot_product(p, u_axis) / scale;
-	uv.v = dot_product(p, v_axis) / scale;
+		pl_uv.helper = (t_vect3){0, 1, 0};
+	pl_uv.u_axis = vector_norm(cross_product(pl_uv.helper, hit.normal));
+	pl_uv.v_axis = cross_product(hit.normal, pl_uv.u_axis);
+	pl_uv.p = vectors_sub(hit.collision_point, hit.obj->pos);
+	uv.u = dot_product(pl_uv.p, pl_uv.u_axis) / pl_uv.scale;
+	uv.v = dot_product(pl_uv.p, pl_uv.v_axis) / pl_uv.scale;
 	uv.u = uv.u - floor(uv.u);
 	uv.v = uv.v - floor(uv.v);
 	return (uv);
 }
+
+#endif

@@ -35,8 +35,6 @@ SRCS = main.c\
 		rendering/ray_tracer.c\
 		rendering/shading.c\
 		rendering/texturing.c\
-		rendering/uv.c\
-		rendering/uv_2.c\
 		rendering/normal.c\
 		utils/clean_exit.c\
 		utils/debug_obj_print.c\

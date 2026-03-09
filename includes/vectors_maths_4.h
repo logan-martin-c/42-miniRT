@@ -6,11 +6,11 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 11:44:46 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 11:53:29 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 14:11:14 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTORS_MATHS_4H
+#ifndef VECTORS_MATHS_4_H
 # define VECTORS_MATHS_4_H
 
 # include "minirt.h"

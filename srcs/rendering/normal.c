@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:27:57 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 13:32:37 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 14:09:06 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ t_vect3	get_object_tangent(t_nearest_object hit)
 	t_vect3	helper;
 
 	n = hit.normal;
-	helper = (fabs(n.y) > 0.999f) ? (t_vect3){0, 0, 1} : (t_vect3){0, 1, 0};
+	if (fabs(n.y) > 0.999f)
+		helper = (t_vect3){0, 0, 1};
+	else
+		helper = (t_vect3){0, 1, 0};
 	if (hit.obj->e_type == _plane || hit.e_hit_type == _caps)
 		return (vector_norm(cross_product(helper, n)));
 	if (hit.obj->e_type == _sphere)

@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 18:50:07 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 11:55:01 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 13:35:41 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static inline void	cc_ini_1(t_cyc *cyc, t_ray ray, t_object *object)
 	cyc->bottom_center = vectors_sub(object->pos, vector_mult(object->rot,
 				object->u_data.cylinder.height / 2.0));
 	cyc->oc = vectors_sub(ray.origin, cyc->bottom_center);
-	cyc->radius = object->u_data.cylinder.diameter / 2.0f;
+	cyc->radius = object->u_data.cylinder.radius;
 	cyc->baba = dot_product(cyc->ba, cyc->ba);
 	cyc->bard = dot_product(cyc->ba, ray.dir);
 	cyc->baoc = dot_product(cyc->ba, cyc->oc);

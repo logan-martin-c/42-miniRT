@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 16:08:54 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 12:03:56 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 13:47:43 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@ void	init_texture(t_global_data *g_data)
 {
 	int		i;
 	char	*data;
+	int		tmp;
 
-	int bpp, size_line, endian;
-	i = 0;
-	while (i < g_data->world.obj_count)
+	i = -1;
+	while (++i < g_data->world.obj_count)
 	{
 		if (g_data->world.objs[i].material.tex_name)
 		{
-			g_data->world.objs[i].material.tex.img = mlx_xpm_file_to_image(g_data->mlx.mlx,
+			g_data->world.objs[i].material.tex.img
+				= mlx_xpm_file_to_image(g_data->mlx.mlx,
 					g_data->world.objs[i].material.tex_name,
 					&g_data->world.objs[i].material.tex.width,
 					&g_data->world.objs[i].material.tex.height);
@@ -33,11 +34,10 @@ void	init_texture(t_global_data *g_data)
 				i++;
 				continue ;
 			}
-			data = mlx_get_data_addr(g_data->world.objs[i].material.tex.img, &bpp,
-					&size_line, &endian);
+			data = mlx_get_data_addr(g_data->world.objs[i].material.tex.img,
+					&tmp, &tmp, &tmp);
 			g_data->world.objs[i].material.tex.pixels = (int *)data;
 		}
-		i++;
 	}
 }
 
@@ -45,14 +45,15 @@ void	init_normal(t_global_data *g_data)
 {
 	int		i;
 	char	*data;
+	int		tmp;
 
-	int bpp, size_line, endian;
-	i = 0;
-	while (i < g_data->world.obj_count)
+	i = -1;
+	while (++i < g_data->world.obj_count)
 	{
 		if (g_data->world.objs[i].material.normal_name)
 		{
-			g_data->world.objs[i].material.normal.img = mlx_xpm_file_to_image(g_data->mlx.mlx,
+			g_data->world.objs[i].material.normal.img
+				= mlx_xpm_file_to_image(g_data->mlx.mlx,
 					g_data->world.objs[i].material.normal_name,
 					&g_data->world.objs[i].material.normal.width,
 					&g_data->world.objs[i].material.normal.height);
@@ -62,10 +63,9 @@ void	init_normal(t_global_data *g_data)
 				i++;
 				continue ;
 			}
-			data = mlx_get_data_addr(g_data->world.objs[i].material.normal.img, &bpp,
-					&size_line, &endian);
+			data = mlx_get_data_addr(g_data->world.objs[i].material.normal.img,
+					&tmp, &tmp, &tmp);
 			g_data->world.objs[i].material.normal.pixels = (int *)data;
 		}
-		i++;
 	}
 }
