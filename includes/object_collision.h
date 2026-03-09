@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 09:33:59 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/09 15:47:33 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:56:51 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,3 @@ static inline double	light_collision(t_ray ray, t_object *light)
 }
 
 #endif
-/* static inline double	sphere_collision(t_ray ray, t_object *object)
-{
-	t_vect3	l;
-	float	b;
-	float	c;
-	float	sqrt_delta;
-	double	t;
-
-	l = vectors_sub(ray.origin, object->pos);
-	b = 2 * dot_product(ray.dir, l);
-	c = dot_product(l, l) - object->u_data.sphere.radius
-		* object->u_data.sphere.radius;
-	sqrt_delta = sqrt(b * b - 4 * 1.0 * c);
-	t = (-b - sqrt_delta) / 2.0;
-	if (t > 0.001)
-		return (t);
-	t = (-b + sqrt_delta) / 2.0;
-	if (t > 0.001)
-		return (t);
-	return (-1.0);
-} */

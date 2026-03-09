@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_mover.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 14:48:04 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/04 13:49:47 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:22:20 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ int	move_object(t_object *obj, t_world_data *world, t_interface *input,
 
 void	rotate_object(t_object *obj, t_vect2 move)
 {
-	obj->rot = vector_rot(obj->rot, (float)(move.y) * 1e-3, (float)(move.x)
-			* 1e-3, 0);
+	obj->rot = vector_rot(obj->rot, (float)(move.y) / 1e3, (float)(move.x)
+			/ 1e3, 0);
 }

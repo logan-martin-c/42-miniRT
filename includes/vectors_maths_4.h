@@ -6,41 +6,51 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 11:44:46 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 14:11:14 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 16:06:02 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTORS_MATHS_4_H
 # define VECTORS_MATHS_4_H
 
-# include "minirt.h"
-# include "vectors_maths_1.h"
-# include "vectors_maths_3.h"
-
-static inline t_vect3	random_unit_vector(void)
+static inline t_vect3	get_rand_p_light(t_vect3 light_pos, float radius)
 {
-	float	r;
-	float	x;
-	float	y;
-	float	z;
-	float	a;
+	t_vect3	offset;
 
-	z = fast_rand() * 2.0f - 1.0f;
-	a = fast_rand() * 2.0f * 3.14159265f;
-	r = sqrt(1.0f - z * z);
-	x = r * cos(a);
-	y = r * sin(a);
-	return ((t_vect3){x, y, z});
+	offset.x = (fast_rand() * 2.0f - 1.0f) * radius;
+	offset.y = (fast_rand() * 2.0f - 1.0f) * radius;
+	offset.z = (fast_rand() * 2.0f - 1.0f) * radius;
+	return (vectors_add(light_pos, offset));
 }
 
-static inline t_vect3	cross_product(t_vect3 a, t_vect3 b)
+static inline bool	random_cond(float chances)
 {
-	t_vect3	result;
+	if (fast_rand() < chances)
+		return (true);
+	return (false);
+}
 
-	result.x = a.y * b.z - a.z * b.y;
-	result.y = a.z * b.x - a.x * b.z;
-	result.z = a.x * b.y - a.y * b.x;
-	return (result);
+static inline float	get_reflectance(float cos_theta, float reflectance)
+{
+	return (1 / (reflectance + (1.0 - reflectance) * pow(1.0 - cos_theta,
+				5.0)));
+}
+
+static inline t_vect3	get_bounce(t_ray *ray, t_vect3 n, t_material material,
+		bool direction, t_world_data *world, t_vect3 collision_point)
+{
+	float	refraction;
+	float	reflectance;
+
+	if (direction)
+		refraction = get_current_refraction(world->objs, world->obj_count,
+				collision_point);
+	else
+		refraction = material.refraction;
+	reflectance = material.color.a;
+	if (reflectance)
+		return (ray->e_blend_mode = _reflected, reflect(ray->dir, n));
+	return (ray->e_blend_mode = _refracted, refract(ray, n, refraction));
 }
 
 #endif

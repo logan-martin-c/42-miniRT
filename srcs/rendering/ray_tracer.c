@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:36:21 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/09 15:53:38 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 17:07:57 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 //
 #include "vectors_maths_1.h"
 #include "vectors_maths_2.h"
+#include "refraction.h"
 #include "vectors_maths_3.h"
 #include "vectors_maths_4.h"
 //
@@ -24,10 +25,9 @@
 //
 #include "colors_maths.h"
 #include "colors_maths_2.h"
-#include "colors_maths_long.h"
+#include "colors_maths_3.h"
 #include "mlx_utils.h"
 #include "object_collision.h"
-#include "object_normal.h"
 #include "refraction.h"
 #include "tone_mapping.h"
 
@@ -71,17 +71,13 @@ static inline t_vect3	get_ray_dir(t_vect2 pos, t_viewport *viewport,
 static inline t_float_color	color_blend(t_nearest_object *nearest, t_ray ray,
 		t_world_data *world, int bounce)
 {
-	float			diffuse_weight;
 	t_float_color	color;
-	t_vect3			normal_diffused;
 
-	diffuse_weight = (1.0 - nearest->obj->material.reflectance)
-		* nearest->obj->material.color.a;
-	normal_diffused = get_diffuse_vector(nearest->normal,
-			nearest->obj->material.smoothness);
-	color = colors_scal(compute_direct_light(*nearest, world),
-			diffuse_weight);
-	ray.dir = get_bounce(&ray, normal_diffused, nearest->obj->material,
+	color = colors_scal(compute_direct_light(*nearest, world), (1.0
+				- nearest->obj->material.reflectance)
+			* nearest->obj->material.color.a);
+	ray.dir = get_bounce(&ray, get_diffuse_vector(nearest->normal,
+				nearest->obj->material.smoothness), nearest->obj->material,
 			nearest->is_inside, world, nearest->collision_point);
 	ray.origin = nearest->collision_point;
 	if (nearest->is_inside)
@@ -89,12 +85,16 @@ static inline t_float_color	color_blend(t_nearest_object *nearest, t_ray ray,
 				world->obj_count, nearest->collision_point);
 	else
 		ray.origin_refraction = nearest->obj->material.refraction;
-	if (ray.blend_mode == _reflected)
-		color = color_gradient(color, get_pixel_color(ray, world,
-					bounce + 1), nearest->obj->material.reflectance);
+	if (ray.e_blend_mode == _reflected)
+	{
+		if (dot_product(ray.dir, nearest->normal) < 0)
+			return (color);
+		color = color_gradient(color, get_pixel_color(ray, world, bounce + 1),
+				nearest->obj->material.reflectance);
+	}
 	else
-		color = colors_mult(nearest->obj->material.color,
-				get_pixel_color(ray, world, bounce + 1));
+		color = colors_mult(nearest->obj->material.color, get_pixel_color(ray,
+					world, bounce + 1));
 	return (color);
 }
 
@@ -103,7 +103,7 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 	t_nearest_object	nearest;
 
 	if (bounce > BOUNCES)
-		return (BLACK);
+		return ((t_float_color){1, 0, 0, 0});
 	nearest = get_nearest(ray, world);
 	if (nearest.t == -1)
 		return (get_sky_color(color_intensity(world->ambient_light.color,

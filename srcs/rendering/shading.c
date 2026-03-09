@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 15:53:49 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 17:15:52 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 //
 #include "vectors_maths_1.h"
 #include "vectors_maths_2.h"
+//
+#include "refraction.h"
 #include "vectors_maths_3.h"
 #include "vectors_maths_4.h"
 //
@@ -60,7 +62,7 @@ void	shadow_factor(t_shader_compute *shader, t_world_data *world,
 	t_nearest_object	hit;
 	int					i;
 
-	shader->light_intensity_sum = WHITE;
+	shader->light_intensity_sum = (t_float_color){1, 1, 1, 1};
 	rand_p_light = get_rand_p_light(light.pos, light.u_data.light.radius);
 	rand_light_dir = vectors_sub(rand_p_light, shader->shadow_origin);
 	rand_light_dist = vector_mag(rand_light_dir);
@@ -79,13 +81,11 @@ void	shadow_factor(t_shader_compute *shader, t_world_data *world,
 	}
 }
 
-void	calc_shader(t_shader_compute *shader, t_world_data *world, int i)
+void	calc_shader(t_shader_compute *shader, t_world_data *world, int i, float dist)
 {
-	float	dist;
 	float	r;
 	float	attenuation;
 
-	dist = shader->light_ray_dist;
 	r = world->lights[i].u_data.light.radius;
 	attenuation = 1.0f / (dist * dist + (r * r) + 1.0f);
 	shader->light_rgb = world->lights[i].material.color;
@@ -110,15 +110,20 @@ t_float_color	compute_direct_light(t_nearest_object hit, t_world_data *world)
 	while (i < world->light_count)
 	{
 		prep_compute_dl(&shader, hit.collision_point, world, i);
+		float dist = shader.light_ray_dist;
 		if (shader.dot_nl > 0)
 		{
 			shadow_factor(&shader, world, world->lights[i]);
-			calc_shader(&shader, world, i);
+			calc_shader(&shader, world, i, dist);
 		}
 		i++;
 	}
 	return (shader.final_pixel_color);
 }
+
+
+
+
 
 // float attenuation = 1.0f / (dist * dist + (r * r) + 1.0f);
 // squared light (closer to real physics) but need tone mapping

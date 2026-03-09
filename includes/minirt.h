@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/09 14:42:24 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:42:20 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,10 @@
 # define PLUS_KEY 61
 # define MINUS_KEY 45
 
-# define LINE_SIZE WIN_WIDTH * 4
+# define LINE_SIZE 5120
 # define BPP 4
-# define BLACK (t_float_color){1, 0, 0, 0}
-# define WHITE (t_float_color){1, 1, 1, 1}
-# define INV_WIN_HEIGHT 1 / WIN_HEIGHT
-# define INV_WIN_WIDTH 1 / WIN_WIDTH
+# define INV_WIN_HEIGHT 0.0013888889
+# define INV_WIN_WIDTH 0.00078125
 
 # ifndef DEBUG
 #  define DEBUG 0

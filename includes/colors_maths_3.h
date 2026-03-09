@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colors_maths_long.h                                :+:      :+:    :+:   */
+/*   colors_maths_3.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLORS_MATHS_LONG_H
-# define COLORS_MATHS_LONG_H
+#ifndef COLORS_MATHS_3_H
+# define COLORS_MATHS_3_H
 
 static inline int	get_color_summed(t_vect2 pointer, t_float_color *color_tab,
 		t_float_color new_color, long frame_nb)

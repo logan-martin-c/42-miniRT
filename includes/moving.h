@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moving.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 15:14:39 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/27 15:15:42 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/09 16:04:41 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static inline int	init_pos(t_vect2 *mouse_p, t_vect2 *last_mouse_p)
 static inline void	center_mouse(t_vect2 *mouse_p, t_vect2 *last_mouse_p,
 		t_mlx_data *mlx)
 {
-	if (mouse_p->x > 300 || mouse_p->y > 300 || mouse_p->x < -300
-		|| mouse_p->y < -300)
+	if (mouse_p->x > WIN_WIDTH / 2 - 1 || mouse_p->y > WIN_HEIGHT / 2 - 1
+		|| mouse_p->x < -WIN_WIDTH / 2 + 1 || mouse_p->y < -WIN_HEIGHT / 2 + 1)
 	{
 		last_mouse_p->x -= mouse_p->x;
 		last_mouse_p->y -= mouse_p->y;

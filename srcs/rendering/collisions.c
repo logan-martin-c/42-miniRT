@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 11:47:12 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/09 15:53:28 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:59:17 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 //
 #include "vectors_maths_1.h"
 #include "vectors_maths_2.h"
+//
+#include "refraction.h"
 #include "vectors_maths_3.h"
 #include "vectors_maths_4.h"
 //
