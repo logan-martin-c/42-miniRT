@@ -18,12 +18,13 @@ int	new_cone(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	char	**params;
 
 	params = ft_split_charset(obj_line, " \t\v\f\r");
+	(node->e_type = _cone, set_default_obj(node));
 	if (!params)
 	{
 		free(node);
 		clean_exit(ft_perror(NULL, g_data->prog_name), g_data, p_data, NULL);
 	}
-	if (check_args_count(params, 6, 11) == -1)
+	if (check_args_count(params, 6, 8) == -1)
 		return (ft_free_strs(params),
 			ft_maperror("cone : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
@@ -35,18 +36,9 @@ int	new_cone(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 			ft_maperror("cone : invalid parameters", p_data->line_nb,
 			g_data->prog_name));
 	if (params[6])
-		node->material.smoothness = ft_atof(params[6]);
+		node->material.tex_name = ft_strdup(params[6]);
 	if (params[6] && params[7])
-		node->material.refraction = ft_atof(params[7]);
-	else
-		node->material.refraction = 1;
-	if (params[6] && params[7] && params[8])
-		node->material.reflectance = ft_atof(params[8]);
-	if (params[6] && params[7] && params[8] && params[9])
-		node->tex_name = ft_strdup(params[9]);
-	if (params[6] && params[7] && params[8] && params[9] && params[10])
-		node->normal_name = ft_strdup(params[10]);
-	node->e_type = _cone;
+		node->material.normal_name = ft_strdup(params[7]);
 	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
 	return (ft_free_strs(params), 0);
 }

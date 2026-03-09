@@ -27,11 +27,13 @@
 # define CAM_Y 0
 # define CAM_Z 0
 // --ROTATION--
-# define CAM_PITCH 0 //[0.0-1.0]
-# define CAM_YAW 0 //[0.0-1.0]
-# define CAM_ROLL 1 //[0.0-1.0]
+# define CAM_ANGLE_X 0 //[0.0-1.0]
+# define CAM_ANGLE_Y 0 //[0.0-1.0]
+# define CAM_ANGLE_Z 1 //[0.0-1.0]
 // --FOV--
 # define CAM_FOV 90
+// --SPEED
+# define CAM_SPEED 40
 
 // Default light settings (when not defined in the map)
 // --POSITION--
@@ -47,7 +49,7 @@
 
 // Default ambient light settings (when not defined in the map)
 // --RATIO--
-# define A_LIGHT_RAT 1 //[0.0-1.0]
+# define A_LIGHT_RAT 0.3 //[0.0-1.0]
 // --COLOR--
 # define A_LIGHT_R 255
 # define A_LIGHT_G 255

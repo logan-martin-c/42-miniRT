@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:49:24 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 13:17:19 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 13:34:47 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 #include "vectors_maths_2.h"
 #include "vectors_maths_4.h"
 #define _USE_MATH_DEFINES
-#ifndef M_PI
-# define M_PI 3.14159265358979323846
-#endif
 
 t_uv	get_plane_uv(t_nearest_object hit);
 
@@ -38,7 +35,7 @@ t_uv	get_cylinder_cap_uv(t_nearest_object hit)
 	p = hit.collision_point;
 	center = hit.obj->pos;
 	axis = hit.obj->rot;
-	radius = hit.obj->u_data.cylinder.diameter / 2.0f;
+	radius = hit.obj->u_data.cylinder.radius;
 	v = vectors_sub(p, center);
     if (ft_abs_float(axis.y) > 0.999f)
         right = (t_vect3){1, 0, 0};

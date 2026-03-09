@@ -20,9 +20,9 @@ void	print_cam(t_cam_data *cam)
 	printf("\t\ty : %lf\n", (double)cam->pos.y);
 	printf("\t\tz : %lf\n", (double)cam->pos.z);
 	printf("\torientation :\n");
-	printf("\t\tx : %lf\n", (double)cam->angle.x);
-	printf("\t\ty : %lf\n", (double)cam->angle.y);
-	printf("\t\tz : %lf\n", (double)cam->angle.z);
+	printf("\t\tx : %lf\n", (double)cam->forward.x);
+	printf("\t\ty : %lf\n", (double)cam->forward.y);
+	printf("\t\tz : %lf\n", (double)cam->forward.z);
 	printf("\tFOV : %d\n", cam->fov);
 }
 

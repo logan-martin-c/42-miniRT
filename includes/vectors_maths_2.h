@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vectors_maths_2.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 09:43:55 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/03 14:06:48 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/08 23:11:56 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static inline t_vect3	vector_reflect(t_vect3 i, t_vect3 n)
 	scaled_n = vector_mult(n, 2.0 * dot);
 	return (vectors_sub(i, scaled_n));
 }
+
 static inline float	vectors_angle(t_vect3 a, t_vect3 b)
 {
 	return (dot_product(vector_norm(a), vector_norm(b)));

@@ -52,6 +52,7 @@ SRCS = ft_abs_bonus.c\
 		ft_putnbr_base_fd_bonus.c\
 		ft_putnbr_fd.c\
 		ft_putstr_fd.c\
+		ft_realloc.c\
 		ft_split.c\
 		ft_strchr.c\
 		ft_strclen.c\
@@ -62,6 +63,7 @@ SRCS = ft_abs_bonus.c\
 		ft_strlcpy.c\
 		ft_strlen.c\
 		ft_strmapi.c\
+		ft_strcmp.c\
 		ft_strncmp.c\
 		ft_strnstr.c\
 		ft_strrchr.c\

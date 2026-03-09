@@ -1,10 +1,10 @@
 C 0,0,0			0,0,1				70
-sp 0,0,50							20				255,200,200,255		1		1	1 ./textures/brick.xpm 	./textures/brick_normal.xpm
-sp 25,0,50							20				0,0,255,0			1   	1.4  1
-sp 13,20,100						40				0,0,0,255			1		1
-sp 40,20,1000						40				255,255,0,0			1		1       0
-cy 50.0,0.0,20.6 	0.0,0.0,1.0 	14.2 21.42 		255,200,200,100		1		1   0 	./textures/brick.xpm 	./textures/brick_normal.xpm
-co 50.0,0.0,20.6 	0.0,0.0,1.0 	6 11 			200,200,200,100		1		1.5   0 ./textures/brick.xpm 	./textures/brick_normal.xpm
-pl 0.0,0.0,-20.0 	0.0,1.0,0.0 					255,150,150,225 					./textures/brick.xpm 	./textures/brick_normal.xpm
-L 60,20,50						1					255,255,255			3
-A 0.01													200,200,200
+sp 0,0,50							20				255,200,200,255     ./textures/brick.xpm 	./textures/brick_normal.xpm
+sp 25,0,50							20				0,0,255,0
+sp 13,20,100						40				0,0,0,255
+sp 40,20,1000						40				255,255,0,0
+cy 50.0,0.0,20.6 	0.0,0.0,1.0 	14.2 21.42 		255,200,200,100		./textures/brick.xpm 	./textures/brick_normal.xpm
+co 50.0,0.0,20.6 	0.0,0.0,1.0 	6 11 			200,200,200,100		./textures/brick.xpm 	./textures/brick_normal.xpm
+pl 0.0,0.0,-20.0 	0.0,1.0,0.0 					255,150,150,225 	./textures/brick.xpm 	./textures/brick_normal.xpm
+L 60,20,50						1					255,255,255
+A 0.1													200,200,200

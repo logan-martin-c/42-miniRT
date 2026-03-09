@@ -51,9 +51,9 @@ t_float_color	get_texel_color(t_texture tex, t_uv uv)
 
 t_float_color	get_texture_color(t_nearest_object hit)
 {
-	if (hit.obj->tex_name && ft_strncmp(hit.obj->tex_name, "UV", 2))
-		return (get_texel_color(hit.obj->tex, hit.uv));
-	if (hit.obj->tex_name && !ft_strncmp(hit.obj->tex_name, "UV", 2))
+	if (hit.obj->material.tex_name && ft_strncmp(hit.obj->material.tex_name, "UV", 2))
+		return (get_texel_color(hit.obj->material.tex, hit.uv));
+	if (hit.obj->material.tex_name && !ft_strncmp(hit.obj->material.tex_name, "UV", 2))
 		return (get_checkerboard_color(hit.uv));
 	return ((hit.obj->material.color));
 }

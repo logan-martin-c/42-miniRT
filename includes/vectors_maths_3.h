@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 09:43:55 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/09 11:55:50 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 13:31:36 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static inline t_vect3	get_random_vector(float min, float max)
 	v.x = fast_rand() * (max - min) + min;
 	v.y = fast_rand() * (max - min) + min;
 	v.z = fast_rand() * (max - min) + min;
+	vector_norm(v);
 	return (v);
 }
 
@@ -70,6 +71,8 @@ static inline t_vect3	refract(t_ray *ray, t_vect3 n, float refraction)
 	if (refraction == ray->origin_refraction)
 		return (ray->dir);
 	cos_theta = -dot_product(ray->dir, n);
+	// if (refraction * sqrt(1.0 - cos_theta * cos_theta) > 1.0)
+	// 	return (ray->blend_mode = _reflected, reflect(ray->dir, n));
 	r_out_perp = vector_mult(vectors_add(ray->dir, vector_mult(n, cos_theta)),
 			ray->origin_refraction / refraction);
 	r_out_parralel = vector_mult(n, -sqrt(ft_abs_float(1.0

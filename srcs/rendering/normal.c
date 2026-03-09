@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:27:57 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 12:01:44 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 13:32:37 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_vect3	get_normal_from_map(t_nearest_object hit)
 	t_float_color	color;
 	t_vect3			map_n;
 
-	color = get_texel_color(hit.obj->normal, hit.uv);
+	color = get_texel_color(hit.obj->material.normal, hit.uv);
 	map_n.x = (color.r * 2.0f) - 1.0f;
 	map_n.y = (color.g * 2.0f) - 1.0f;
 	map_n.z = (color.b * 2.0f) - 1.0f;

@@ -21,21 +21,21 @@ void	init_texture(t_global_data *g_data)
 	i = 0;
 	while (i < g_data->world.obj_count)
 	{
-		if (g_data->world.objs[i].tex_name)
+		if (g_data->world.objs[i].material.tex_name)
 		{
-			g_data->world.objs[i].tex.img = mlx_xpm_file_to_image(g_data->mlx.mlx,
-					g_data->world.objs[i].tex_name,
-					&g_data->world.objs[i].tex.width,
-					&g_data->world.objs[i].tex.height);
-			if (!g_data->world.objs[i].tex.img)
+			g_data->world.objs[i].material.tex.img = mlx_xpm_file_to_image(g_data->mlx.mlx,
+					g_data->world.objs[i].material.tex_name,
+					&g_data->world.objs[i].material.tex.width,
+					&g_data->world.objs[i].material.tex.height);
+			if (!g_data->world.objs[i].material.tex.img)
 			{
-				g_data->world.objs[i].tex_name = "UV";
+				g_data->world.objs[i].material.tex_name = "UV";
 				i++;
 				continue ;
 			}
-			data = mlx_get_data_addr(g_data->world.objs[i].tex.img, &bpp,
+			data = mlx_get_data_addr(g_data->world.objs[i].material.tex.img, &bpp,
 					&size_line, &endian);
-			g_data->world.objs[i].tex.pixels = (int *)data;
+			g_data->world.objs[i].material.tex.pixels = (int *)data;
 		}
 		i++;
 	}
@@ -50,21 +50,21 @@ void	init_normal(t_global_data *g_data)
 	i = 0;
 	while (i < g_data->world.obj_count)
 	{
-		if (g_data->world.objs[i].normal_name)
+		if (g_data->world.objs[i].material.normal_name)
 		{
-			g_data->world.objs[i].normal.img = mlx_xpm_file_to_image(g_data->mlx.mlx,
-					g_data->world.objs[i].normal_name,
-					&g_data->world.objs[i].normal.width,
-					&g_data->world.objs[i].normal.height);
-			if (!g_data->world.objs[i].normal.img)
+			g_data->world.objs[i].material.normal.img = mlx_xpm_file_to_image(g_data->mlx.mlx,
+					g_data->world.objs[i].material.normal_name,
+					&g_data->world.objs[i].material.normal.width,
+					&g_data->world.objs[i].material.normal.height);
+			if (!g_data->world.objs[i].material.normal.img)
 			{
-				g_data->world.objs[i].normal_name = "error";
+				g_data->world.objs[i].material.normal_name = "error";
 				i++;
 				continue ;
 			}
-			data = mlx_get_data_addr(g_data->world.objs[i].normal.img, &bpp,
+			data = mlx_get_data_addr(g_data->world.objs[i].material.normal.img, &bpp,
 					&size_line, &endian);
-			g_data->world.objs[i].normal.pixels = (int *)data;
+			g_data->world.objs[i].material.normal.pixels = (int *)data;
 		}
 		i++;
 	}
