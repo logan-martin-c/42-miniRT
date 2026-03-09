@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/09 14:16:35 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 14:42:24 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,6 +315,7 @@ t_float_color				get_sky_color(t_float_color ambient_color,
 								t_vect3 ray);
 t_nearest_object			get_nearest_object(t_ray ray, t_world_data *world);
 t_nearest_object			get_nearest(t_ray ray, t_world_data *world);
+t_uv						get_uv_coords(t_nearest_object hit);
 t_float_color				get_texture_color(t_nearest_object hit);
 t_float_color				get_texel_color(t_texture tex, t_uv uv);
 t_vect3						apply_normal_map(t_nearest_object hit);

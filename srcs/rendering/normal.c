@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:27:57 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 14:09:06 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 14:40:15 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_vect3	get_object_tangent(t_nearest_object hit)
 	t_vect3	helper;
 
 	n = hit.normal;
-	if (fabs(n.y) > 0.999f)
+	if (ft_abs_float(n.y) > 0.999f)
 		helper = (t_vect3){0, 0, 1};
 	else
 		helper = (t_vect3){0, 1, 0};

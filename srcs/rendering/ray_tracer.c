@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:36:21 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/09 14:09:29 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 14:42:51 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 #include "vectors_maths_2.h"
 #include "vectors_maths_3.h"
 #include "vectors_maths_4.h"
-#include "uv.h"
 #define _USE_MATH_DEFINES
 
 void	init_viewport(t_viewport *viewport, int fov)

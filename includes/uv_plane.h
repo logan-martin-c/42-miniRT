@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 16:47:37 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 14:13:18 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 14:37:23 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@
 # include "vectors_maths_2.h"
 # include "vectors_maths_4.h"
 # define _USE_MATH_DEFINES
-# ifndef M_PI
-#  define M_PI 3.14159265358979323846
-# endif
 
 typedef struct s_pl_uv
 {
