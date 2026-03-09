@@ -6,13 +6,12 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 15:45:10 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 13:30:25 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:48:08 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
-#include "vectors_maths_1.h"
-#include "vectors_maths_2.h"
+#ifndef OBJECT_COLLISION_2_H
+# define OBJECT_COLLISION_2_H
 
 static inline t_nearest_object	new_sphere_collision(t_ray ray, t_object *obj)
 {
@@ -79,3 +78,5 @@ static inline t_nearest_object	plane_collision(t_ray ray, t_object *obj)
 		hit.normal = obj->rot;
 	return (hit);
 }
+
+#endif

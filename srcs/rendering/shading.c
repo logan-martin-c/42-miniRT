@@ -6,19 +6,26 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 14:25:34 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:53:49 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 //
+#include "vectors_maths_1.h"
+#include "vectors_maths_2.h"
+#include "vectors_maths_3.h"
+#include "vectors_maths_4.h"
+//
+#include "cone_collision.h"
+#include "cone_collision_2.h"
+#include "cylinder_collision.h"
+#include "object_collision_2.h"
+//
 #include "colors_maths.h"
 #include "colors_maths_2.h"
 #include "mlx_utils.h"
 #include "object_collision.h"
-#include "vectors_maths_1.h"
-#include "vectors_maths_2.h"
-#include "vectors_maths_3.h"
 #define _USE_MATH_DEFINES
 
 void	ini_compute_dl(t_shader_compute *shader, t_vect3 point_r_c,
@@ -65,8 +72,7 @@ void	shadow_factor(t_shader_compute *shader, t_world_data *world,
 		hit = check_object_collision(&world->objs[i], shader->shadow_ray);
 		if (hit.t > 0 && hit.t < rand_light_dist)
 		{
-			shader->light_intensity_sum
-				= colors_mult(colors_scal(hit.obj->material.color,
+			shader->light_intensity_sum = colors_mult(colors_scal(hit.obj->material.color,
 						1.0f - hit.obj->material.color.a),
 					shader->light_intensity_sum);
 		}

@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   uv.h                                               :+:      :+:    :+:   */
+/*   uv.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 13:49:24 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 14:41:42 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:26:17 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include "uv_cone.h"
 #include "uv_cylinder.h"
+//
+#include "uv_cone.h"
 #include "uv_plane.h"
 #include "uv_sphere.h"
 #include "vectors_maths_1.h"

@@ -6,13 +6,12 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 11:16:20 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 11:45:58 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:31:14 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
-#include "vectors_maths_1.h"
-#include "vectors_maths_2.h"
+#ifndef CONE_COLLISION_H
+# define CONE_COLLISION_H
 
 typedef struct s_coc
 {
@@ -146,22 +145,4 @@ static inline void	coc_calc_hit(t_coc *coc, t_ray ray, t_object *obj,
 	}
 }
 
-static inline t_nearest_object	cone_collision(t_ray ray, t_object *obj)
-{
-	t_nearest_object	hit;
-	t_coc				coc;
-
-	hit = (t_nearest_object){.t = -1.0f, .is_inside = false, .obj = obj};
-	coc_ini(&coc, ray, obj);
-	if (coc.delta < 0.0f)
-		return (hit);
-	coc.sqrt_delta = sqrt(coc.delta);
-	coc.t1 = (-coc.b - coc.sqrt_delta) / (2.0f * coc.a);
-	coc.t2 = (-coc.b + coc.sqrt_delta) / (2.0f * coc.a);
-	coc_cal_t_body(&coc, ray);
-	coc_cal_t_cap(&coc, ray, obj);
-	coc_choose_t_final(&coc, &hit);
-	if (coc.final_t > 0.001f)
-		coc_calc_hit(&coc, ray, obj, &hit);
-	return (hit);
-}
+#endif

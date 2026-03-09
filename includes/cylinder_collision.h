@@ -6,13 +6,12 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 18:50:07 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 13:35:41 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:31:38 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
-#include "vectors_maths_1.h"
-#include "vectors_maths_2.h"
+#ifndef CYLINDER_COLLISION_H
+# define CYLINDER_COLLISION_H
 
 typedef struct s_cyc
 {
@@ -146,3 +145,5 @@ static inline t_nearest_object	cylinder_collision(t_ray ray, t_object *object)
 	}
 	return (hit);
 }
+
+#endif

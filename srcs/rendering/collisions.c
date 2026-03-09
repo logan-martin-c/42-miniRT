@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   collisions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 11:47:12 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/08 23:10:34 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:53:28 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+//
+#include "vectors_maths_1.h"
+#include "vectors_maths_2.h"
+#include "vectors_maths_3.h"
+#include "vectors_maths_4.h"
+//
+#include "cone_collision.h"
+#include "cone_collision_2.h"
+#include "cylinder_collision.h"
+#include "object_collision_2.h"
+//
 #include "object_collision.h"
 
 t_nearest_object	get_nearest_object(t_ray ray, t_world_data *world)
