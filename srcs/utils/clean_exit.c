@@ -40,8 +40,20 @@ void	clean_exec(t_exec_data *e_data)
 	free(e_data->tasks);
 }
 
-void	free_world(t_world_data *world)
+void	free_world(t_world_data *world, void *mlx)
 {
+	int	i;
+
+	i = -1;
+	while (++i < world->obj_count)
+	{
+		free(world->objs[i].material.tex_name);
+		free(world->objs[i].material.normal_name);
+		if (world->objs[i].material.tex.img)
+			mlx_destroy_image(mlx, world->objs[i].material.tex.img);
+		if (world->objs[i].material.normal.img)
+			mlx_destroy_image(mlx, world->objs[i].material.normal.img);
+	}
 	free(world->objs);
 	free(world->lights);
 	free(world->color_tab);
@@ -52,7 +64,7 @@ void	clean_exit(int exit_status, t_global_data *g_data,
 {
 	if (p_data)
 		clean_parsing(p_data);
-	free_world(&g_data->world);
+	free_world(&g_data->world, g_data->mlx.mlx);
 	if (e_data)
 		clean_exec(e_data);
 	if (g_data->mlx.mlx)
