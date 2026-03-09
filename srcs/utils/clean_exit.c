@@ -51,6 +51,8 @@ void	free_world(t_world_data *world, void *mlx)
 		free(world->objs[i].material.normal_name);
 		if (world->objs[i].material.tex.img)
 			mlx_destroy_image(mlx, world->objs[i].material.tex.img);
+		if (world->objs[i].material.normal.img)
+			mlx_destroy_image(mlx, world->objs[i].material.normal.img);
 	}
 	free(world->objs);
 	free(world->lights);

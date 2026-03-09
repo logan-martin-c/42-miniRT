@@ -8,7 +8,8 @@
     "refraction" : 2,
     "reflectance" : 0.5,
     "smoothness" : 0.8,
-    "texture" : "textures/brick.xpm"
+    "texture" : "textures/brick.xpm",
+    "bump_map" : "textures/brick_normal.xpm"
   },
   "light":
   {
