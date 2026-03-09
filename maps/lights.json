@@ -57,7 +57,7 @@
     "position" : [0, 0, -20],
     "rotation" : [0.0, 1, 0],
     "color" : [255, 150, 150, 225],
-    "smoothness" : 0,
+    "smoothness" : 0.5,
     "reflectance" : 0.5
   },
   "light" :
