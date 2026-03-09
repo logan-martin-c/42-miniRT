@@ -15,9 +15,8 @@
 
 static inline float	fast_rand(void)
 {
-	static _Thread_local unsigned int	xorshift_state;
+	static _Thread_local unsigned int	xorshift_state = 42;
 
-	xorshift_state = 42;
 	xorshift_state ^= xorshift_state << 13;
 	xorshift_state ^= xorshift_state >> 17;
 	xorshift_state ^= xorshift_state << 5;

@@ -44,9 +44,11 @@ int	ft_maperror(char *error, int line_nb, char *progname)
 
 	error_str = NULL;
 	line = ft_itoa(line_nb);
-	if (error)
+	if (error && line_nb != -1)
 		error_str = ft_strjoin_mult(5, "Error\n", error, " on line ", line,
 				"\n");
+	else
+		error_str = ft_strjoin_mult(3, "Error\n", error, "\n");
 	if (!error_str && progname)
 	{
 		perror(progname);

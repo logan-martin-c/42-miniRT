@@ -32,7 +32,7 @@ static inline bool	random_cond(float chances)
 
 static inline float	get_reflectance(float cos_theta, float reflectance)
 {
-	return (1 / (reflectance + (1.0 - reflectance) * pow(1.0 - cos_theta,
+	return (1.0 / (reflectance + (1.0 - reflectance) * pow(1.0 - cos_theta,
 				5.0)));
 }
 

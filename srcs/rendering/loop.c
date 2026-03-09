@@ -35,7 +35,7 @@ int	update_display(t_global_data *g_data)
 		ft_min(elapsed, 500000));
 	move_object(g_data->world.selected_obj, &g_data->world, &g_data->key,
 		ft_min(elapsed, 500000));
-	if (g_data->world.static_frames != -5)
+	if (g_data->world.static_frames != -2)
 		render_image(g_data);
 	mlx_put_image_to_window(g_data->mlx.mlx, g_data->mlx.win,
 		g_data->mlx.s_img_data.img, 0, 0);
