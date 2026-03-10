@@ -24,7 +24,11 @@ void	clean_parsing(t_parsing_data *p_data)
 		fclose(p_data->stream);
 	free_json(p_data->json);
 	gnl = get_next_line(p_data->map_fd);
-	free(gnl);
+	while (gnl)
+	{
+		free(gnl);
+		gnl = get_next_line(p_data->map_fd);
+	}
 	ft_lstclear(&p_data->obj_lst, free);
 }
 

@@ -5,9 +5,9 @@
     "rotation" : [0, 1, 0],
     "diameter" : 30,
     "color" : [0, 255, 255, 255],
-    "refraction" : 2,
+    "refraction" : 1.4,
     "reflectance" : 0.5,
-    "smoothness" : 0.8,
+    "smoothness" : 1,
     "texture" : "textures/brick.xpm",
     "bump_map" : "textures/brick_normal.xpm"
   },

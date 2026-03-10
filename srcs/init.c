@@ -65,8 +65,9 @@ void	init(t_global_data *g_data, t_parsing_data *p_data, t_exec_data *e_data,
 int	init_exec(t_exec_data *e_data, t_global_data *g_data)
 {
 	g_data->world.color_tab = malloc(sizeof(t_float_color) * WIN_HEIGHT
-			* WIN_WIDTH * 100);
-	if (!g_data->world.color_tab)
+			* WIN_WIDTH);
+	if (pthread_mutex_init(&e_data->mutex, NULL) == -1
+		|| !g_data->world.color_tab)
 		return (1);
 	if (init_threads(e_data, g_data))
 		return (1);

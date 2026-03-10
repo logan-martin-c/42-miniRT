@@ -68,6 +68,7 @@ int	move_object(t_object *obj, t_world_data *world, t_interface *input,
 	double	factor;
 	t_vect3	moving_vector;
 
+	moving_vector = (t_vect3){0, 0, 0};
 	if (!obj)
 		return (-1);
 	factor = ((double)elapsed / 1000000.0) * (double)world->cam.speed * 5.0;
@@ -87,8 +88,7 @@ int	move_object(t_object *obj, t_world_data *world, t_interface *input,
 				vector_mult(world->cam.forward, move.z));
 	obj->pos = vectors_add(obj->pos, vector_mult(moving_vector, world->cam.speed
 				* elapsed / 1000000.0));
-	world->static_frames = -1;
-	return (0);
+	return (world->static_frames = -1, 0);
 }
 
 void	rotate_object(t_object *obj, t_vect2 move)

@@ -25,8 +25,13 @@ void	*thread_routine(void *data)
 	g_data = (t_global_data *)data;
 	while (!g_data->e_data->stop)
 	{
+		pthread_mutex_lock(&g_data->e_data->mutex);
 		while (!g_data->e_data->stop && !g_data->e_data->rendering)
-			usleep(100);
+		{
+			(pthread_mutex_unlock(&g_data->e_data->mutex), usleep(200));
+			pthread_mutex_lock(&g_data->e_data->mutex);
+		}
+		pthread_mutex_unlock(&g_data->e_data->mutex);
 		while (!g_data->e_data->stop
 			&& g_data->e_data->current_task < g_data->e_data->to_do)
 		{
@@ -58,6 +63,8 @@ int	init_threads(t_exec_data *e_data, t_global_data *g_data)
 	nb_max_tasks = ceil((ceil((float)WIN_HEIGHT / (float)RENDERING_SQUARE)
 				* (ceil((float)WIN_WIDTH / (float)RENDERING_SQUARE))));
 	e_data->tasks = malloc((nb_max_tasks + 1) * sizeof(t_tasks));
+	if (!e_data->tasks)
+		return (1);
 	create_tasks(e_data);
 	return (0);
 }

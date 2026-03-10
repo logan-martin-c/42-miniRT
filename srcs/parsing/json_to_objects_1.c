@@ -55,12 +55,12 @@ int	json_to_sphere(t_json json, t_global_data *g_data, t_world_data *world)
 				+ world->obj_count, &check, g_data))
 			return (1);
 	}
-	if (!check.pos || !check.color || !check.diamet)
-		return (ft_maperror("incomplete sphere parameters", -1,
-				g_data->prog_name));
 	world->objs[world->obj_count].u_data.sphere.radius *= 0.5;
 	world->objs[world->obj_count].e_type = _sphere;
 	++world->obj_count;
+	if (!check.pos || !check.color || !check.diamet)
+		return (ft_maperror("incomplete sphere parameters", -1,
+				g_data->prog_name));
 	return (0);
 }
 
@@ -108,12 +108,12 @@ int	json_to_cylinder(t_json json, t_global_data *g_data, t_world_data *world)
 				+ world->obj_count, &check, g_data))
 			return (1);
 	}
+	world->objs[world->obj_count].u_data.cylinder.radius *= 0.5;
+	world->objs[world->obj_count].e_type = _cylinder;
+	++world->obj_count;
 	if (!check.pos || !check.rot || !check.color || !check.diamet
 		|| !check.height)
 		return (ft_maperror("incomplete cylinder parameters", -1,
 				g_data->prog_name));
-	world->objs[world->obj_count].u_data.cylinder.radius *= 0.5;
-	world->objs[world->obj_count].e_type = _cylinder;
-	++world->obj_count;
 	return (0);
 }

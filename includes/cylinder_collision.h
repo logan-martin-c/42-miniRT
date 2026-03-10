@@ -110,7 +110,7 @@ static inline void	cc_choose_cap(t_cyc *cyc, t_ray ray, t_nearest_object *hit)
 		cyc->y = cyc->baoc + cyc->final_t * cyc->bard;
 		cyc->n = vector_norm(cyc->ba);
 		if (cyc->y < cyc->baba / 2.0f)
-			hit->normal = vectors_sub((t_vect3){0.0, 0.0, 0.0}, hit->normal);
+			hit->normal = vectors_sub((t_vect3){0.0, 0.0, 0.0}, cyc->n);
 		else
 			hit->normal = cyc->n;
 		hit->e_hit_type = _caps;

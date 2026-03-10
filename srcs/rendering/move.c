@@ -22,9 +22,9 @@ void	calc_pos(t_vect2 *pos, t_vect2 mouse_p, t_vect2 last_mouse_p)
 	pos->x += (mouse_p.x - last_mouse_p.x);
 	pos->y += (mouse_p.y - last_mouse_p.y);
 	if (pos->y < -1570)
-		pos->y = -1570.796;
+		pos->y = -1570;
 	if (pos->y > 1570)
-		pos->y = 1570.796;
+		pos->y = 1570;
 }
 
 void	rotate_cam(t_cam_data *cam, t_mlx_data *mlx, bool *rotating,

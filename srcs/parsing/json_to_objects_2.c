@@ -52,11 +52,11 @@ int	json_to_plane(t_json json, t_global_data *g_data, t_world_data *world)
 				+ world->obj_count, &check, g_data))
 			return (1);
 	}
+	world->objs[world->obj_count].e_type = _plane;
+	++world->obj_count;
 	if (!check.pos || !check.rot || !check.color)
 		return (ft_maperror("incomplete plane parameters", -1,
 				g_data->prog_name));
-	world->objs[world->obj_count].e_type = _plane;
-	++world->obj_count;
 	return (0);
 }
 
@@ -104,12 +104,12 @@ int	json_to_cone(t_json json, t_global_data *g_data, t_world_data *world)
 				+ world->obj_count, &check, g_data))
 			return (1);
 	}
+	world->objs[world->obj_count].u_data.cone.radius *= 0.5;
+	world->objs[world->obj_count].e_type = _cone;
+	++world->obj_count;
 	if (!check.pos || !check.rot || !check.color || !check.diamet
 		|| !check.height)
 		return (ft_maperror("incomplete cone parameters", -1,
 				g_data->prog_name));
-	world->objs[world->obj_count].u_data.cone.radius *= 0.5;
-	world->objs[world->obj_count].e_type = _cone;
-	++world->obj_count;
 	return (0);
 }

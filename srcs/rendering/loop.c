@@ -21,8 +21,14 @@ void	render_image(t_global_data *g_data, t_exec_data *e_data)
 	e_data->current_task = 0;
 	e_data->to_do = e_data->nb_tasks;
 	e_data->rendering = true;
+	pthread_mutex_lock(&g_data->e_data->mutex);
 	while (g_data->e_data->rendering)
-		usleep(100);
+	{
+		pthread_mutex_unlock(&g_data->e_data->mutex);
+		usleep(200);
+		pthread_mutex_lock(&g_data->e_data->mutex);
+	}
+	pthread_mutex_unlock(&g_data->e_data->mutex);
 }
 
 int	update_display(t_global_data *g_data)

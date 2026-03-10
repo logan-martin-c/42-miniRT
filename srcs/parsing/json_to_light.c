@@ -55,12 +55,12 @@ int	json_to_light(t_json json, t_global_data *g_data, t_world_data *world)
 				+ world->light_count, &check, g_data))
 			return (1);
 	}
-	if (!check.pos || !check.ratio || !check.color)
-		return (ft_maperror("incomplete light parameters", -1,
-				g_data->prog_name));
 	if (check.diamet)
 		world->lights[world->light_count].u_data.light.radius *= 0.5;
 	world->lights[world->light_count].e_type = _light;
 	++world->light_count;
+	if (!check.pos || !check.ratio || !check.color)
+		return (ft_maperror("incomplete light parameters", -1,
+				g_data->prog_name));
 	return (0);
 }
