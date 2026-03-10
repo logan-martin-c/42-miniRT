@@ -77,8 +77,7 @@ static inline t_float_color	color_blend(t_nearest_object *nearest, t_ray ray,
 				- nearest->obj->material.reflectance)
 			* nearest->obj->material.color.a);
 	ray.dir = get_bounce(&ray, get_diffuse_vector(nearest->normal,
-				nearest->obj->material.smoothness), nearest->obj->material,
-			nearest->is_inside, world, nearest->collision_point);
+				nearest->obj->material.smoothness), nearest, world);
 	ray.origin = nearest->collision_point;
 	if (nearest->is_inside)
 		ray.origin_refraction = get_current_refraction(world->objs,
@@ -109,7 +108,7 @@ t_float_color	get_pixel_color(t_ray ray, t_world_data *world, int bounce)
 		return (get_sky_color(color_intensity(world->ambient_light.color,
 					world->ambient_light.ratio), ray.dir));
 	if (nearest.obj->e_type == _light)
-		return (colors_scal(nearest.obj->material.color, !(!bounce) * 9.0 + 1.0));
+		return (colors_scal(nearest.obj->material.color, 10.0));
 	nearest.collision_point = get_collision_point(ray, nearest.t);
 	nearest.uv = get_uv_coords(nearest);
 	if (nearest.obj->material.normal_name

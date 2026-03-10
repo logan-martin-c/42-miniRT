@@ -63,13 +63,13 @@
   "light" :
   {
     "position" : [0, 20, 60],
-    "color" : [155, 255, 155],
+    "color" : [255, 255, 255],
     "ratio" : 1,
     "diameter" : 20
   },
   "ambient_light" :
   {
-    "ratio" : 0.1,
+    "ratio" : 0.2,
     "color" : [200, 200, 200]
   },
   "cone" :
