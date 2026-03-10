@@ -1,0 +1,130 @@
+{
+  "camera" :
+  {
+    "position" : [0, 10, 0],
+    "rotation" : [0, 0, 1],
+    "fov" : 70
+  },
+  "cone" :
+  {
+    "position" : [0, 21, 0],
+    "rotation" : [0.0, -1, 0],
+    "color" : [150, 150, 150],
+    "smoothness" : 1,
+    "refraction" : 1,
+    "reflectance" : 0,
+    "diameter" : 16,
+    "height" : 21
+  },
+  "sphere" :
+  {
+    "position" : [20, 40, 0],
+    "diameter" : 7,
+    "color" : [0, 255, 255, 0],
+    "smoothness" : 1,
+    "refraction" : 1.4,
+    "reflectance" : 0
+  },
+  "sphere" :
+  {
+    "position" : [-20, 40, 0],
+    "diameter" : 7,
+    "color" : [0, 0, 255, 255],
+    "smoothness" : 1,
+    "refraction" : 1.4,
+    "reflectance" : 0
+  },
+  "sphere" :
+  {
+    "position" : [0, 40, 20],
+    "diameter" : 7,
+    "color" : [0, 255, 0, 0],
+    "smoothness" : 1,
+    "refraction" : 1.4,
+    "reflectance" : 0
+  },
+  "sphere" :
+  {
+    "position" : [0, 40, -20],
+    "diameter" : 7,
+    "color" : [0, 0, 255, 0],
+    "smoothness" : 1,
+    "refraction" : 1.4,
+    "reflectance" : 0
+  },
+  "cylinder" :
+  {
+    "position" : [-50, 25, 0],
+    "rotation" : [0.0, 1, 0],
+    "diameter" : 10,
+    "height" : 50,
+    "color" : [255, 200, 200, 0],
+	"texture" : "textures/marble.xpm",
+    "bump_map" : "textures/marble_normal.xpm",
+    "smoothness" : 1,
+    "refraction" : 1.1,
+    "reflectance" : 0
+  },
+   "cylinder" :
+  {
+    "position" : [50, 25, 0],
+    "rotation" : [0.0, 1, 0],
+    "diameter" : 10,
+    "height" : 50,
+    "color" : [255, 200, 200, 0],
+	"texture" : "textures/marble.xpm",
+    "bump_map" : "textures/marble_normal.xpm",
+    "smoothness" : 1,
+    "refraction" : 1.1,
+    "reflectance" : 0
+  },
+   "cylinder" :
+  {
+    "position" : [0, 25, -50],
+    "rotation" : [0.0, 1, 0],
+    "diameter" : 10,
+    "height" : 50,
+    "color" : [255, 200, 200, 0],
+	"texture" : "textures/marble.xpm",
+    "bump_map" : "textures/marble_normal.xpm",
+    "smoothness" : 1,
+    "refraction" : 1.1,
+    "reflectance" : 0
+  },
+   "cylinder" :
+  {
+    "position" : [0, 25, 50],
+    "rotation" : [0.0, 1, 0],
+    "diameter" : 10,
+    "height" : 50,
+    "color" : [255, 200, 200, 0],
+	"texture" : "textures/marble.xpm",
+    "bump_map" : "textures/marble_normal.xpm",
+    "smoothness" : 1,
+    "refraction" : 1.1,
+    "reflectance" : 0
+  },
+  "plane" :
+  {
+    "position" : [0, 0, 0],
+    "rotation" : [0.0, 1.0, 0.0],
+    "color" : [255, 150, 150, 225],
+	"texture" : "textures/brick.xpm",
+    "bump_map" : "textures/brick_normal.xpm",
+    "smoothness" : 0,
+    "reflectance" : 0
+  },
+  "light" :
+  {
+    "position" : [0, 45, 0],
+    "color" : [255, 255, 255],
+    "ratio" : 1,
+    "diameter" : 15
+  },
+
+  "ambient_light" :
+  {
+    "ratio" : 0.2,
+    "color" : [200, 200, 200]
+  }
+}
