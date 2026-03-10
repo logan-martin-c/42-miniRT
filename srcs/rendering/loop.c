@@ -17,7 +17,6 @@
 
 void	render_image(t_global_data *g_data, t_exec_data *e_data)
 {
-	// create_tasks(g_data->e_data);
 	e_data->tasks_done = 0;
 	e_data->current_task = 0;
 	e_data->to_do = e_data->nb_tasks;
