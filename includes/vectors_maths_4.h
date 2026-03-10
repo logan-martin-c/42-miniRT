@@ -48,7 +48,7 @@ static inline t_vect3	get_bounce(t_ray *ray, t_vect3 n, t_material material,
 	else
 		refraction = material.refraction;
 	reflectance = material.color.a;
-	if (reflectance)
+	if (random_cond(reflectance))
 		return (ray->e_blend_mode = _reflected, reflect(ray->dir, n));
 	return (ray->e_blend_mode = _refracted, refract(ray, n, refraction));
 }

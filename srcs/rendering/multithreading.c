@@ -60,6 +60,7 @@ int	init_threads(t_exec_data *e_data, t_global_data *g_data)
 	nb_max_tasks = ceil((ceil((float)WIN_HEIGHT / (float)RENDERING_SQUARE)
 				* (ceil((float)WIN_WIDTH / (float)RENDERING_SQUARE))));
 	e_data->tasks = malloc((nb_max_tasks + 1) * sizeof(t_tasks));
+	create_tasks(e_data);
 	return (0);
 }
 
@@ -83,8 +84,5 @@ void	create_tasks(t_exec_data *e_data)
 		}
 		yy += RENDERING_SQUARE;
 	}
-	e_data->tasks_done = 0;
-	e_data->current_task = 0;
-	e_data->to_do = i;
-	e_data->rendering = true;
+	e_data->nb_tasks = i;
 }

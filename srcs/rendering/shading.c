@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 17:15:52 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/09 22:46:02 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,16 @@ void	shadow_factor(t_shader_compute *shader, t_world_data *world,
 		hit = check_object_collision(&world->objs[i], shader->shadow_ray);
 		if (hit.t > 0 && hit.t < rand_light_dist)
 		{
-			shader->light_intensity_sum = colors_mult(colors_scal(hit.obj->material.color,
+			shader->light_intensity_sum = colors_mult(
+						colors_scal(hit.obj->material.color,
 						1.0f - hit.obj->material.color.a),
 					shader->light_intensity_sum);
 		}
 	}
 }
 
-void	calc_shader(t_shader_compute *shader, t_world_data *world, int i, float dist)
+void	calc_shader(t_shader_compute *shader, t_world_data *world, int i,
+		float dist)
 {
 	float	r;
 	float	attenuation;
@@ -102,6 +104,7 @@ t_float_color	compute_direct_light(t_nearest_object hit, t_world_data *world)
 {
 	t_shader_compute	shader;
 	int					i;
+	float				dist;
 
 	i = 0;
 	shader.obj_rgb = get_texture_color(hit);
@@ -110,7 +113,7 @@ t_float_color	compute_direct_light(t_nearest_object hit, t_world_data *world)
 	while (i < world->light_count)
 	{
 		prep_compute_dl(&shader, hit.collision_point, world, i);
-		float dist = shader.light_ray_dist;
+		dist = shader.light_ray_dist;
 		if (shader.dot_nl > 0)
 		{
 			shadow_factor(&shader, world, world->lights[i]);
@@ -120,10 +123,6 @@ t_float_color	compute_direct_light(t_nearest_object hit, t_world_data *world)
 	}
 	return (shader.final_pixel_color);
 }
-
-
-
-
 
 // float attenuation = 1.0f / (dist * dist + (r * r) + 1.0f);
 // squared light (closer to real physics) but need tone mapping

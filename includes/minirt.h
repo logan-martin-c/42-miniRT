@@ -212,6 +212,7 @@ typedef struct s_exec_data
 	_Atomic int				tasks_done;
 	_Atomic int				to_do;
 	unsigned int			nb_threads;
+	unsigned int			nb_tasks;
 	pthread_mutex_t			mutex;
 	pthread_t				*threads;
 	t_tasks					*tasks;

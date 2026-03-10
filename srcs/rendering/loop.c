@@ -15,9 +15,13 @@
 #include "colors_maths.h"
 #include "mlx_utils.h"
 
-void	render_image(t_global_data *g_data)
+void	render_image(t_global_data *g_data, t_exec_data *e_data)
 {
-	create_tasks(g_data->e_data);
+	// create_tasks(g_data->e_data);
+	e_data->tasks_done = 0;
+	e_data->current_task = 0;
+	e_data->to_do = e_data->nb_tasks;
+	e_data->rendering = true;
 	while (g_data->e_data->rendering)
 		usleep(100);
 }
@@ -36,7 +40,7 @@ int	update_display(t_global_data *g_data)
 	move_object(g_data->world.selected_obj, &g_data->world, &g_data->key,
 		ft_min(elapsed, 500000));
 	if (g_data->world.static_frames != -2)
-		render_image(g_data);
+		render_image(g_data, g_data->e_data);
 	mlx_put_image_to_window(g_data->mlx.mlx, g_data->mlx.win,
 		g_data->mlx.s_img_data.img, 0, 0);
 	display_gui(&g_data->world, &g_data->mlx, elapsed);
