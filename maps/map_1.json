@@ -7,7 +7,7 @@
   },
   "sphere" :
   {
-    "position" : [0, 20, 100],
+    "position" : [0, 20, 120],
     "diameter" : 20,
     "color" : [255, 255, 255],
     "smoothness" : 1,
@@ -16,7 +16,7 @@
   },
     "sphere" :
   {
-    "position" : [0, 20, -100],
+    "position" : [0, 20, -120],
     "diameter" : 20,
     "color" : [255, 255, 255],
     "smoothness" : 1,
@@ -25,7 +25,7 @@
   },
   "cylinder" :
   {
-    "position" : [-20, 0, 100],
+    "position" : [-20, 0, 120],
     "rotation" : [0.0, 1, 0],
     "diameter" : 10,
     "height" : 200,
@@ -51,33 +51,7 @@
   },
   "cylinder" :
   {
-    "position" : [-20, 0, 60],
-    "rotation" : [0.0, 1, 0],
-    "diameter" : 10,
-    "height" : 200,
-    "color" : [255, 200, 200, 0],
-	"texture" : "textures/marble.xpm",
-    "bump_map" : "textures/marble_normal.xpm",
-    "smoothness" : 1,
-    "refraction" : 1.1,
-    "reflectance" : 0
-  },
-  "cylinder" :
-  {
     "position" : [-20, 0, 40],
-    "rotation" : [0.0, 1, 0],
-    "diameter" : 10,
-    "height" : 200,
-    "color" : [255, 200, 200, 0],
-	"texture" : "textures/marble.xpm",
-    "bump_map" : "textures/marble_normal.xpm",
-    "smoothness" : 1,
-    "refraction" : 1.1,
-    "reflectance" : 0
-  },
-  "cylinder" :
-  {
-    "position" : [-20, 0, 20],
     "rotation" : [0.0, 1, 0],
     "diameter" : 10,
     "height" : 200,
@@ -103,33 +77,7 @@
   },
   "cylinder" :
   {
-    "position" : [-20, 0, -20],
-    "rotation" : [0.0, 1, 0],
-    "diameter" : 10,
-    "height" : 200,
-    "color" : [255, 200, 200, 0],
-	"texture" : "textures/marble.xpm",
-    "bump_map" : "textures/marble_normal.xpm",
-    "smoothness" : 1,
-    "refraction" : 1.1,
-    "reflectance" : 0
-  },
-  "cylinder" :
-  {
     "position" : [-20, 0, -40],
-    "rotation" : [0.0, 1, 0],
-    "diameter" : 10,
-    "height" : 200,
-    "color" : [255, 200, 200, 0],
-	"texture" : "textures/marble.xpm",
-    "bump_map" : "textures/marble_normal.xpm",
-    "smoothness" : 1,
-    "refraction" : 1.1,
-    "reflectance" : 0
-  },
-  "cylinder" :
-  {
-    "position" : [-20, 0, -60],
     "rotation" : [0.0, 1, 0],
     "diameter" : 10,
     "height" : 200,
@@ -155,7 +103,7 @@
   },
   "cylinder" :
   {
-    "position" : [-20, 0, -100],
+    "position" : [-20, 0, -120],
     "rotation" : [0.0, 1, 0],
     "diameter" : 10,
     "height" : 200,
@@ -168,7 +116,7 @@
   },
   "cylinder" :
   {
-    "position" : [20, 0, 100],
+    "position" : [20, 0, 120],
     "rotation" : [0.0, 1, 0],
     "diameter" : 10,
     "height" : 200,
@@ -179,7 +127,7 @@
     "refraction" : 1.1,
     "reflectance" : 0
   },
-  "cylinder" :
+    "cylinder" :
   {
     "position" : [20, 0, 80],
     "rotation" : [0.0, 1, 0],
@@ -192,35 +140,9 @@
     "refraction" : 1.1,
     "reflectance" : 0
   },
-  "cylinder" :
-  {
-    "position" : [20, 0, 60],
-    "rotation" : [0.0, 1, 0],
-    "diameter" : 10,
-    "height" : 200,
-    "color" : [255, 200, 200, 0],
-	"texture" : "textures/marble.xpm",
-    "bump_map" : "textures/marble_normal.xpm",
-    "smoothness" : 1,
-    "refraction" : 1.1,
-    "reflectance" : 0
-  },
-  "cylinder" :
+    "cylinder" :
   {
     "position" : [20, 0, 40],
-    "rotation" : [0.0, 1, 0],
-    "diameter" : 10,
-    "height" : 200,
-    "color" : [255, 200, 200, 0],
-	"texture" : "textures/marble.xpm",
-    "bump_map" : "textures/marble_normal.xpm",
-    "smoothness" : 1,
-    "refraction" : 1.1,
-    "reflectance" : 0
-  },
-  "cylinder" :
-  {
-    "position" : [20, 0, 20],
     "rotation" : [0.0, 1, 0],
     "diameter" : 10,
     "height" : 200,
@@ -246,33 +168,7 @@
   },
   "cylinder" :
   {
-    "position" : [20, 0, -20],
-    "rotation" : [0.0, 1, 0],
-    "diameter" : 10,
-    "height" : 200,
-    "color" : [255, 200, 200, 0],
-	"texture" : "textures/marble.xpm",
-    "bump_map" : "textures/marble_normal.xpm",
-    "smoothness" : 1,
-    "refraction" : 1.1,
-    "reflectance" : 0
-  },
-  "cylinder" :
-  {
     "position" : [20, 0, -40],
-    "rotation" : [0.0, 1, 0],
-    "diameter" : 10,
-    "height" : 200,
-    "color" : [255, 200, 200, 0],
-	"texture" : "textures/marble.xpm",
-    "bump_map" : "textures/marble_normal.xpm",
-    "smoothness" : 1,
-    "refraction" : 1.1,
-    "reflectance" : 0
-  },
-  "cylinder" :
-  {
-    "position" : [20, 0, -60],
     "rotation" : [0.0, 1, 0],
     "diameter" : 10,
     "height" : 200,
@@ -298,7 +194,7 @@
   },
   "cylinder" :
   {
-    "position" : [20, 0, -100],
+    "position" : [20, 0, -120],
     "rotation" : [0.0, 1, 0],
     "diameter" : 10,
     "height" : 200,
