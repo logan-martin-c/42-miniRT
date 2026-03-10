@@ -27,7 +27,7 @@
   {
     "position" : [10, 5, 30],
     "diameter" : 10,
-    "color" : [100, 255, 255, 255],
+    "color" : [0, 255, 255, 255],
     "smoothness" : 1,
     "refraction" : 1.4,
     "reflectance" : 1
@@ -47,7 +47,7 @@
     "rotation" : [0.0, 1, 0],
     "diameter" : 14.2,
     "height" : 21.42,
-    "color" : [0, 200, 200, 100],
+    "color" : [0, 200, 200, 0],
     "smoothness" : 1,
     "refraction" : 1.1,
     "reflectance" : 0

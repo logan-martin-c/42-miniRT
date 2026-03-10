@@ -6,11 +6,40 @@
 /*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 16:38:47 by lomartin          #+#    #+#             */
-/*   Updated: 2026/02/27 15:21:23 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/10 14:10:25 by lomartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+void	key_press_2(int keycode, t_global_data *g_data, t_object *obj)
+{
+	if (keycode == RIGHT_BRACE && (obj->e_type == _sphere
+			|| obj->e_type == _cylinder || obj->e_type == _cone
+			|| obj->e_type == _light))
+	{
+		obj->u_data.sphere.radius++;
+		g_data->world.static_frames = -1;
+	}
+	if (keycode == LEFT_BRACE && (obj->e_type == _sphere
+			|| obj->e_type == _cylinder || obj->e_type == _cone
+			|| obj->e_type == _light) && obj->u_data.sphere.radius > 0)
+	{
+		obj->u_data.sphere.radius--;
+		g_data->world.static_frames = -1;
+	}
+	if (keycode == QUOTE && (obj->e_type == _cylinder || obj->e_type == _cone))
+	{
+		obj->u_data.cylinder.height++;
+		g_data->world.static_frames = -1;
+	}
+	if (keycode == COLON && (obj->e_type == _cylinder || obj->e_type == _cone)
+		&& obj->u_data.cylinder.height > 0)
+	{
+		obj->u_data.cylinder.height--;
+		g_data->world.static_frames = -1;
+	}
+}
 
 int	key_press(int keycode, t_global_data *g_data)
 {
@@ -32,6 +61,9 @@ int	key_press(int keycode, t_global_data *g_data)
 		g_data->world.cam.speed++;
 	if (keycode == MINUS_KEY && g_data->world.cam.speed > 0)
 		g_data->world.cam.speed--;
+	if (keycode == RIGHT_BRACE || keycode == LEFT_BRACE || keycode == QUOTE
+		|| keycode == COLON && g_data->world.selected_obj)
+		key_press_2(keycode, g_data, g_data->world.selected_obj);
 	return (0);
 }
 

@@ -20,6 +20,7 @@
 void	rotate_cam(t_cam_data *cam, t_mlx_data *mlx, bool *rotating,
 		t_object *obj)
 {
+	t_vect3			rot;
 	t_vect2			mouse_p;
 	static t_vect2	last_mouse_p = {-1, -1};
 
@@ -30,9 +31,8 @@ void	rotate_cam(t_cam_data *cam, t_mlx_data *mlx, bool *rotating,
 	*rotating = true;
 	if (!obj)
 	{
-		cam->forward = vector_rot(cam->forward, (float)(mouse_p.y
-					- last_mouse_p.y) / 1e3, (float)(mouse_p.x
-					- last_mouse_p.x) / 1e3, 0);
+		cam->forward = vector_rot((t_vect3){0, 0, 1},
+				last_mouse_p.y / 1e3, last_mouse_p.x / 1e3, 0);
 		cam->right = vector_norm(vector_cross((t_vect3){0, 1, 0},
 					cam->forward));
 		cam->up = vector_norm(vector_cross(cam->forward, cam->right));

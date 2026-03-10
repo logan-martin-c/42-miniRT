@@ -53,7 +53,7 @@ int	object_picker(int button, int x, int y, void *data)
 	ray.dir = get_ray_dir((t_vect2){x, y}, &g_data->world.viewport,
 			&g_data->world.cam);
 	ray.origin = g_data->world.cam.pos;
-	nearest = get_nearest_object(ray, &g_data->world);
+	nearest = get_nearest(ray, &g_data->world);
 	if (nearest.t == -1)
 		g_data->world.selected_obj = NULL;
 	else
