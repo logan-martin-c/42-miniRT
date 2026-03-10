@@ -55,8 +55,7 @@ int	init_threads(t_exec_data *e_data, t_global_data *g_data)
 	while (++i < e_data->nb_threads)
 	{
 		if (pthread_create(e_data->threads + i, NULL, thread_routine, g_data))
-			return (1);
-	}
+			return (1);	}
 	nb_max_tasks = ceil((ceil((float)WIN_HEIGHT / (float)RENDERING_SQUARE)
 				* (ceil((float)WIN_WIDTH / (float)RENDERING_SQUARE))));
 	e_data->tasks = malloc((nb_max_tasks + 1) * sizeof(t_tasks));

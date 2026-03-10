@@ -36,18 +36,18 @@ static inline float	get_reflectance(float cos_theta, float reflectance)
 				5.0)));
 }
 
-static inline t_vect3	get_bounce(t_ray *ray, t_vect3 n, t_material material,
-		bool direction, t_world_data *world, t_vect3 collision_point)
+static inline t_vect3	get_bounce(t_ray *ray, t_vect3 n,
+	t_nearest_object *nearest, t_world_data *world)
 {
 	float	refraction;
 	float	reflectance;
 
-	if (direction)
+	if (nearest->is_inside)
 		refraction = get_current_refraction(world->objs, world->obj_count,
-				collision_point);
+				nearest->collision_point);
 	else
-		refraction = material.refraction;
-	reflectance = material.color.a;
+		refraction = nearest->obj->material.refraction;
+	reflectance = nearest->obj->material.color.a;
 	if (random_cond(reflectance))
 		return (ray->e_blend_mode = _reflected, reflect(ray->dir, n));
 	return (ray->e_blend_mode = _refracted, refract(ray, n, refraction));
