@@ -26,7 +26,15 @@ void	rotate_cam(t_cam_data *cam, t_mlx_data *mlx, bool *rotating,
 	mlx_mouse_get_pos(mlx->mlx, mlx->win, &mouse_p.x, &mouse_p.y);
 	if (init_pos(&mouse_p, &last_mouse_p))
 		return ;
-	center_mouse(&mouse_p, &last_mouse_p, mlx);
+	if (mouse_p.x > WIN_WIDTH * 0.5 - 1 || mouse_p.y > WIN_HEIGHT * 0.5 - 1
+		|| mouse_p.x < -WIN_WIDTH * 0.5 + 1 || mouse_p.y < -WIN_HEIGHT * 0.5 + 1)
+	{
+		last_mouse_p.x -= mouse_p.x;
+		last_mouse_p.y -= mouse_p.y;
+		mouse_p.x = 0;
+		mouse_p.y = 0;
+		mlx_mouse_move(mlx->mlx, mlx->win, WIN_WIDTH * 0.5, WIN_HEIGHT * 0.5);
+	}
 	*rotating = true;
 	if (!obj)
 	{
