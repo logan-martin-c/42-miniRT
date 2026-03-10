@@ -44,6 +44,10 @@
 # define P_KEY 112
 # define PLUS_KEY 61
 # define MINUS_KEY 45
+# define LEFT_BRACE 91
+# define RIGHT_BRACE 93
+# define QUOTE 39
+# define COLON 59
 
 # define LINE_SIZE 5120
 # define BPP 4

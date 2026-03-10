@@ -93,8 +93,8 @@ typedef struct s_map_data
 
 typedef struct s_sphere
 {
-	float			diameter;
 	float			radius;
+	float			diameter;
 }					t_sphere;
 
 typedef struct s_cylinder
@@ -111,8 +111,8 @@ typedef struct s_cone
 
 typedef struct s_light
 {
-	float			ratio;
 	float			radius;
+	float			ratio;
 }					t_light;
 
 typedef struct s_texture
