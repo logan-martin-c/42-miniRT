@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/10 14:18:51 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/10 14:50:50 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	shadow_factor(t_shader_compute *shader, t_world_data *world,
 		hit = check_object_collision(&world->objs[i], shader->shadow_ray);
 		if (hit.t > 0 && hit.t < rand_light_dist)
 		{
-			shader->light_intensity_sum = colors_mult(colors_scal(hit.obj->material.color,
+			shader->light_intensity_sum
+				= colors_mult(colors_scal(hit.obj->material.color,
 						1.0f - hit.obj->material.color.a),
 					shader->light_intensity_sum);
 		}
