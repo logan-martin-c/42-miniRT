@@ -34,7 +34,7 @@
     "bump_map" : "textures/marble_normal.xpm",
     "smoothness" : 1,
     "refraction" : 1.1,
-    "reflectance" : 0
+    "reflectance" : 0.02
   },
   "cylinder" :
   {
@@ -47,7 +47,7 @@
     "bump_map" : "textures/marble_normal.xpm",
     "smoothness" : 1,
     "refraction" : 1.1,
-    "reflectance" : 0
+    "reflectance" : 0.02
   },
   "cylinder" :
   {
@@ -60,7 +60,7 @@
     "bump_map" : "textures/marble_normal.xpm",
     "smoothness" : 1,
     "refraction" : 1.1,
-    "reflectance" : 0
+    "reflectance" : 0.02
   },
   "cylinder" :
   {
@@ -73,7 +73,7 @@
     "bump_map" : "textures/marble_normal.xpm",
     "smoothness" : 1,
     "refraction" : 1.1,
-    "reflectance" : 0
+    "reflectance" : 0.02
   },
   "cylinder" :
   {
@@ -86,7 +86,7 @@
     "bump_map" : "textures/marble_normal.xpm",
     "smoothness" : 1,
     "refraction" : 1.1,
-    "reflectance" : 0
+    "reflectance" : 0.02
   },
   "cylinder" :
   {
@@ -99,7 +99,7 @@
     "bump_map" : "textures/marble_normal.xpm",
     "smoothness" : 1,
     "refraction" : 1.1,
-    "reflectance" : 0
+    "reflectance" : 0.02
   },
   "cylinder" :
   {
@@ -112,7 +112,7 @@
     "bump_map" : "textures/marble_normal.xpm",
     "smoothness" : 1,
     "refraction" : 1.1,
-    "reflectance" : 0
+    "reflectance" : 0.02
   },
   "cylinder" :
   {
@@ -125,7 +125,7 @@
     "bump_map" : "textures/marble_normal.xpm",
     "smoothness" : 1,
     "refraction" : 1.1,
-    "reflectance" : 0
+    "reflectance" : 0.02
   },
     "cylinder" :
   {
@@ -138,7 +138,7 @@
     "bump_map" : "textures/marble_normal.xpm",
     "smoothness" : 1,
     "refraction" : 1.1,
-    "reflectance" : 0
+    "reflectance" : 0.02
   },
     "cylinder" :
   {
@@ -151,7 +151,7 @@
     "bump_map" : "textures/marble_normal.xpm",
     "smoothness" : 1,
     "refraction" : 1.1,
-    "reflectance" : 0
+    "reflectance" : 0.02
   },
   "cylinder" :
   {
@@ -164,7 +164,7 @@
     "bump_map" : "textures/marble_normal.xpm",
     "smoothness" : 1,
     "refraction" : 1.1,
-    "reflectance" : 0
+    "reflectance" : 0.02
   },
   "cylinder" :
   {
@@ -177,7 +177,7 @@
     "bump_map" : "textures/marble_normal.xpm",
     "smoothness" : 1,
     "refraction" : 1.1,
-    "reflectance" : 0
+    "reflectance" : 0.02
   },
   "cylinder" :
   {
@@ -190,7 +190,7 @@
     "bump_map" : "textures/marble_normal.xpm",
     "smoothness" : 1,
     "refraction" : 1.1,
-    "reflectance" : 0
+    "reflectance" : 0.02
   },
   "cylinder" :
   {
@@ -203,7 +203,7 @@
     "bump_map" : "textures/marble_normal.xpm",
     "smoothness" : 1,
     "refraction" : 1.1,
-    "reflectance" : 0
+    "reflectance" : 0.02
   },
   "plane" :
   {

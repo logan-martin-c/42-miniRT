@@ -1,0 +1,59 @@
+{
+  "camera" :
+  {
+    "position" : [0, 20, -70],
+    "rotation" : [0, 0, 1],
+    "fov" : 75
+  },
+  "ambient_light" :
+  {
+    "ratio" : 0.4,
+    "color" : [50, 20, 0]
+  },
+  "light" :
+  {
+    "position" : [0, 10, 0],
+    "color" : [255, 100, 0],
+    "ratio" : 1,
+    "diameter" : 20
+  },
+  "plane" :
+  {
+    "position" : [0, 0, 0],
+    "rotation" : [0.0, 1.0, 0.0],
+    "color" : [255, 30, 30, 30],
+    "texture" : "textures/brick.xpm",
+    "bump_map" : "textures/brick_normal.xpm",
+    "smoothness" : 0.8,
+    "reflectance" : 0.3
+  },
+  "sphere" :
+  {
+    "position" : [0, 40, 0],
+    "diameter" : 15,
+    "color" : [120, 255, 255, 255],
+    "smoothness" : 1,
+    "refraction" : 1.5,
+    "reflectance" : 0.2
+  },
+  "cylinder" :
+  {
+    "position" : [-25, 25, 20],
+    "rotation" : [0.2, 1, 0.2],
+    "diameter" : 6,
+    "height" : 50,
+    "color" : [255, 100, 69, 19],
+    "smoothness" : 0,
+    "reflectance" : 0
+  },
+  "cylinder" :
+  {
+    "position" : [25, 25, 20],
+    "rotation" : [-0.2, 1, -0.2],
+    "diameter" : 6,
+    "height" : 50,
+    "color" : [255, 100, 69, 19],
+    "smoothness" : 0,
+    "reflectance" : 0
+  }
+}
