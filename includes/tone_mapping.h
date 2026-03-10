@@ -6,9 +6,12 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 18:01:20 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/09 11:55:08 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/10 11:38:39 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef TONE_MAPPING_H
+# define TONE_MAPPING_H
 
 #include "minirt.h"
 
@@ -36,7 +39,7 @@ static inline t_float_color	gamma_correct(t_float_color color)
 {
 	float	gamma;
 
-	gamma = 1.0f / 2.2f;
+	gamma = 1.0f / 2.0f;
 	color.r = powf(color.r, gamma);
 	color.g = powf(color.g, gamma);
 	color.b = powf(color.b, gamma);
@@ -47,8 +50,7 @@ static inline t_float_color	exposure_correction(t_float_color color)
 {
 	t_float_color	final_pixel;
 	float			exposure;
-
-	exposure = 0.3f;
+	exposure = 0.5f;
 	final_pixel = color;
 	final_pixel.r *= exposure;
 	final_pixel.g *= exposure;
@@ -63,5 +65,7 @@ static inline t_float_color	color_correction(t_float_color color)
 	final_pixel = exposure_correction(color);
 	final_pixel = ace_tone_map(final_pixel);
 	final_pixel = gamma_correct(final_pixel);
-	return (final_pixel);
+	return ((colors_mult(final_pixel, color)));
 }
+
+#endif
