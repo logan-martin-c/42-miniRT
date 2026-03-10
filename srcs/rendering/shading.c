@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/10 14:09:28 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/10 14:18:51 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,7 @@ void	shadow_factor(t_shader_compute *shader, t_world_data *world,
 		hit = check_object_collision(&world->objs[i], shader->shadow_ray);
 		if (hit.t > 0 && hit.t < rand_light_dist)
 		{
-			shader->light_intensity_sum
-				= colors_mult(colors_scal(hit.obj->material.color,
+			shader->light_intensity_sum = colors_mult(colors_scal(hit.obj->material.color,
 						1.0f - hit.obj->material.color.a),
 					shader->light_intensity_sum);
 		}
@@ -90,8 +89,9 @@ void	calc_shader(t_shader_compute *shader, t_world_data *world, int i)
 	attenuation = 1.0f / (shader->light_ray_dist * shader->light_ray_dist
 			+ 1.0f);
 	shader->light_rgb = world->lights[i].material.color;
-	shader->intensity = world->lights[i].u_data.light.ratio * 1500
-		* shader->dot_nl * attenuation;
+	shader->intensity = world->lights[i].u_data.light.ratio
+		* world->lights[i].u_data.light.radius * 200 * shader->dot_nl
+		* attenuation;
 	shader->diffuse = colors_scal(colors_mult(shader->light_rgb,
 				shader->obj_rgb), shader->intensity);
 	shader->diffuse = colors_mult(shader->diffuse, shader->light_intensity_sum);

@@ -62,10 +62,10 @@
   },
   "light" :
   {
-    "position" : [0, 10, 60],
+    "position" : [0, 20, 60],
     "color" : [255, 255, 255],
     "ratio" : 1,
-    "diameter" : 2
+    "diameter" : 10
   },
   "ambient_light" :
   {
