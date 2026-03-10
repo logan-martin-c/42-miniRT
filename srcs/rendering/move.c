@@ -20,7 +20,6 @@
 void	rotate_cam(t_cam_data *cam, t_mlx_data *mlx, bool *rotating,
 		t_object *obj)
 {
-	t_vect3			rot;
 	t_vect2			mouse_p;
 	static t_vect2	last_mouse_p = {-1, -1};
 

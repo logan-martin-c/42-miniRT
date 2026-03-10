@@ -62,7 +62,7 @@ int	key_press(int keycode, t_global_data *g_data)
 	if (keycode == MINUS_KEY && g_data->world.cam.speed > 0)
 		g_data->world.cam.speed--;
 	if (keycode == RIGHT_BRACE || keycode == LEFT_BRACE || keycode == QUOTE
-		|| keycode == COLON && g_data->world.selected_obj)
+		|| (keycode == COLON && g_data->world.selected_obj))
 		key_press_2(keycode, g_data, g_data->world.selected_obj);
 	return (0);
 }

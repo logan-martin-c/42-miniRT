@@ -33,10 +33,10 @@ static inline void	center_mouse(t_vect2 *mouse_p, t_vect2 *last_mouse_p,
 	if (mouse_p->x > WIN_WIDTH / 2 - 1 || mouse_p->y > WIN_HEIGHT / 2 - 1
 		|| mouse_p->x < -WIN_WIDTH / 2 + 1 || mouse_p->y < -WIN_HEIGHT / 2 + 1)
 	{
-		last_mouse_p->x -= mouse_p->x;
-		last_mouse_p->y -= mouse_p->y;
-		mouse_p->x = 0;
-		mouse_p->y = 0;
+		last_mouse_p->x -= mouse_p->x - WIN_WIDTH / 2;
+		last_mouse_p->y -= mouse_p->y - WIN_HEIGHT / 2;
+		mouse_p->x = WIN_WIDTH / 2;
+		mouse_p->y = WIN_HEIGHT / 2;
 		mlx_mouse_move(mlx->mlx, mlx->win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
 	}
 }
