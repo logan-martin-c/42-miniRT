@@ -58,14 +58,14 @@
     "rotation" : [0.0, 1.0, 0.0],
     "color" : [255, 150, 150, 225],
     "smoothness" : 0,
-    "reflectance" : 1
+    "reflectance" : 0
   },
   "light" :
   {
-    "position" : [0, 20, 60],
+    "position" : [0, 10, 60],
     "color" : [255, 255, 255],
     "ratio" : 1,
-    "diameter" : 20
+    "diameter" : 2
   },
   "ambient_light" :
   {

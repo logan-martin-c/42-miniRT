@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/10 11:25:51 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/10 14:09:28 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	prep_compute_dl(t_shader_compute *shader, t_vect3 point_r_c,
 		t_world_data *world, int i)
 {
 	shader->light_ray_dir = vectors_sub(world->lights[i].pos, point_r_c);
-	shader->light_ray_dist = vector_mag(shader->light_ray_dir);
+	shader->light_ray_dist = vector_mag(shader->light_ray_dir)
+		- world->lights[i].u_data.light.radius;
 	shader->light_ray.dir = vector_norm(shader->light_ray_dir);
 	shader->light_ray.origin = shader->shadow_origin;
 	shader->dot_nl = dot_product(shader->n_point_normal, shader->light_ray.dir);
@@ -74,24 +75,22 @@ void	shadow_factor(t_shader_compute *shader, t_world_data *world,
 		hit = check_object_collision(&world->objs[i], shader->shadow_ray);
 		if (hit.t > 0 && hit.t < rand_light_dist)
 		{
-			shader->light_intensity_sum = colors_mult(
-					colors_scal(hit.obj->material.color,
+			shader->light_intensity_sum
+				= colors_mult(colors_scal(hit.obj->material.color,
 						1.0f - hit.obj->material.color.a),
 					shader->light_intensity_sum);
 		}
 	}
 }
 
-void	calc_shader(t_shader_compute *shader, t_world_data *world, int i,
-		float dist)
+void	calc_shader(t_shader_compute *shader, t_world_data *world, int i)
 {
-	float	r;
 	float	attenuation;
 
-	r = world->lights[i].u_data.light.radius;
-	attenuation = 1.0f / (dist * dist + (r * r) + 1.0f);
+	attenuation = 1.0f / (shader->light_ray_dist * shader->light_ray_dist
+			+ 1.0f);
 	shader->light_rgb = world->lights[i].material.color;
-	shader->intensity = world->lights[i].u_data.light.ratio * 4500
+	shader->intensity = world->lights[i].u_data.light.ratio * 1500
 		* shader->dot_nl * attenuation;
 	shader->diffuse = colors_scal(colors_mult(shader->light_rgb,
 				shader->obj_rgb), shader->intensity);
@@ -104,7 +103,6 @@ t_float_color	compute_direct_light(t_nearest_object hit, t_world_data *world)
 {
 	t_shader_compute	shader;
 	int					i;
-	float				dist;
 
 	i = 0;
 	shader.obj_rgb = get_texture_color(hit);
@@ -113,11 +111,10 @@ t_float_color	compute_direct_light(t_nearest_object hit, t_world_data *world)
 	while (i < world->light_count)
 	{
 		prep_compute_dl(&shader, hit.collision_point, world, i);
-		dist = shader.light_ray_dist;
 		if (shader.dot_nl > 0)
 		{
 			shadow_factor(&shader, world, world->lights[i]);
-			calc_shader(&shader, world, i, dist);
+			calc_shader(&shader, world, i);
 		}
 		i++;
 	}

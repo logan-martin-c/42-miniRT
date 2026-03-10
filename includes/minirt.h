@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lomartin <lomartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:21:42 by lomartin          #+#    #+#             */
-/*   Updated: 2026/03/09 15:42:20 by lomartin         ###   ########.fr       */
+/*   Updated: 2026/03/10 13:40:43 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ typedef struct s_shader_compute
 	t_float_color			obj_rgb;
 	t_float_color			light_rgb;
 	t_vect3					light_ray_dir;
-	double					light_ray_dist;
+	float					light_ray_dist;
 	t_vect3					n_light_normal;
 	t_vect3					n_point_normal;
 	t_vect3					n_point_normal_diffused;

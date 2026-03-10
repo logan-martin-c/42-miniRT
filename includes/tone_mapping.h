@@ -6,14 +6,14 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 18:01:20 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/10 11:38:39 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/10 14:10:09 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TONE_MAPPING_H
 # define TONE_MAPPING_H
 
-#include "minirt.h"
+# include "minirt.h"
 
 static inline t_float_color	ace_tone_map(t_float_color color)
 {
@@ -50,6 +50,7 @@ static inline t_float_color	exposure_correction(t_float_color color)
 {
 	t_float_color	final_pixel;
 	float			exposure;
+
 	exposure = 0.5f;
 	final_pixel = color;
 	final_pixel.r *= exposure;
