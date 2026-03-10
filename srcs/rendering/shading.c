@@ -6,7 +6,7 @@
 /*   By: adastugu <adastugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 17:24:58 by adastugu          #+#    #+#             */
-/*   Updated: 2026/03/10 14:50:50 by adastugu         ###   ########.fr       */
+/*   Updated: 2026/03/10 16:06:26 by adastugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	calc_shader(t_shader_compute *shader, t_world_data *world, int i)
 			+ 1.0f);
 	shader->light_rgb = world->lights[i].material.color;
 	shader->intensity = world->lights[i].u_data.light.ratio
-		* world->lights[i].u_data.light.radius * 200 * shader->dot_nl
+		* (world->lights[i].u_data.light.radius + 1) * 200 * shader->dot_nl
 		* attenuation;
 	shader->diffuse = colors_scal(colors_mult(shader->light_rgb,
 				shader->obj_rgb), shader->intensity);
