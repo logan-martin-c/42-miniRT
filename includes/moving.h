@@ -13,7 +13,8 @@
 #ifndef MOVING_H
 # define MOVING_H
 
-static inline int	init_pos(t_vect2 *mouse_p, t_vect2 *last_mouse_p)
+static inline int	init_pos(t_vect2 *mouse_p, t_vect2 *last_mouse_p,
+	t_vect3 *init_rot, t_vect3 cam_f)
 {
 	mouse_p->x -= WIN_WIDTH * 0.5;
 	mouse_p->y -= WIN_HEIGHT * 0.5;
@@ -21,6 +22,7 @@ static inline int	init_pos(t_vect2 *mouse_p, t_vect2 *last_mouse_p)
 	{
 		last_mouse_p->x = mouse_p->x;
 		last_mouse_p->y = mouse_p->y;
+		*init_rot = (t_vect3){cam_f.x, cam_f.y, cam_f.z};
 	}
 	else if (last_mouse_p->y == mouse_p->y && last_mouse_p->x == mouse_p->x)
 		return (1);
