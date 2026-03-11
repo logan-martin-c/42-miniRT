@@ -1,46 +1,81 @@
 {
   "sphere" :
   {
-    "position" : [32.25, 20, 50],
+    "position" : [0, 20, 50],
     "rotation" : [0, 1, 0],
     "diameter" : 30,
     "color" : [0, 255, 255, 255],
     "refraction" : 1.4,
     "reflectance" : 0.5,
     "smoothness" : 1,
-    "texture" : "textures/brick.xpm",
     "bump_map" : "textures/brick_normal.xpm"
   },
   "light":
   {
-    "position" : [20, 30, 40],
+    "position" : [0, 5, 50],
     "color" : [255, 24, 54],
+    "ratio" : 1,
+    "diameter" : 5
+  },
+  "sphere" :
+  {
+    "position" : [50, 20, 60],
+    "rotation" : [0, 1, 0],
+    "diameter" : 30,
+    "color" : [0, 255, 255, 255],
+    "refraction" : 1.4,
+    "reflectance" : 0.5,
+    "smoothness" : 0.7
+  },
+  "light":
+  {
+    "position" : [50, 5, 60],
+    "color" : [123, 255, 34],
+    "ratio" : 1,
+    "diameter" : 5
+  },
+  "sphere" :
+  {
+    "position" : [-50, 20, 60],
+    "rotation" : [0, 1, 0],
+    "diameter" : 30,
+    "color" : [0, 255, 255, 255],
+    "refraction" : 1.4,
+    "reflectance" : 0.5,
+    "smoothness" : 1
+  },
+  "light":
+  {
+    "position" : [-50, 5, 60],
+    "color" : [54, 144, 213],
     "ratio" : 1,
     "diameter" : 5
   },
   "camera":
   {
-    "position" : [20, 10, 0],
+    "position" : [0, 20, 0],
     "rotation" : [0, 0, 1],
     "fov" : 70
   },
   "ambient_light" :
   {
     "color" : [255, 255, 255],
-    "ratio" : 0.5
+    "ratio" : 0.1
   },
   "plane" :
   {
-    "position" : [20, 10, 40],
+    "position" : [20, 0, 40],
     "rotation" : [0, 1, 0],
-    "color" : [255, 255, 255]
+    "color" : [255, 255, 255],
+    "reflectance": 0.6,
+    "smoothness": 0
   },
   "cylinder" :
   {
-    "position" : [20, 10, 40],
-    "rotation" : [0, 0, 1],
-    "color" : [0, 255, 0],
-    "height" : 20,
-    "diameter" : 5
+    "position" : [0, 10, 80],
+    "rotation" : [0, 1, 0],
+    "color" : [150, 255, 32],
+    "height" : 80,
+    "diameter" : 20
   }
 }
