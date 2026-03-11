@@ -19,10 +19,10 @@ static inline int	get_color_summed(t_vect2 pointer, t_float_color *color_tab,
 	t_float_color	*color;
 
 	color = &color_tab[pointer.y * WIN_WIDTH + pointer.x];
+	if (frame_nb == -2)
+		return (vec4_to_color((colors_divide(*color, frame_nb + 1))));
 	if (frame_nb <= 0)
 		*color = new_color;
-	else if (frame_nb == -2)
-		return (vec4_to_color((colors_divide(*color, frame_nb + 1))));
 	else
 	{
 		*color = colors_add(*color, new_color);

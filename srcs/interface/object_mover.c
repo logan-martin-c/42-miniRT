@@ -91,8 +91,12 @@ int	move_object(t_object *obj, t_world_data *world, t_interface *input,
 	return (world->static_frames = -1, 0);
 }
 
-void	rotate_object(t_object *obj, t_vect2 move)
+void	rotate_object(t_object *obj, t_vect2 mouse_p, t_vect2 last_mouse_p)
 {
-	obj->rot = vector_rot(obj->rot, (float)(move.y) / 1e3, (float)(move.x)
+	static t_vect2	pos = {0, 0};
+
+	pos.x += (mouse_p.x - last_mouse_p.x);
+	pos.y += (mouse_p.y - last_mouse_p.y);
+	obj->rot = vector_rot(obj->init_rot, (float)(pos.y) / 1e3, (float)(pos.x)
 			/ 1e3, 0);
 }

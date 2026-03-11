@@ -299,16 +299,10 @@ t_float_color				get_color_chars(unsigned char a, unsigned char r,
 								unsigned char g, unsigned char b);
 t_float_color				compute_direct_light(t_nearest_object hit,
 								t_world_data *world);
-// int							color_sup(int color_a, int color_b);
 t_vect3						project(t_vect3 pos, t_cam_data *cam_data);
-// void						my_mlx_pixel_put(t_mlx_data *mlx, t_vect3 pos,
-// 								int color);
 void						trace_rays(t_world_data *world, t_mlx_data *mlx);
-// t_vect3					vector_norm(t_vect3 a);
-// t_vect3					vector_cross(t_vect3 a, t_vect3 b);
 void						render_canva(t_vect2 start, t_vect2 end,
 								t_world_data *world, t_mlx_data *mlx);
-// int							get_prev_color(t_vect3 pos, t_mlx_data *mlx);
 int							init_threads(t_exec_data *e_data,
 								t_global_data *g_data);
 int							init_exec(t_exec_data *e_data,
@@ -341,7 +335,8 @@ void						display_gui(t_world_data *world, t_mlx_data *mlx,
 int							object_picker(int buttom, int x, int y, void *data);
 int							move_object(t_object *obj, t_world_data *world,
 								t_interface *input, int elapsed);
-void						rotate_object(t_object *obj, t_vect2 move);
+void						rotate_object(t_object *obj, t_vect2 mouse_p,
+								t_vect2 last_mouse_p);
 
 // UTILS
 int							ft_puterr(char *error);

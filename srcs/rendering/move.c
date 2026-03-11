@@ -50,8 +50,7 @@ void	rotate_cam(t_cam_data *cam, t_mlx_data *mlx, bool *rotating,
 		cam->up = vector_norm(vector_cross(cam->forward, cam->right));
 	}
 	else
-		rotate_object(obj, (t_vect2){mouse_p.x - last_mouse_p.x, mouse_p.y
-			- last_mouse_p.y});
+		rotate_object(obj, mouse_p, last_mouse_p);
 	last_mouse_p.x = mouse_p.x;
 	last_mouse_p.y = mouse_p.y;
 }
@@ -116,7 +115,7 @@ void	move_cam(t_world_data *world, t_mlx_data *mlx, t_interface *key,
 		update_cam_pos(key, &world->cam, elapsed, &world->moving);
 	if (!world->moving && !world->rotating)
 	{
-		if (world->static_frames < 10000)
+		if (world->static_frames != -2 && world->static_frames < 10000)
 			world->static_frames++;
 		else
 			world->static_frames = -2;

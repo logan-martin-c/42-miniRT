@@ -58,6 +58,7 @@ int	json_to_light(t_json json, t_global_data *g_data, t_world_data *world)
 	if (check.diamet)
 		world->lights[world->light_count].u_data.light.radius *= 0.5;
 	world->lights[world->light_count].e_type = _light;
+	world->lights[world->light_count].init_rot = (t_vect3){0, 0, 1};
 	++world->light_count;
 	if (!check.pos || !check.ratio || !check.color)
 		return (ft_maperror("incomplete light parameters", -1,

@@ -148,6 +148,7 @@ typedef struct s_object
 	t_material		material;
 	t_vect3			pos;
 	t_vect3			rot;
+	t_vect3			init_rot;
 	union
 	{
 		t_sphere	sphere;

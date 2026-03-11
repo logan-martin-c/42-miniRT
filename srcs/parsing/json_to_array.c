@@ -55,6 +55,10 @@ int	json_to_array(t_parsing_data *p_data, t_global_data *g_data,
 			ft_maperror(error, -1, g_data->prog_name);
 			return (free(error), 1);
 		}
+		if (world->obj_count && world->objs[world->obj_count - 1].e_type
+			!= _light)
+			world->objs[world->obj_count - 1].init_rot
+				= world->objs[world->obj_count - 1].rot;
 	}
 	free_json(p_data->json);
 	return (0);

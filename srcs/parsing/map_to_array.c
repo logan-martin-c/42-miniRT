@@ -23,7 +23,10 @@ int	lst_objs_to_array(t_object **objs, t_list *obj_lst, int obj_count)
 	while (++i < obj_count)
 	{
 		if (((t_object *)obj_lst->content)->e_type != _light)
+		{
 			memcpy(&objs[0][i], (t_object *)obj_lst->content, sizeof(t_object));
+			objs[0][i].init_rot = objs[0][i].rot;
+		}
 		else
 			i--;
 		obj_lst = obj_lst->next;
@@ -42,9 +45,12 @@ int	lst_lights_to_array(t_object **lights, t_list *obj_lst, int light_count)
 	while (++i < light_count)
 	{
 		if (((t_object *)obj_lst->content)->e_type == _light)
+		{
 			memcpy(lights[0] + i,
 				(t_object *)obj_lst->content,
 				sizeof(t_object));
+			lights[0][i].init_rot = lights[0][i].rot;
+		}
 		else
 			i--;
 		obj_lst = obj_lst->next;
