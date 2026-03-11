@@ -358,5 +358,6 @@ int							check_args_count(char **args, unsigned int min,
 								unsigned int max);
 int							is_normalized(t_vect3 pos);
 t_obj_type					get_obj_type(char *obj_line);
+void						clean_parsing(t_parsing_data *p_data);
 
 #endif

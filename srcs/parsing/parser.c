@@ -64,7 +64,6 @@ void	parse_rt(char *av[], t_global_data *g_data, t_parsing_data *p_data)
 		ft_perror(NULL, g_data->prog_name);
 		clean_exit(1, g_data, p_data, NULL);
 	}
-	ft_lstclear(&p_data->obj_lst, free);
 }
 
 void	parser(int ac, char *av[], t_global_data *g_data,
@@ -75,4 +74,5 @@ void	parser(int ac, char *av[], t_global_data *g_data,
 		parse_rt(av, g_data, p_data);
 	else if (p_data->file_type == _json)
 		parse_json(av, g_data, p_data);
+	clean_parsing(p_data);
 }

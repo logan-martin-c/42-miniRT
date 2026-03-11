@@ -60,6 +60,5 @@ int	json_to_array(t_parsing_data *p_data, t_global_data *g_data,
 			world->objs[world->obj_count - 1].init_rot
 				= world->objs[world->obj_count - 1].rot;
 	}
-	free_json(p_data->json);
 	return (0);
 }
