@@ -76,3 +76,16 @@ void	set_default_obj(t_object *obj)
 	obj->material.refraction = 1;
 	obj->material.smoothness = 1;
 }
+
+int	parse_material(t_material *material, char **params)
+{
+	if (params[0])
+		material->tex_name = ft_strdup(params[0]);
+	if (!material->tex_name && params[0])
+		return (1);
+	if (params[0] && params[1])
+		material->normal_name = ft_strdup(params[1]);
+	if (!material->normal_name && params[0] && params[1])
+		return (1);
+	return (0);
+}

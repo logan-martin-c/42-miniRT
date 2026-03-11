@@ -12,6 +12,18 @@
 
 #include "minirt.h"
 
+int	put_in_lst(t_object *node, t_global_data *g_data,
+	t_parsing_data *p_data)
+{
+	t_list	*elem;
+
+	elem = ft_lstnew(node);
+	if (!elem)
+		return (ft_perror(NULL, g_data->prog_name));
+	ft_lstadd_front(&p_data->obj_lst, elem);
+	return (0);
+}
+
 void	parse_line(t_parsing_data *p_data, char *obj_line,
 		t_global_data *g_data)
 {

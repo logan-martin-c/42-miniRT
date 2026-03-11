@@ -291,6 +291,10 @@ int							lst_lights_to_array(t_object **lights,
 								t_list *obj_lst, int light_count);
 void						parse_json(char *av[], t_global_data *g_data,
 								t_parsing_data *p_data);
+int							parse_material(t_material *material,
+								char **params);
+int							put_in_lst(t_object *node, t_global_data *g_data,
+								t_parsing_data *p_data);
 
 // RENDER
 int							update_display(t_global_data *data);

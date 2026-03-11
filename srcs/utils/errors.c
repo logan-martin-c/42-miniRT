@@ -80,6 +80,7 @@ int	ft_perror(char *optional_name, char *progname)
 	if (!progname)
 		return (EXIT_FAILURE);
 	perror(error_prefix);
-	free(error_prefix);
+	if (optional_name)
+		free(error_prefix);
 	return (EXIT_FAILURE);
 }

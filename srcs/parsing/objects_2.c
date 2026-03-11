@@ -34,10 +34,9 @@ int	new_cone(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 		return (ft_free_strs(params),
 			ft_maperror("cone : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
-	if (params[6])
-		node->material.tex_name = ft_strdup(params[6]);
-	if (params[6] && params[7])
-		node->material.normal_name = ft_strdup(params[7]);
-	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
+	if (parse_material(&node->material, &params[6]))
+		return (ft_perror(NULL, g_data->prog_name));
+	if (put_in_lst(node, g_data, p_data))
+		return (ft_perror(NULL, g_data->prog_name));
 	return (node->e_type = _cone, ft_free_strs(params), 0);
 }

@@ -67,7 +67,7 @@ char	*get_string(FILE *stream, t_parsing_data *p_data, t_global_data *g_data)
 	j = 1;
 	string = ft_calloc(1, 512);
 	if (!string)
-		ft_perror(NULL, g_data->prog_name);
+		return (ft_perror(NULL, g_data->prog_name), NULL);
 	i = 0;
 	while (peek(stream) != '"' && peek(stream) != EOF)
 	{

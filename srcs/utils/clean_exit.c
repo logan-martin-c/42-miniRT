@@ -49,14 +49,17 @@ void	free_world(t_world_data *world, void *mlx)
 	int	i;
 
 	i = -1;
-	while (++i < world->obj_count)
+	if (world->objs)
 	{
-		free(world->objs[i].material.tex_name);
-		free(world->objs[i].material.normal_name);
-		if (world->objs[i].material.tex.img)
-			mlx_destroy_image(mlx, world->objs[i].material.tex.img);
-		if (world->objs[i].material.normal.img)
-			mlx_destroy_image(mlx, world->objs[i].material.normal.img);
+		while (++i < world->obj_count)
+		{
+			free(world->objs[i].material.tex_name);
+			free(world->objs[i].material.normal_name);
+			if (world->objs[i].material.tex.img)
+				mlx_destroy_image(mlx, world->objs[i].material.tex.img);
+			if (world->objs[i].material.normal.img)
+				mlx_destroy_image(mlx, world->objs[i].material.normal.img);
+		}
 	}
 	free(world->objs);
 	free(world->lights);

@@ -34,11 +34,10 @@ int	new_sphere(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 			ft_maperror("u_data.sphere : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
 	node->u_data.sphere.radius = node->u_data.sphere.diameter / 2;
-	if (params[4])
-		node->material.tex_name = ft_strdup(params[4]);
-	if (params[4] && params[5])
-		node->material.normal_name = ft_strdup(params[5]);
-	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
+	if (parse_material(&node->material, &params[4]))
+		return (ft_perror(NULL, g_data->prog_name));
+	if (put_in_lst(node, g_data, p_data))
+		return (ft_perror(NULL, g_data->prog_name));
 	return (node->e_type = _sphere, ft_free_strs(params), 0);
 }
 
@@ -62,11 +61,10 @@ int	new_plane(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 		return (ft_free_strs(params), ft_maperror("plane : invalid parameters",
 				p_data->line_nb, g_data->prog_name));
 	node->e_type = _plane;
-	if (params[4])
-		node->material.tex_name = ft_strdup(params[4]);
-	if (params[4] && params[5])
-		node->material.normal_name = ft_strdup(params[5]);
-	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
+	if (parse_material(&node->material, &params[4]))
+		return (ft_perror(NULL, g_data->prog_name));
+	if (put_in_lst(node, g_data, p_data))
+		return (ft_perror(NULL, g_data->prog_name));
 	return (ft_free_strs(params), 0);
 }
 
@@ -92,11 +90,10 @@ int	new_cylinder(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 			ft_maperror("cylinder : invalid parameters", p_data->line_nb,
 				g_data->prog_name));
 	node->u_data.cylinder.radius *= 0.5;
-	if (params[6])
-		node->material.tex_name = ft_strdup(params[6]);
-	if (params[6] && params[7])
-		node->material.normal_name = ft_strdup(params[7]);
-	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
+	if (parse_material(&node->material, &params[6]))
+		return (ft_perror(NULL, g_data->prog_name));
+	if (put_in_lst(node, g_data, p_data))
+		return (ft_perror(NULL, g_data->prog_name));
 	return (node->e_type = _cylinder, ft_free_strs(params), 0);
 }
 
@@ -123,7 +120,8 @@ int	new_light(t_parsing_data *p_data, char *obj_line, t_global_data *g_data,
 	if (params[4])
 		node->u_data.light.radius = ft_atof(params[4]) * 0.5;
 	node->e_type = _light;
-	ft_lstadd_front(&p_data->obj_lst, ft_lstnew(node));
+	if (put_in_lst(node, g_data, p_data))
+		return (ft_perror(NULL, g_data->prog_name));
 	p_data->light_count++;
 	return (ft_free_strs(params), 0);
 }
