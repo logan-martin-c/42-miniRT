@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS += -Wall -Wextra -Werror -Wpedantic -Ofast -ffast-math
-DFLAGS += -g3 -D DEBUG=1 -Ofast -ffast-math
+DFLAGS += -g3 -D DEBUG=1 #-Ofast -ffast-math
 
 LIBS += -lpthread -latomic
 

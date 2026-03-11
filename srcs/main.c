@@ -25,7 +25,7 @@ int	main(int ac, char *av[])
 	if (init_mlx(&g_data.mlx))
 	{
 		ft_perror("mlx", g_data.prog_name);
-		clean_exit(EXIT_FAILURE, &g_data, &p_data, NULL);
+		clean_exit(EXIT_FAILURE, &g_data, NULL, NULL);
 	}
 	init_texture(&g_data);
 	init_normal(&g_data);

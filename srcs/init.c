@@ -14,7 +14,7 @@
 
 int	init_mlx(t_mlx_data *mlx)
 {
-	mlx->mlx = mlx_init();
+	// mlx->mlx = mlx_init();
 	if (!mlx->mlx)
 		return (1);
 	mlx->s_img_data.img = mlx_new_image(mlx->mlx, WIN_WIDTH, WIN_HEIGHT);

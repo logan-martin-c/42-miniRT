@@ -68,7 +68,7 @@ void	clean_exit(int exit_status, t_global_data *g_data,
 {
 	if (p_data)
 		clean_parsing(p_data);
-	free_world(&g_data->world, g_data->mlx.mlx);
+	// free_world(&g_data->world, g_data->mlx.mlx);
 	if (e_data)
 		clean_exec(e_data);
 	if (g_data->mlx.mlx)
