@@ -42,11 +42,12 @@ int	json_to_light(t_json json, t_global_data *g_data, t_world_data *world)
 	size_t			i;
 	t_parsing_check	check;
 
-	ft_bzero(&check, sizeof(check));
-	if (json.e_type != _brace)
+	if (json.e_type != _brace || (ft_bzero(&check, sizeof(check)), 0))
 		return (1);
 	world->lights = ft_realloc(world->lights, world->light_count
 			* sizeof(t_object), (world->light_count + 1) * sizeof(t_object));
+	if (!world->lights)
+		return (ft_perror(NULL, g_data->prog_name));
 	world->lights[world->light_count].u_data.light.radius = 0;
 	i = -1;
 	while (++i < json.u_data.s_brace.size)
@@ -58,8 +59,7 @@ int	json_to_light(t_json json, t_global_data *g_data, t_world_data *world)
 	if (check.diamet)
 		world->lights[world->light_count].u_data.light.radius *= 0.5;
 	world->lights[world->light_count].e_type = _light;
-	world->lights[world->light_count].init_rot = (t_vect3){0, 0, 1};
-	++world->light_count;
+	world->lights[world->light_count++].init_rot = (t_vect3){0, 0, 1};
 	if (!check.pos || !check.ratio || !check.color)
 		return (ft_maperror("incomplete light parameters", -1,
 				g_data->prog_name));

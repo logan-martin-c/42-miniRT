@@ -28,7 +28,7 @@ void	*ft_calloc(size_t n, size_t size)
 		return (NULL);
 	area = malloc(len);
 	if (!area)
-		return (0);
+		return (NULL);
 	ft_bzero(area, len);
 	return (area);
 }

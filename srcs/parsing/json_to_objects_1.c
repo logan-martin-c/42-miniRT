@@ -47,6 +47,8 @@ int	json_to_sphere(t_json json, t_global_data *g_data, t_world_data *world)
 		return (1);
 	world->objs = ft_realloc(world->objs, world->obj_count * sizeof(t_object),
 			(world->obj_count + 1) * sizeof(t_object));
+	if (!world->objs)
+		return (ft_perror(NULL, g_data->prog_name));
 	set_default_obj(world->objs + world->obj_count);
 	i = -1;
 	while (++i < json.u_data.s_brace.size)
@@ -95,11 +97,12 @@ int	json_to_cylinder(t_json json, t_global_data *g_data, t_world_data *world)
 	size_t			i;
 	t_parsing_check	check;
 
-	ft_bzero(&check, sizeof(check));
-	if (json.e_type != _brace)
+	if (json.e_type != _brace || (ft_bzero(&check, sizeof(check)), 0))
 		return (1);
 	world->objs = ft_realloc(world->objs, world->obj_count * sizeof(t_object),
 			(world->obj_count + 1) * sizeof(t_object));
+	if (!world->objs)
+		return (ft_perror(NULL, g_data->prog_name));
 	set_default_obj(world->objs + world->obj_count);
 	i = -1;
 	while (++i < json.u_data.s_brace.size)
