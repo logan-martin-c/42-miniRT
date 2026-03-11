@@ -23,6 +23,8 @@ void	init_texture(t_global_data *g_data)
 	{
 		if (g_data->world.objs[i].material.tex_name)
 		{
+			if (!ft_strcmp("UV", g_data->world.objs[i].material.tex_name))
+				return ;
 			g_data->world.objs[i].material.tex.img
 				= mlx_xpm_file_to_image(g_data->mlx.mlx,
 					g_data->world.objs[i].material.tex_name,

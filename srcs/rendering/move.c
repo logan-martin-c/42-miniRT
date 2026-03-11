@@ -17,14 +17,15 @@
 #include "vectors_maths_2.h"
 #include "vectors_rotations.h"
 
-void	calc_pos(t_vect2 *pos, t_vect2 mouse_p, t_vect2 last_mouse_p)
+void	calc_pos(t_vect2 *pos, t_vect2 mouse_p, t_vect2 last_mouse_p, float cos)
 {
 	pos->x += (mouse_p.x - last_mouse_p.x);
-	pos->y += (mouse_p.y - last_mouse_p.y);
-	if (pos->y < -1570)
-		pos->y = -1570;
-	if (pos->y > 1570)
-		pos->y = 1570;
+	if ((cos >= 0.99 && (mouse_p.y - last_mouse_p.y) < 0) || (cos <= -0.99 && (mouse_p.y - last_mouse_p.y) > 0) || cos < 0.99 || cos > -0.99)
+		pos->y += (mouse_p.y - last_mouse_p.y);
+	// if (pos->y < -1570)
+	// 	pos->y = -1570;
+	// if (pos->y > 1570)
+	// 	pos->y = 1570;
 }
 
 void	rotate_cam(t_cam_data *cam, t_mlx_data *mlx, bool *rotating,
@@ -42,8 +43,8 @@ void	rotate_cam(t_cam_data *cam, t_mlx_data *mlx, bool *rotating,
 	*rotating = true;
 	if (!obj)
 	{
-		calc_pos(&pos, mouse_p, last_mouse_p);
-		cam->forward = vector_rot((t_vect3){0, 0, 1},
+		calc_pos(&pos, mouse_p, last_mouse_p, dot_product(vector_norm(cam->forward), (t_vect3){0, 1, 0}));
+		cam->forward = vector_rot(init_rot,
 				pos.y / 1e3, pos.x / 1e3, 0);
 		cam->right = vector_norm(vector_cross((t_vect3){0, 1, 0},
 					cam->forward));

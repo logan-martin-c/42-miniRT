@@ -1,8 +1,21 @@
 {
+  "camera" :
+  {
+    "position" : [0, 50, 0],
+    "rotation" : [0, 0, 1],
+    "fov" : 70
+  },
   "light": {
     "position": [0, 80, 0],
     "color": [255, 240, 200],
     "ratio": 1,
     "diameter": 20
+  },
+  "plane":
+  {
+    "position" : [0, 0, 0],
+    "rotation" : [0, 1, 0],
+    "color" : [255, 255, 255],
+    "texture" : "UV"
   }
 }
