@@ -8,7 +8,11 @@ Adastugu and I wanted to bring it further to learn more and to end with a progra
 
 Just before we give you a detailed description of what our miniRT can do, enjoy some beautifil scenes it can render :
 
-🚧 WORK IN PROGRESS 🚧
+![map_4.json](images/map_4.png)
+![simple_glass.json](images/simple_glass.png)
+![materials.json](images/materials.png)
+![lights.json](images/shadow.png)
+![lights.json](images/lights.png)
 
 This miniRT includes some bonus features :
 - Objects have an **advanced material attribute** where possible parameters are :
