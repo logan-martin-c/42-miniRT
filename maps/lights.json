@@ -38,7 +38,7 @@
     "diameter" : 10,
     "color" : [0, 173, 16, 221],
     "smoothness" : 1,
-    "refraction" : 1.1,
+    "refraction" : 1.4,
     "reflectance" : 1
   },
   "cylinder" :
@@ -65,7 +65,7 @@
     "position" : [0, 20, 60],
     "color" : [255, 255, 255],
     "ratio" : 1,
-    "diameter" : 10
+    "diameter" : 20
   },
   "ambient_light" :
   {

@@ -1,0 +1,78 @@
+{
+  "camera" :
+  {
+    "position" : [0, 20, 0],
+    "rotation" : [0, 0, 1],
+    "fov" : 70
+  },
+  "sphere" :
+  {
+    "position" : [10, 10, 40],
+    "color" : [0, 255, 255, 255],
+    "diameter" : 20,
+    "refraction" : 1.4,
+    "reflectance": 1
+  },
+  "sphere" :
+  {
+    "position" : [-20, 10, 40],
+    "color" : [0, 255, 255, 255],
+    "diameter" : 20,
+    "refraction" : 1.4,
+    "reflectance": 1,
+    "smoothness": 0.95
+  },
+  "sphere" :
+  {
+    "position" : [10, 10, 80],
+    "color" : [255, 241, 143, 1],
+    "diameter" : 20,
+    "reflectance": 0
+  },
+  "cylinder" :
+  {
+    "position" : [-20, 10, 80],
+    "rotation" : [0, 1, 0],
+    "color" : [255, 162, 59, 114],
+    "diameter" : 20,
+    "height" : 40,
+    "reflectance": 0
+  },
+  "cone" :
+  {
+    "position" : [-50, 10, 80],
+    "rotation" : [0, 1, 0],
+    "color" : [255, 46, 134, 171],
+    "diameter" : 20,
+    "height" : 40,
+    "reflectance": 0
+  },
+  "cylinder" :
+  {
+    "position" : [50, 10, 80],
+    "rotation" : [0, 0, 1],
+    "color" : [255, 199, 62, 29],
+    "diameter" : 20,
+    "height" : 60,
+    "reflectance": 0
+  },
+  "plane" :
+  {
+    "position" : [0, 0, 0],
+    "color" : [150, 200, 150],
+    "rotation" : [0, 1, 0],
+    "reflectance" : 0.3
+  },
+  "ambient_light" :
+  {
+    "color" : [255, 255, 255],
+    "ratio" : 0.8
+  },
+  "light" :
+  {
+    "position" : [0, 50, 50],
+    "color" : [255, 255, 255],
+    "ratio" : 1,
+    "diameter" : 10
+  }
+}

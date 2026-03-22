@@ -1,0 +1,48 @@
+{
+  "camera": {
+    "position": [0, 0, -20],
+    "rotation": [0, 0, 1],
+    "fov": 50
+  },
+  "ambient_light": {
+    "ratio": 0.2,
+    "color": [255, 255, 255, 255]
+  },
+  "light": {
+    "position": [0, 10, -5],
+    "ratio": 0.9,
+    "color": [255, 255, 255, 255]
+  },
+  "plane": {
+    "position": [0, 0, 15],
+    "rotation": [0, 0, -1],
+    "color": [255, 255, 255, 255],
+    "texture": "UV"
+  },
+  "sphere": {
+    "position": [0, 0, 0],
+    "diameter": 8,
+    "color": [100, 255, 0, 0],
+    "refraction": 1.1
+  },
+  "sphere": {
+    "position": [3, 0, -5],
+    "diameter": 4,
+    "color": [150, 0, 255, 0],
+    "reflectance": 0.3
+  },
+  "sphere": {
+    "position": [-3, 0, -5],
+    "diameter": 4,
+    "color": [150, 0, 0, 255],
+    "refraction": 1.2
+  },
+  "cone": {
+    "position": [0, -4, -2],
+    "rotation": [0, 1, 0],
+    "diameter": 10,
+    "height": 4,
+    "color": [200, 255, 255, 255],
+    "smoothness": 0.5
+  }
+}
