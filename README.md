@@ -1,10 +1,13 @@
 _This project has been created as part of the 42 curriculum by **adastugu**, **lomartin**_
 
-# Description
+# MiniRT
 
-MiniRT is a 42 project that serves as an introduction to the raytracing protocol.
+A physically-based raytracer built from scratch in C.
 
-Adastugu and I wanted to bring it further to learn more and to end with a program we could be proud of.
+## 🎨 Description
+
+
+Initially a standard school assignment, [@DAFX](https://github.com/DAFX-GIT) and I pushed miniRT beyond the requirements to implement **advanced lighting** and material properties like **glass**, **soft shadows** and other **advanced material properties**. We wanted a project that we could be proud of.
 
 Just before we give you a detailed description of what our miniRT can do, enjoy some beautifil scenes it can render :
 
@@ -14,31 +17,51 @@ Just before we give you a detailed description of what our miniRT can do, enjoy 
 ![lights.json](images/shadow.png)
 ![lights.json](images/lights.png)
 
-This miniRT includes some bonus features :
-- Objects have an **advanced material attribute** where possible parameters are :
-  - Texture
-  - Bump map
-  - Transparency
-  - Reflectivity
-  - Refraction
-  - Smoothness
-- Each object and light can be **selected** by a click on it and can be **moved**, **rotated** and **resized**.
-- To achieve certain other bonuses features implementation, maps file can be given in a **.json**
-- **Cam parameters can be modified** in the program (fov, speed)
+## 🚀 Key Features
+### 🛠 Rendering Engine
+- Multiple Light Bounces: Support for recursive raytracing (configurable in includes/settings.h). 
+- Advanced Materials: * Reflectivity & Refraction: Adjustable indices for glass, water, or metallic surfaces. 
+- Transparency: Alpha channel support (0–255). 
+- Smoothness: Control surface roughness vs. mirror-like finishes. 
+- Texturing: Support for .xpm textures and Normal Mapping (Bump maps) to simulate surface relief.
 
-# Instructions
+### 📦 Geometric Primitives
+- Spheres, Cylinders, Planes, and Cones. 
+- All objects support full transformation (Position, Rotation, Scale). 
+- Note: Spheres include rotation parameters specifically for texture alignment.
 
-Compile using make command
+### 🖱 Interactive Sandbox
+- Live Selection: Click any object or light source directly in the viewport. 
+- Real-time Editing: Move, rotate, or resize selected objects using hotkeys. 
+- Camera Control: Dynamic FOV and movement speed adjustments.
+
+## 🛠 Instructions
+
+### Installation
 ```bash
+git clone https://github.com/logan-martin-c/42-miniRT
+cd 42-miniRT
 make miniRT
 ```
 
-Run with a valid map
+### Usage
+The program supports both the standard .rt format and a custom .json format for advanced features.
 ```bash
 ./miniRT_debug maps/validmap[.json|.rt]
 ```
 
-## Map instructions
+### ⌨️ Controls
+All of the controls for a QWERTY keyboard mapping :\
+\
+| Key | Action |
+| :---: | :---: |
+| <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><kbd>Space</kbd><kbd>Ctrl</kbd> | Move camera or object |
+| <kbd>Scroll up</kbd><kbd>Scroll down</kbd> | Zoom in/out |
+| <kbd>-</kbd><kbd>+</kbd> | Decrease/increase moving speed (for camera and objects) |
+| <kbd>[</kbd><kbd>]</kbd> | Decrease/increase object's diameter |
+| <kbd>;</kbd><kbd>'</kbd> | Decrease/increase object's height |
+
+### Map instructions
 
 - Ambient Light and Camera are unique, there can't be 2 instance of each.
 - Each object must have at least a position and a color
@@ -106,7 +129,7 @@ Objects should be defined this way :
 }
 ```
 
-# Ressources
+## Ressources
 
 - [Raytracing in one week](https://raytracing.github.io/)
 - [JSON standard](https://www.json.org/json-en.html)
