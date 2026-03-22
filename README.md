@@ -9,7 +9,7 @@ A physically-based raytracer built from scratch in C.
 
 Initially a standard school assignment, [@DAFX](https://github.com/DAFX-GIT) and I pushed miniRT beyond the requirements to implement **advanced lighting** and material properties like **glass**, **soft shadows** and other **advanced material properties**. We wanted a project that we could be proud of.
 
-Just before we give you a detailed description of what our miniRT can do, enjoy some beautifil scenes it can render :
+Just before we give you a detailed description of what our miniRT can do, enjoy some beautiful scenes it can render :
 
 ![map_4.json](images/map_4.png)
 ![simple_glass.json](images/simple_glass.png)
