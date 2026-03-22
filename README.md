@@ -47,11 +47,11 @@ make miniRT
 ### Usage
 The program supports both the standard .rt format and a custom .json format for advanced features.
 ```bash
-./miniRT_debug maps/validmap[.json|.rt]
+./miniRT maps/validmap[.json|.rt]
 ```
 
 ### ⌨️ Controls
-All of the controls for a QWERTY keyboard mapping :
+Key-bindings for a QWERTY keyboard :
 
 | Key | Action |
 | :---: | :---: |
