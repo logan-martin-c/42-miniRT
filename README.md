@@ -51,8 +51,8 @@ The program supports both the standard .rt format and a custom .json format for 
 ```
 
 ### ⌨️ Controls
-All of the controls for a QWERTY keyboard mapping :\
-\
+All of the controls for a QWERTY keyboard mapping :
+
 | Key | Action |
 | :---: | :---: |
 | <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><kbd>Space</kbd><kbd>Ctrl</kbd> | Move camera or object |
